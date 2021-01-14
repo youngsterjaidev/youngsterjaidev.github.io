@@ -1,0 +1,209 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box }
+
+::selection {
+    background-color: #f6454f;
+    color: #fff;
+}
+
+[type="button"] {
+    font-family: "Roboto Mono", monospace;
+    padding: 1rem 3rem;
+    background-color: #f6454f;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+img {
+    width: 100%;
+}
+
+h1 {
+    text-shadow: 0px 5px 5px rgba(0, 0, 0, 0.089);
+}
+
+nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    padding: 4rem 2rem;
+}
+
+body > div {
+    background: #eee;
+    padding: 1rem;
+    width: 100%;
+    height: 100vh;
+}
+
+body > div:nth-of-type(2) {
+    background-color: #fff;
+}
+
+body > div:nth-of-type(3) {
+    background-color: #f7f5f7;
+}
+
+body > div:nth-of-type(4) {
+    background-color:#fff;
+    min-height: 100vh;
+    height: auto;
+}
+
+body > div:nth-of-type(5) {
+    background-color: #f6454f;
+    height: 70vh;
+}
+
+nav a {
+    text-decoration: none;
+    text-align: center;
+    color: #000;
+    flex: 1;
+    transition: all 1s;
+    user-select: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+nav a:nth-of-type(3) {
+    flex: 2;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bold;
+    font-family: "Roboto Mono", monospace;
+}
+
+body > div > div {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 1rem;
+}
+
+body > div:nth-of-type(1) > div > div:first-of-type {
+    padding: 2rem;
+    width: 60%;
+}
+
+body > div:nth-of-type(1) > div > div:last-of-type {
+    width: 40%;
+}
+
+body > div:nth-of-type(1) > div > div:first-of-type a {
+    margin: 1em 0;
+    display: inline-block;
+    text-decoration: none;
+}
+
+body > div:nth-of-type(1) > div > div:first-of-type h1 {
+    font-size: 2.5rem
+}
+
+body > div:nth-of-type(1) > div > div:first-of-type p {
+    width: 70%;
+}
+
+body > div:nth-of-type(2) h1, body > div:nth-of-type(3) h1, body > div:nth-of-type(4) h1, body > div:nth-of-type(5) h1{
+    font-size: 2.5rem;
+    margin: 6rem auto 3rem auto;
+    text-align: center;
+}
+
+body > div:nth-of-type(2) div > div {
+    padding: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+body > div:nth-of-type(2) > div > div img {
+    width: 50%;
+}
+
+body > div:nth-of-type(3) > div {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 2rem;
+    justify-content: space-around;
+    align-items: center;
+}
+
+body > div:nth-of-type(3) > div > div {
+    background-color: #fff;
+    margin: 0em 1em;
+    min-height: 20em;
+    flex: 1;
+    border-radius: 4px;
+    display: flex;
+    flex-flow: column nowrap;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.411);
+}
+
+
+body > div:nth-of-type(3) > div > div:hover {
+    background-color: #f6454f;
+    color: #fff;
+    transform: translate(0px, -40px);
+}
+
+body > div:nth-of-type(3) > div > div:hover > div > .im {
+    color: #fff;
+}
+
+body > div:nth-of-type(3) > div > div > div:nth-of-type(1) {
+    display: flex;
+    width: 100%;
+    flex: 1;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+
+body > div:nth-of-type(3) > div > div > div:first-of-type a {
+    text-decoration: none;
+    color:#f6454f;
+}
+
+body > div:nth-of-type(3) > div > div > div:last-of-type {
+    text-align: center;
+    padding: 2rem;
+}
+
+.im {
+    font-size: 8rem;
+}
+
+body > div:nth-of-type(4) > div {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem 5rem;
+}
+
+body > div:nth-of-type(4) > div > div > h2 {
+    margin: 0 0 0.5em 0;
+    text-align: left;
+}
+
+body > div:nth-of-type(4) > div > div {
+    padding: 1rem 4rem;
+    width: 50%;
+}
+
+body > div:nth-of-type(4) > div img {
+    width: 30%;
+    height: auto;
+}
