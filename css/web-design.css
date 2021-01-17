@@ -141,6 +141,7 @@ body > div:nth-of-type(3) > div > div {
     background-color: #fff;
     margin: 0em 1em;
     min-height: 20em;
+    min-width: 15em;
     flex: 1;
     border-radius: 4px;
     display: flex;
