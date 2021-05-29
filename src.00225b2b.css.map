@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles.css"],"names":[],"mappings":"AAAA,UACI,QAAS,CACT,WACJ,CAEA,GACI,UAAW,CACX,WAAY,CACZ,aAAc,CACd,cACJ","file":"src.00225b2b.css","sourceRoot":"..","sourcesContent":["html, body {\n    margin: 0;\n    height: 100%;\n}\n\n#c {\n    width: 100%;\n    height: 100%;\n    display: block;\n    background: red;\n}"]}
