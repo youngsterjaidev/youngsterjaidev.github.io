@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FLO Standard Operators</title>
     <link rel="stylesheet" href="css/main.css">
     <style>
@@ -9,8 +11,21 @@
             box-sizing: border-box;
         }
 
+        ::selection {
+            background: #9400ff;
+            color: #fff;
+        }
+
+        b {
+            background: #eee;
+            font-weight: 300;
+            padding: 0.1em 0.2em;
+            border-radius: 5px;
+        }
+
         body {
-            padding: 1em;
+            padding: 0em 0em 1em 0em;
+            background-color: #f8f8f8;
         }
 
         body>div {
@@ -18,6 +33,12 @@
             flex-flow: column nowrap;
             justify-content: center;
             align-items: center;
+        }
+        
+        body>div:nth-of-type(1) {
+            background: red;
+            position: sticky;
+            top: 0;
         }
 
         body>div:nth-of-type(2) {
@@ -30,6 +51,10 @@
             border-radius: 5px;
         }
 
+        .container {
+            padding: 1em;
+        }
+
         .container>div {
             margin: 1em 0em;
         }
@@ -40,6 +65,15 @@
 
         sm-input {
             margin: 0.5em 0em;
+        }
+
+        .list {
+            word-break: break-all;
+            display: block;
+        }
+
+        footer {
+            padding: 0.5em 1em;
         }
 
         @media screen and (max-width: 700px) {
@@ -101,8 +135,8 @@
     <sm-popup id="popup">Content</sm-popup>
 
 
-    <div
-        style="display: flex; background-color: #fff; flex-flow: row wrap; padding:1em 0em; justify-content: space-between;">
+    <div id="nav"
+        style="display: flex;z-index: 2; background-color: #f8f8f8; flex-flow: row wrap; padding:1em 0em; justify-content: space-between;">
         <div>
             <h1>Flo</h1>
         </div>
@@ -139,7 +173,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="sadButton">Send Data</sm-button>
                         <div id="sadFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -152,7 +186,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="radButton">Request Data</sm-button>
                         <div id="radFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -172,7 +206,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="sgdButton">Send Data</sm-button>
                         <div id="sgdFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -188,7 +222,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="rgdButton">Request Data</sm-button>
                         <div id="rgdFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -204,7 +238,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="rodButton">Reset Data</sm-button>
                         <div id="rodFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -220,7 +254,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="uodButton">Update Data</sm-button>
                         <div id="uodFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -236,7 +270,7 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="rqodButton">Request Data</sm-button>
                         <div id="rqodFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all;overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
@@ -257,13 +291,28 @@
                     <div>
                         <sm-button type="submit" variant="outlined" id="getEncryptDataButton">Get Data</sm-button>
                         <div id="encryptDataFeedBack"
-                            style="background-color: #f8f8f8;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
+                            style="background-color: #fff;box-shadow: none; padding: 0em; margin: 1em 0em; width: 100%; border-radius: 5px; word-break: break-all; overflow-y: auto; max-height: 50vh;">
                         </div>
                     </div>
                 </div>
             </sm-panel>
         </sm-tab-panels>
     </div>
+
+    <footer>
+        <h1>FLO Standard Operations</h1>
+        <p style="max-width: 100%;">
+            RanchiMall is releasing FLO Standard Operations in order to make it easier for everyone in community to access common functions that any developer would need in a standardized way for JavaScript based development around FLO Blockchain ecosystem.
+
+            The methods enable developers to read and write into FLO Blockchain directly without any wallet or Chrome extension dependencies. They also enable developers to create digital signatures for any message out of any FLO ID, and functions verify them as well. In additional, standard methods are being provided for data encryption using recipient FLO ID and private key splitting using Shamir Secret Sharing algorithm.
+
+            We are also provding access to a common data infrastructure called the FLO Blockchain Data Cloud which can provide place for host data that will be too expensive to put inside the blockchain.
+
+            We are offering methods simplifying access to inbuilt browser database IndexedDB or IDB.
+
+            Last but not the least, we are also providing methods for simplying common operations for FLO based Distributed Application Development.
+        </p>
+    </footer>
 
     <script src=" js/component.js">
     </script>
@@ -9672,6 +9721,15 @@
             }
         }
 
+
+        window.onscroll = (e) => {
+            if(window.scrollY === 0) {
+                document.getElementById("nav").style.boxShadow = "none"
+            } else {
+                document.getElementById("nav").style.boxShadow = "0 4px 23px 5px rgb(0 0 0 / 20%), 0 2px 6px rgb(0 0 0 / 15%)"
+            }
+        }
+
         let notification = document.getElementById("notification")
         let popup = document.getElementById("popup")
 
@@ -9777,7 +9835,11 @@
             e.preventDefault()
 
             if (!sadMessageInput.value || !sadTypeInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                if(!sadMessageInput.value) {
+                    notification.push("Need To Fill the Message Input !", { type: "error" })
+                } else {
+                    notification.push("Need To Fill the Type Inputs !", { type: "error" })
+                }
             } else {
                 floCloudAPI.sendApplicationData(sadMessageInput.value, sadTypeInput.value).then(res => {
                     sadFeedback.innerText = JSON.stringify(res)
@@ -9812,7 +9874,11 @@
             console.log("send General Data")
 
             if (!sgdMessageInput.value || !sgdTypeInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                if(!sgdMessageInput.value) {
+                    notification.push("Need To Fill the Message Input !", { type: "error" })
+                } else {
+                    notification.push("Need To Fill the Type Inputs !", { type: "error" })
+                }
             } else {
                 floCloudAPI.sendGeneralData(sgdMessageInput.value, sgdTypeInput.value).then(res => {
                     sgdFeedback.innerText = JSON.stringify(res)
@@ -9830,7 +9896,7 @@
             console.log("Request General Data !")
 
             if (!rgdTypeInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                    notification.push("Need To Fill the Type Inputs !", { type: "error" })
             } else {
 
                 floCloudAPI.requestGeneralData(rgdTypeInput.value).then(res => {
@@ -9851,7 +9917,11 @@
             console.log("Reset Object Data !")
 
             if (!rodObjectNameInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                if(!rodObjectNameInput.value) {
+                    notification.push("Need To Fill the Message Input !", { type: "error" })
+                } else {
+                    notification.push("Need To Fill the Type Inputs !", { type: "error" })
+                }
             } else {
 
                 floCloudAPI.resetObjectData(rodObjectNameInput.value).then(res => {
@@ -9872,7 +9942,7 @@
             console.log("Update Object Data !")
 
             if (!uodObjectNameInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                notification.push("Need To Fill Object Name the Inputs !", { type: "error" })
             } else {
 
                 floCloudAPI.updateObjectData(uodObjectNameInput.value).then(res => {
@@ -9893,7 +9963,7 @@
             console.log("Request Object Data !")
 
             if (!rqodObjectNameInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                notification.push("Need To Fill Object Name Inputs !", { type: "error" })
             } else {
 
                 floCloudAPI.requestObjectData(rqodObjectNameInput.value).then(res => {
@@ -9915,7 +9985,11 @@
             console.log("get Encrypted Data")
 
             if (!rDataInput.value || !rFloIdInput.value) {
-                notification.push("Need To Fill the Inputs !", { type: "error" })
+                if(!rDataInput.value) {
+                    notification.push("Need To Fill the Data Inputs !", { type: "error" })
+                } else {
+                    notification.push("Need To Fill the FloId Inputs !", { type: "error" })
+                }
             } else {
                 let encryptedData = floCrypto.encryptData(rDataInput.value, rFloIdInput.value)
                 console.log("_---", encryptedData)
@@ -9924,7 +9998,7 @@
             }
         })
 
-        createFloIdButton.addEventListener("click", e => {
+        createFloIdButton.addEventListener("click", function(e) {
 
             console.log(floCrypto)
 
@@ -9956,9 +10030,15 @@
 
             popup.innerHTML = `
                 <div>
-                    <div>Flo Id: ${getData.floID}</div>     
-                    <div>Private Key: ${getData.privKey}</div>     
-                    <div>Public Key: ${getData.pubKey}</div>     
+                    <div class="list">Flo Id: <b>${getData.floID}</b></div>     
+                    <div class="list">Private Key: <b>${getData.privKey}</b></div>     
+                    <div class="list"><b>${getData.privKey}</b> key is verified : <b>${verifiedPrivateKey}</b></div>
+                    <div class="list">Public Key: <b>${getData.pubKey}</b></div>     
+                    <div class="list">The Test Input Data: Data</div>
+                    <div class="list">The Encrypted Data: <b>${JSON.stringify(encryptedData)}</b></div>
+                    <div class="list">The Decrypted Data: <b>${JSON.stringify(encryptedData)}</b></div>
+                    <div class="list">The Signature : <b>${signature}</b></div>
+                    <div class="list"><b>${signature}</b> is verified : <b>${verifySignData}</b></div>
                 </div> 
             `
             popup.show()
