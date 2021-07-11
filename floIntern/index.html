@@ -5,19 +5,504 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/main.css">
-    <title>Flo Users</title>
+    <title>Intern Data</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0em 1em;
+            background-color: #f0f0f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        nav>div {
+            padding: 0.6em;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        input {
+            padding: 0.5em;
+            background-color: #fff;
+            border: 2px solid #fff;
+            border-bottom-color: #ddd;
+        }
+
+        input:active {
+            outline: none;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        nav {
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0.8em 0em 0.8em 0.8em;
+            background-color: transparent;
+        }
+
+        @media screen and (max-width: 500px) {
+            body {
+                padding: 0em;
+            }
+
+            nav {
+                padding: 0.5em;
+            }
+        }
+
+        /* Isolated styles */
+
+        ul {
+            list-style: none;
+            height: 300px;
+            overflow-y: auto;
+            padding: 0.5em;
+        }
+
+        li {
+            padding: 1em 0em;
+        }
+
+        li>div:last-of-type {
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .container {
+            display: block;
+            padding: 1em;
+            background-color: #fff;
+            border-radius: 5px;
+            border: 1px solid #eee;
+            cursor: pointer;
+            transition: all 0.5s ease-out;
+        }
+
+        .container:hover {
+            box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        #transaction {
+            padding: 1em;
+            background-color: #fff;
+            border-radius: 5px;
+            display: none;
+            border: 1px solid #eee;
+        }
+
+        #transaction>div:nth-of-type(1) {
+            background-color: #ffff;
+            padding: 0.5em;
+        }
+
+        #transaction>div:nth-of-type(1)>input {
+            background-color: #ffff;
+            padding: 0.7em;
+            width: 100%;
+            border-radius: 5px;
+            border: 2px solid #ddd;
+            display: block;
+        }
+
+        #searchNav:disabled {
+            cursor: not-allowed;
+        }
+
+        .wrapper {
+            margin: 1em 0em;
+        }
+    </style>
 </head>
 
 <body>
     <nav>
-        <div class="heading">Flo User</div>
-        <form id="searchForm">
-            <input type="search" placeholder="search" id="searchInput" />
-        </form>
+        <div>
+            <input type="search" id="searchInput" placeholder="search" />
+        </div>
     </nav>
-    <div id="root" class="container"></div>
-    <script src="js/main.js"></script>
+
+    <template id="template">
+        <style>
+            ul {
+                list-style: none;
+                height: 300px;
+                overflow-y: auto;
+                padding: 0.5em;
+                background-color: #f0f0f0;
+                border-radius: 5px;
+            }
+
+            li {
+                padding: 1.5em 0em;
+            }
+
+            li>div:last-of-type {
+                float: right;
+                font-size: 2rem;
+                font-weight: bold;
+            }
+
+            .container {
+                display: block;
+                padding: 1em;
+                background-color: #fff;
+                border-radius: 5px;
+                border: 1px solid #eee;
+                cursor: pointer;
+                transition: all 0.5s ease-out;
+            }
+
+            .container:hover {
+                border: 1px solid rgb(255, 0, 0);
+                box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.19);
+            }
+
+            .container:active {
+                background-color: #f0f0f0;
+            }
+
+            #transaction {
+                padding: 1em;
+                background-color: #fff;
+                border-radius: 5px;
+                display: none;
+                border: 1px solid #eee;
+            }
+
+            #transaction>div:nth-of-type(1) {
+                background-color: #fff;
+                padding: 0.5em;
+            }
+
+            #transaction>div:nth-of-type(1)>input {
+                background-color: #ffff;
+                padding: 0.7em;
+                width: 100%;
+                border-radius: 5px;
+                border: 2px solid #ddd;
+                display: block;
+                box-sizing: border-box;
+            }
+
+            #searchNav:disabled {
+                cursor: not-allowed;
+            }
+
+            .wrapper {
+                margin: 1em 0em;
+            }
+        </style>
+        <div class="wrapper">
+            <div class="container">
+                <div id="floUserName">User Name</div>
+                <div id="floId">User Id</div>
+            </div>
+            <div id="transaction">
+                <div>
+                    <input type="text" id="searchNav" placeholder="search" />
+                </div>
+                <ul id="content">
+                    <li>
+                        <div>Message</div>
+                        <div>Sender - Receiver</div>
+                        <div>3000</div>
+                    </li>
+                    <li>
+                        <div>Message</div>
+                        <div>Sender - Receiver</div>
+                        <div>Amount</div>
+                    </li>
+                    <li>
+                        <div>Message</div>
+                        <div>Sender - Receiver</div>
+                        <div>Amount</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </template>
+
+    <div id="root">
+    </div>
+
+    <script>
+        // const container = document.querySelector(".container")
+        // const detail = document.querySelector("#transaction")
+        // const content = document.getElementById("content")
+        // const searchNav = document.getElementById("searchNav")
+        // const isOpen = detail.style.display
+
+        // function openPop(e) {
+        //     const isOpen = detail.style.display === "block"
+        //     if (isOpen) {
+        //         detail.style.display = "none"
+        //     } else {
+        //         detail.style.display = "block"
+        //         isReady = false
+        //         searchNav.disabled = !isReady
+        //         content.innerHTML = `
+        //                 <h1 style="text-align: center;">Wait a sec !</h1> 
+        //             `
+        //         // call the server
+        //         setTimeout(() => {
+        //             isReady = true
+        //             searchNav.disabled = !isReady
+        //             let data = ["1", "1"]
+        //             content.innerHTML = ``
+        //             for (let i = 0; i < 5; i++) {
+        //                 const li = document.createElement("li")
+        //                 li.innerHTML = `
+        //                     <li>
+        //                         <div>Message</div>
+        //                         <div>Sender - Receiver</div>
+        //                         <div>3000</div>
+        //                     </li>
+        //                 `
+
+        //                 content.appendChild(li)
+        //             }
+        //         }, 2000)
+        //     }
+        // }
+
+        // container.addEventListener("click", openPop)
+    </script>
+    <script>
+        class Card extends HTMLElement {
+            constructor() {
+                super()
+                this.shadow = this.attachShadow({ mode: "open" })
+            }
+
+            async openPop() {
+                let detail = this.shadow.querySelector("#transaction")
+                let content = this.shadow.getElementById("content")
+                let searchNav = this.shadow.getElementById("searchNav")
+                let isOpen = detail.style.display === "block"
+
+                if (isOpen) {
+                    detail.style.display = "none"
+                } else {
+                    detail.style.display = "block"
+                    let isReady = false
+                    searchNav.disabled = !isReady
+                    content.innerHTML = `
+                        <h1 style="text-align: center;">Wait a sec !</h1> 
+                    `
+
+                    try {
+                        let uri = `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressTransactions?floAddress=${this.floid}`
+                        let res = await fetch(uri)
+                        let data = await res.json()
+                        console.log(data)
+                        content.innerHTML = ``
+                        if (data.result === "error") {
+                            content.innerHTML = `<div style="text-align: center;">${data.description}</div>`
+                        }
+                        if (data.result === 'ok') {
+                            Object.keys(data.transactions).map((index) => {
+                                let { parsedFloData, transactionDetails } = data.transactions[index]
+                                // renderUserInfo()
+                                const li = document.createElement("li")
+                                li.innerHTML = `
+                            <li>
+                                <div>${parsedFloData.flodata}</div>
+                                <div>Sender - Receiver</div>
+                                <div>RS. ${parsedFloData.tokenAmount}.00</div>
+                            </li>
+                        `
+
+                                content.appendChild(li)
+                            })
+                        }
+                    } catch (e) {
+                        // ERROR HANDLING
+                        console.log("Error Occured while fetching the User Data : ", e)
+                    }
+                }
+            }
+
+            fetchUserInfo = async () => {
+                try {
+                    let uri = `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressTransactions?floAddress=FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn`
+                    let res = await fetch(uri)
+                    data = await res.json()
+                    console.log(data)
+                    content.innerHTML = ""
+                    if (data.result === 'ok') {
+                        Object.keys(data.transactions).map((index) => {
+                            let { parsedFloData, transactionDetails } = data.transactions[index]
+                            // renderUserInfo()
+                            renderParsedFloData(parsedFloData)
+                        })
+                    }
+                } catch (e) {
+                    // ERROR HANDLING
+                    console.log("Error Occured while fetching the User Data : ", e)
+                }
+            }
+
+            connectedCallback() {
+                const template = document.querySelector("template")
+                const node = document.importNode(template.content, true)
+                this.shadow.appendChild(node)
+
+                let container = this.shadow.querySelector(".container")
+                let detail = this.shadow.querySelector("#transaction")
+                let content = this.shadow.getElementById("content")
+                let searchNav = this.shadow.getElementById("searchNav")
+
+                this.shadow.getElementById("floId").innerText = this.flousername
+                this.shadow.getElementById("floUserName").innerText = this.floid
+
+                container.addEventListener("click", this.openPop.bind(this))
+            }
+        }
+
+        customElements.define("my-card", Card)
+
+
+        let floUserList = [
+            {
+                floUserName: "Aakriti Sinha",
+                floId: "FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn",
+                project: "Product Launch and Blockchain Marketing"
+            },
+            {
+                floUserName: "Shambhavi",
+                floId: "FK96PZh4NskoJfWoyqcvLpSo7YnTLWMmdD",
+                project: "Product Launch and Blockchain Marketing"
+            },
+            {
+                floUserName: "Salomi Sarkar",
+                floId: "F7HVKrF68Y6YKE9XXpHhAcxt6MwRLcUD67",
+                project: "Product Launch and Blockchain Marketing"
+
+            },
+            {
+                floUserName: "Megha Rani",
+                floId: "FEvLovuDjWo4pXX3Y4SKDh8sq1AxJzqz9Z",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Kriti Shreya",
+                floId: "F8zYh6rCuorGmnMtqGFpaKGeBqQaj9WVtG",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Rashi Sanghvi",
+                floId: "FHWXdnjRRJErqazye4Y9MRmE42D4Bp6Bj7",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Muskan Shoundik",
+                floId: "FSdjJCJdU43a1dyWY6dRES1ekoupEjFPqQ",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Gunjan Kumar Ranjan",
+                floId: "FCTGD4M3DvMKupX3j2y5f3cQNDD9i6LUp7",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Rakhijeet Singh",
+                floId: "FCqLr9nymnbh7ahta1gGC78z634y4GHJGQ",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Madhu Verma",
+                floId: "F765ofUHBhfXhvzrSgnPjvCvJXXCpoW6be",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Shruti Kashyap",
+                floId: "FPtrQK6aSCgFeSNpzC68YTznHPfiz7CCvW",
+                project: "P2P Content Collaboration"
+            },
+            {
+                floUserName: "Shivam Kumar Pandey",
+                floId: "FJK9EDGhKj4Wr2zeCo3zRPXCNU6CXFFQAN",
+                project: "JavaScript Development for Blockchain Products"
+            },
+            {
+                floUserName: "Abhijeet Anand",
+                floId: "FEHKFxQxycsxw2qQQSn2Y1BCT6Mfb8EMko",
+                project: "JavaScript Development for Blockchain Products"
+            },
+            {
+                floUserName: "Ritika Agrawal",
+                floId: "FFaB6N1ETZsykXVS2PdM5xhj5BBoqsfsXC",
+                project: "JavaScript Development for Blockchain Products"
+            },
+            {
+                floUserName: "Jai Dev",
+                floId: "FFoVnVMJv8BTfbk7ij9T5jPHs7VKSz886A",
+                project: "JavaScript Development for Blockchain Products"
+            }
+        ]
+        let _rootElement = document.getElementById("root")
+        let _searchInput = document.getElementById("searchInput")
+
+        floUserList.forEach(i => {
+            let card = document.createElement("my-card")
+            card.floid = i.floId
+            card.flousername = i.floUserName
+            console.log(card)
+            _rootElement.appendChild(card)
+        })
+
+
+        const searchName = (e) => {
+
+            // Prevent from page loading
+            let floName = e.target.value
+
+            // clear the list
+            _rootElement.innerHTML = ""
+
+            // show the loading indicator
+            _rootElement.innerHTML = "<h1>Loading</h1>"
+
+            const result = floUserList.filter((user) => {
+                let newUserName = user.floUserName.slice(0, floName.length)
+                return newUserName.toLowerCase() === floName.toLowerCase()
+            })
+
+            // clear the Loading
+            _rootElement.innerHTML = ""
+
+            if (result.length === 0) {
+                floUserList.forEach(i => {
+                    let card = document.createElement("my-card")
+                    card.floid = i.floId
+                    card.flousername = i.floUserName
+                    console.log(card)
+                    _rootElement.appendChild(card)
+                })
+            } else {
+                result.forEach(i => {
+                    let card = document.createElement("my-card")
+                    card.floid = i.floId
+                    card.flousername = i.floUserName
+                    console.log(card)
+                    _rootElement.appendChild(card)
+                })
+            }
+        }
+
+        _searchInput.addEventListener("input", searchName)
+    </script>
 </body>
 
 </html>
