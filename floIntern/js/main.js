@@ -1,11 +1,20 @@
 //== Main.ts ==//
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 // Declaring all the selectors
-var _rootElement = document.getElementById("root");
-var _searchForm = document.getElementById("searchForm");
-var _searchInput = document.getElementById("searchInput");
-var main = function () {
+let _rootElement = document.getElementById("root");
+let _searchForm = document.getElementById("searchForm");
+let _searchInput = document.getElementById("searchInput");
+const main = () => {
     // get all the users list
-    var floUserList = [
+    const floUserList = [
         {
             floUserName: "Aakriti Sinha",
             floId: "FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn",
@@ -82,62 +91,123 @@ var main = function () {
             project: "JavaScript Development for Blockchain Products"
         }
     ];
-    var renderUserLisit = function () {
-        // render the users in DOM for first load
-        for (var i = 0; i < floUserList.length; i++) {
-            // destructure the keys 
-            var _a = floUserList[i], floId = _a.floId, floUserName = _a.floUserName, project = _a.project;
-            // creating the html ELement
-            var el = document.createElement("a");
-            el.href = "/intern.html/?" + floId;
-            el.innerHTML = "\n            <div class=\"card-heading\">" + floUserName + "</div>\n            <div>" + floId + "</div>\n            <div>" + project + "</div>\n        ";
-            // add the styling to the Element
-            el.className = "card";
-            // add the element to the root
-            _rootElement.appendChild(el);
+    class Card extends HTMLElement {
+        constructor() {
+            super();
+            this.shadow = this.attachShadow({ mode: "open" });
         }
-    };
-    /**
-     * create a card list with the given list
-     */
-    var generateCard = function (list) {
-        for (var i = 0; i < list.length; i++) {
-            // destructure all the keys
-            var _a = list[i], floUserName = _a.floUserName, floId = _a.floId, project = _a.project;
-            var el = document.createElement("a");
-            // stye the element
-            el.className = "card";
-            // fill the values in it
-            el.innerHTML = "\n            <div class=\"card-heading\">" + floUserName + "</div>\n            <div>" + floId + "</div>\n            <div>" + project + "</div>\n        ";
-            _rootElement.appendChild(el);
+        openPop() {
+            return __awaiter(this, void 0, void 0, function* () {
+                let detail = this.shadow.querySelector("#transaction");
+                let content = this.shadow.getElementById("content");
+                let searchNav = this.shadow.getElementById("searchNav");
+                let isOpen = detail.style.display === "block";
+                if (isOpen) {
+                    detail.style.display = "none";
+                }
+                else {
+                    detail.style.display = "block";
+                    let isReady = false;
+                    searchNav.disabled = !isReady;
+                    content.innerHTML = `
+                        <h1 style="text-align: center;">Wait a sec !</h1> 
+                    `;
+                    try {
+                        /* uri is always be a string */
+                        let uri = `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressTransactions?floAddress=${this.floid}`;
+                        /* It will be a response */
+                        let res = yield fetch(uri);
+                        /* get the json data from the response */
+                        let data = yield res.json();
+                        console.log(data);
+                        content.innerHTML = ``;
+                        if (data.result === "error") {
+                            content.innerHTML = `<div style="text-align: center;">${data.description}</div>`;
+                        }
+                        if (data.result === 'ok') {
+                            Object.keys(data.transactions).map((index) => {
+                                let { parsedFloData } = data.transactions[index];
+                                const li = document.createElement("li");
+                                li.innerHTML = `
+                            <li style="margin: 1em 0em;">
+                                <div>${parsedFloData.flodata}</div>
+                                <div style="
+                                    background:#ffb6b6;
+                                    color: #000;
+                                    padding: 0.2em 0.4em;
+                                    border-radius: 5px;
+                                ">FThgnJLcuStugLc24FJQggmp2WgaZjrBSn - ${this.floid}</div>
+                                <div style="color: green; margin: 0.5em 0em;">RS. ${parsedFloData.tokenAmount}.00</div>
+                            </li>
+                        `;
+                                content.appendChild(li);
+                            });
+                        }
+                    }
+                    catch (e) {
+                        // ERROR HANDLING
+                        console.log("Error Occured while fetching the User Data : ", e);
+                    }
+                }
+            });
         }
-    };
-    // search function
-    var searchName = function (e) {
+        connectedCallback() {
+            // get the template
+            const template = document.querySelector("template");
+            /* node will always be document fragment */
+            const node = document.importNode(template.content, true);
+            // Attach node to the Shadow DOM of element
+            this.shadow.appendChild(node);
+            /* Container will be a HTML Element */
+            let container = this.shadow.querySelector(".container");
+            // setting the info to the shadow DOM of element
+            this.shadow.getElementById("floId").innerText = this.flousername;
+            this.shadow.getElementById("floUserName").innerText = this.floid;
+            // settting click event listener on the element
+            container.addEventListener("click", this.openPop.bind(this));
+        }
+    }
+    customElements.define("my-card", Card);
+    floUserList.forEach(i => {
+        let card = document.createElement("my-card");
+        card.floid = i.floId;
+        card.flousername = i.floUserName;
+        _rootElement.appendChild(card);
+    });
+    const searchName = (e) => {
         // Prevent from page loading
-        var floName = e.target.value;
+        let floName = e.target.value;
         // clear the list
         _rootElement.innerHTML = "";
         // show the loading indicator
         _rootElement.innerHTML = "<h1>Loading</h1>";
-        var result = floUserList.filter(function (user) {
-            var newUserName = user.floUserName.slice(0, floName.length);
-            return newUserName === floName;
+        const result = floUserList.filter((user) => {
+            let newUserName = user.floUserName.slice(0, floName.length);
+            return newUserName.toLowerCase() === floName.toLowerCase();
         });
         // clear the Loading
         _rootElement.innerHTML = "";
         if (result.length === 0) {
-            // clear all the search result
-            renderUserLisit();
+            floUserList.forEach(i => {
+                let card = document.createElement("my-card");
+                card.floid = i.floId;
+                card.flousername = i.floUserName;
+                console.log(card);
+                _rootElement.appendChild(card);
+            });
         }
         else {
-            // fill the info the element
-            generateCard(result);
+            result.forEach(i => {
+                let card = document.createElement("my-card");
+                card.floid = i.floId;
+                card.flousername = i.floUserName;
+                console.log(card);
+                _rootElement.appendChild(card);
+            });
         }
     };
+    // set the input Event Listener
     _searchInput.addEventListener("input", searchName);
-    // set the data of the flo user list
-    renderUserLisit();
 };
 // call the main function
 main();
