@@ -28,7 +28,7 @@ body > div:nth-of-type(1) {
 nav {
     background: white;
     display: flex;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
     padding: 1em;
@@ -117,6 +117,7 @@ input {
     nav {
         position: static;
         top: auto;
+        flex-flow: column nowrap;
     }
     input {
         width: 100%;
