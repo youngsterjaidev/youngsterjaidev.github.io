@@ -3,6 +3,7 @@
   margin: 0;
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
+  word-break: break-all;
 }
 
 :root {
@@ -74,6 +75,12 @@ sm-button {
 
 ul {
   list-style: none;
+}
+
+.app {
+    padding: 0.5em;
+    display: flex;
+    flex-flow: row wrap;
 }
 
 .flex {
@@ -381,9 +388,12 @@ sm-tab {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
+  width: 100%;
   min-width: 20rem;
   border-radius: 0.5rem;
-  margin-right: 1.5rem;
+  margin: 1rem 0.5em;
+  flex: 1 0;
+  cursor: pointer;
   background-color: rgba(var(--text-color), 0.06);
 }
 .card h3 {
