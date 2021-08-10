@@ -1,8 +1,94 @@
 ((ready) => {
     if (ready) {
         console.log("JS On Fire");
-        
+
+        // intern Data "const internList = []"
+        //
+        // Data from distributer "const distributerData = []"
+        //
+        // filter the transaction of interns from the distributer
+
         const receiverList = [];
+
+        const internList = [
+            {
+                floUserName: "Aakriti Sinha",
+                floId: "FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn",
+                project: "Product Launch and Blockchain Marketing",
+            },
+            {
+                floUserName: "Shambhavi",
+                floId: "FK96PZh4NskoJfWoyqcvLpSo7YnTLWMmdD",
+                project: "Product Launch and Blockchain Marketing",
+            },
+            {
+                floUserName: "Salomi Sarkar",
+                floId: "F7HVKrF68Y6YKE9XXpHhAcxt6MwRLcUD67",
+                project: "Product Launch and Blockchain Marketing",
+            },
+            {
+                floUserName: "Megha Rani",
+                floId: "FEvLovuDjWo4pXX3Y4SKDh8sq1AxJzqz9Z",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Kriti Shreya",
+                floId: "F8zYh6rCuorGmnMtqGFpaKGeBqQaj9WVtG",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Rashi Sanghvi",
+                floId: "FHWXdnjRRJErqazye4Y9MRmE42D4Bp6Bj7",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Muskan Shoundik",
+                floId: "FSdjJCJdU43a1dyWY6dRES1ekoupEjFPqQ",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Gunjan Kumar Ranjan",
+                floId: "FCTGD4M3DvMKupX3j2y5f3cQNDD9i6LUp7",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Rakhijeet Singh",
+                floId: "FCqLr9nymnbh7ahta1gGC78z634y4GHJGQ",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Madhu Verma",
+                floId: "F765ofUHBhfXhvzrSgnPjvCvJXXCpoW6be",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Shruti Kashyap",
+                floId: "FPtrQK6aSCgFeSNpzC68YTznHPfiz7CCvW",
+                project: "P2P Content Collaboration",
+            },
+            {
+                floUserName: "Shivam Kumar Pandey",
+                floId: "FJK9EDGhKj4Wr2zeCo3zRPXCNU6CXFFQAN",
+                project: "JavaScript Development for Blockchain Products",
+            },
+            {
+                floUserName: "Abhijeet Anand",
+                floId: "FEHKFxQxycsxw2qQQSn2Y1BCT6Mfb8EMko",
+                project: "JavaScript Development for Blockchain Products",
+            },
+            {
+                floUserName: "Ritika Agrawal",
+                floId: "FFaB6N1ETZsykXVS2PdM5xhj5BBoqsfsXC",
+                project: "JavaScript Development for Blockchain Products",
+            },
+            {
+                floUserName: "Jai Dev",
+                floId: "FFoVnVMJv8BTfbk7ij9T5jPHs7VKSz886A",
+                project: "JavaScript Development for Blockchain Products",
+            },
+        ];
+
+        const finalList = [];
 
         customElements.define(
             "my-card",
@@ -58,21 +144,34 @@
                 }
 
                 render() {
-                    return `
-                    <style>
-                        .username {
-                            color: red;
-                        }
+                    if (finalList.length) {
+                        let el = document.createElement("div")
 
-                        .userid {
-                            color: green;
-                        }
-                    </style>
-                    <div class="card">
-                        <h3 class="username">${this.username || "Not Set"}</h3>
-                        <h3 class="userid">${this.userid || "Not set"}</h3>
-                    </div>
-                `;
+                        console.log(this.userid.slice(1))
+
+                        const myResult = finalList.filter(l => {
+                            return this.userid.slice(1) === l.floId
+                        })
+
+                        console.log(myResult)
+
+                        myResult.forEach(r => {
+                            let username = document.createElement("h3")
+                            username.innerText = r.name
+                            let txData = document.createElement("div")
+                            r.transactions.forEach(t => {
+                                let li = document.createElement("div")
+                                li.innerText = t.transaction.floData
+                                txData.appendChild(li)
+                            })
+                            el.appendChild(username)
+                            el.appendChild(txData)
+                        })
+
+                        console.log(el)
+
+                        return el.innerHTML
+                    } 
                 }
             }
         );
@@ -87,29 +186,29 @@
         const _rootDiv = document.getElementById("uInfo");
 
         function renderList() {
-            console.log("==============", receiverList.length)
-            if(receiverList.length !== 0) {
-                let el = document.createElement("div")
-                for(let i of receiverList) {
-                    let card = document.createElement("a")
-                    card.classList.add("card")
-                    card.href=`#${i.floId}`
+            console.log("==============", receiverList.length);
+            if (finalList.length !== 0) {
+                let el = document.createElement("div");
+                for (let i of finalList) {
+                    let card = document.createElement("a");
+                    card.classList.add("card");
+                    card.href = `#${i.floId}`;
                     card.innerHTML = `
                         <h3>${i.floId}</h3>
-                        <h4>${i.message}</h4>
-                    `
-                    el.appendChild(card)
+                        <h4>${i.name}</h4>
+                    `;
+                    el.appendChild(card);
                 }
-                return el.innerHTML
+                return el.innerHTML;
             } else {
-                return `<div>Loading</div>`
+                return `<div>Loading</div>`;
             }
         }
 
         function renderDetail() {
             return `
                 <my-card username="red" userid="${window.location.hash}"></my-card>
-            `
+            `;
         }
 
         const indexPage = `
@@ -126,19 +225,18 @@
 
         let routes = {
             "#": renderList(),
-            "#detail": renderDetail()
+            "#detail": renderDetail(),
         };
-
 
         // run the function when change the has change
         const handleRender = (route) => {
             // ...
             let val = Object.keys(routes)[0];
             if (val === route) {
-                _rootDiv.innerHTML = renderList()
-                console.log(receiverList.length)
+                _rootDiv.innerHTML = renderList();
+                console.log(receiverList.length);
             } else {
-                _rootDiv.innerHTML = renderDetail()
+                _rootDiv.innerHTML = renderDetail();
             }
         };
 
@@ -148,7 +246,7 @@
             handleRender(path.current);
         });
 
-        _rootDiv.innerHTML = renderList()
+        _rootDiv.innerHTML = renderList();
 
         /**
          * Creating a list in which store all the
@@ -160,13 +258,28 @@
             .then((r) => {
                 console.log(r);
                 r.forEach((user) => {
-                    console.log(user)
+                    console.log(user);
                     receiverList.push({
                         floId: user.vout[0].scriptPubKey.addresses[0],
-                        message: user.floData
+                        transaction: user,
                     });
                 });
-                _rootDiv.innerHTML = renderList()
+
+                for (let d of internList) {
+                    const result = receiverList.filter((i) => {
+                        return i.floId === d.floId;
+                    });
+
+                    finalList.push({
+                        name: d.floUserName,
+                        floId: d.floId,
+                        transactions: [...result],
+                    });
+                }
+
+                console.log(finalList);
+
+                _rootDiv.innerHTML = renderList();
             }, console.error);
     }
 })(true);
