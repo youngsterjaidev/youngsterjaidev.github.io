@@ -2,6 +2,54 @@
     if (ready) {
         console.log("JS On Fire");
 
+        let _input = document.querySelector("#input");
+
+        _input.addEventListener("input", (e) => {
+            let val = e.target.value;
+
+            console.log(val);
+
+            if (finalList.length !== 0) {
+                const list = finalList.filter((element) => {
+                    let newUserName = element.name.slice(0, val.length);
+                    return newUserName.toLowerCase() === val.toLowerCase();
+                });
+
+                console.log(list);
+
+                if (list.length) {
+                    //
+                    let el = document.createElement("div");
+                    for (let i of list) {
+                        let card = document.createElement("a");
+                        card.classList.add("card");
+                        card.href = `#${i.floId}`;
+                        card.innerHTML = `
+                        <h3>${i.name}</h3>
+                        <h5>${i.floId}</h5>
+                    `;
+                        el.appendChild(card);
+                    }
+                    _rootDiv.innerHTML = el.innerHTML;
+                } else {
+                    let el = document.createElement("div");
+                    for (let i of finalList) {
+                        let card = document.createElement("a");
+                        card.classList.add("card");
+                        card.href = `#${i.floId}`;
+                        card.innerHTML = `
+                        <h3>${i.name}</h3>
+                        <h5>${i.floId}</h5>
+                    `;
+                        el.appendChild(card);
+                    }
+                    _rootDiv.innerHTML = el.innerHTML;
+                }
+            } else {
+                return `<div>Loading</div>`;
+            }
+        });
+
         // intern Data "const internList = []"
         //
         // Data from distributer "const distributerData = []"
@@ -10,83 +58,7 @@
 
         const receiverList = [];
 
-        const internList = [
-            {
-                floUserName: "Aakriti Sinha",
-                floId: "FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn",
-                project: "Product Launch and Blockchain Marketing",
-            },
-            {
-                floUserName: "Shambhavi",
-                floId: "FK96PZh4NskoJfWoyqcvLpSo7YnTLWMmdD",
-                project: "Product Launch and Blockchain Marketing",
-            },
-            {
-                floUserName: "Salomi Sarkar",
-                floId: "F7HVKrF68Y6YKE9XXpHhAcxt6MwRLcUD67",
-                project: "Product Launch and Blockchain Marketing",
-            },
-            {
-                floUserName: "Megha Rani",
-                floId: "FEvLovuDjWo4pXX3Y4SKDh8sq1AxJzqz9Z",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Kriti Shreya",
-                floId: "F8zYh6rCuorGmnMtqGFpaKGeBqQaj9WVtG",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Rashi Sanghvi",
-                floId: "FHWXdnjRRJErqazye4Y9MRmE42D4Bp6Bj7",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Muskan Shoundik",
-                floId: "FSdjJCJdU43a1dyWY6dRES1ekoupEjFPqQ",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Gunjan Kumar Ranjan",
-                floId: "FCTGD4M3DvMKupX3j2y5f3cQNDD9i6LUp7",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Rakhijeet Singh",
-                floId: "FCqLr9nymnbh7ahta1gGC78z634y4GHJGQ",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Madhu Verma",
-                floId: "F765ofUHBhfXhvzrSgnPjvCvJXXCpoW6be",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Shruti Kashyap",
-                floId: "FPtrQK6aSCgFeSNpzC68YTznHPfiz7CCvW",
-                project: "P2P Content Collaboration",
-            },
-            {
-                floUserName: "Shivam Kumar Pandey",
-                floId: "FJK9EDGhKj4Wr2zeCo3zRPXCNU6CXFFQAN",
-                project: "JavaScript Development for Blockchain Products",
-            },
-            {
-                floUserName: "Abhijeet Anand",
-                floId: "FEHKFxQxycsxw2qQQSn2Y1BCT6Mfb8EMko",
-                project: "JavaScript Development for Blockchain Products",
-            },
-            {
-                floUserName: "Ritika Agrawal",
-                floId: "FFaB6N1ETZsykXVS2PdM5xhj5BBoqsfsXC",
-                project: "JavaScript Development for Blockchain Products",
-            },
-            {
-                floUserName: "Jai Dev",
-                floId: "FFoVnVMJv8BTfbk7ij9T5jPHs7VKSz886A",
-                project: "JavaScript Development for Blockchain Products",
-            },
-        ];
+        const internList = [];
 
         const finalList = [];
 
@@ -119,6 +91,16 @@
                     this.setAttribute("userid", val);
                 }
 
+                async fetchTokenInfo() {
+                    try {
+                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid}`)
+
+                    console.log(r)
+                    } catch(e) {
+                        console.log("Error Occured ", e)
+                    }
+                }
+
                 attributeChangedCallback(name, oldValue, newValue) {
                     if (oldValue !== newValue && this.displayUsername) {
                         console.log("----------", this.userid);
@@ -141,37 +123,41 @@
                     this.displayUserId = this.shadowRoot.querySelector(
                         ".userid"
                     );
+
+                    this.fetchTokenInfo()
                 }
 
                 render() {
                     if (finalList.length) {
-                        let el = document.createElement("div")
+                        let el = document.createElement("div");
 
-                        console.log(this.userid.slice(1))
+                        console.log(this.userid.slice(1));
 
-                        const myResult = finalList.filter(l => {
-                            return this.userid.slice(1) === l.floId
-                        })
+                        const myResult = finalList.filter((l) => {
+                            return this.userid.slice(1) === l.floId;
+                        });
 
-                        console.log(myResult)
+                        console.log(myResult);
 
-                        myResult.forEach(r => {
-                            let username = document.createElement("h3")
-                            username.innerText = r.name
-                            let txData = document.createElement("div")
-                            r.transactions.forEach(t => {
-                                let li = document.createElement("div")
-                                li.innerText = t.transaction.floData
-                                txData.appendChild(li)
-                            })
-                            el.appendChild(username)
-                            el.appendChild(txData)
-                        })
+                        myResult.forEach((r) => {
+                            let username = document.createElement("h2");
+                            username.innerText = r.name;
+                            username.style.textAlign = "center";
+                            let txData = document.createElement("ul");
+                            r.transactions.forEach((t) => {
+                                let li = document.createElement("li");
+                                li.style.margin = "1em 0em";
+                                li.innerText = t.transaction.floData;
+                                txData.appendChild(li);
+                            });
+                            el.appendChild(username);
+                            el.appendChild(txData);
+                        });
 
-                        console.log(el)
+                        console.log(el);
 
-                        return el.innerHTML
-                    } 
+                        return el.innerHTML;
+                    }
                 }
             }
         );
@@ -194,8 +180,8 @@
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
                     card.innerHTML = `
-                        <h3>${i.floId}</h3>
-                        <h4>${i.name}</h4>
+                        <h3>${i.name}</h3>
+                        <h5>${i.floId}</h5>
                     `;
                     el.appendChild(card);
                 }
@@ -207,21 +193,9 @@
 
         function renderDetail() {
             return `
-                <my-card username="red" userid="${window.location.hash}"></my-card>
+                <my-card username="red" style="flex: 1;" userid="${window.location.hash}"></my-card>
             `;
         }
-
-        const indexPage = `
-            <div class="card">
-                <h3>Flo User Name</h3>
-                <h3>Flo Id</h3>
-                <h3>Project</h3>
-            </div>
-        `;
-        const detailPage = `
-            <h1>Detail Page</h1>
-            <my-card username="John" userId="378478234fhdjfh"></my-card>
-        `;
 
         let routes = {
             "#": renderList(),
@@ -253,33 +227,82 @@
          * flo addresses of the receiver
          */
 
-        floBlockchainAPI
-            .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
-            .then((r) => {
-                console.log(r);
-                r.forEach((user) => {
-                    console.log(user);
-                    receiverList.push({
-                        floId: user.vout[0].scriptPubKey.addresses[0],
-                        transaction: user,
-                    });
+        async function getInternData() {
+            try {
+                let r = await floCloudAPI.requestObjectData("RIBC", {
+                    application: "RIBC",
+                    receiverID: "FMeiptdJNtYQEtzyYAVNP8fjsDJ1i4EPfE",
+                    senderIDs: [
+                        "F7TxecSPV8oFZE6Y2giVuP8hfsqfAD6erj",
+                        "FCja6sLv58e3RMy41T5AmWyvXEWesqBCkX",
+                        "FPFeL5PXzW9bGosUjQYCxTHSMHidnygvvd",
+                        "FS4jMAcSimRMrhoRhk5cjuJERS2otiwq4A",
+                        "FU2fkubqGD5ynbr7qhvaPe9DPqrNdGB6mw",
+                        "FUkY9k9mVVxPzYA8uUGxUuLVH6CB83Nb9r",
+                    ],
                 });
 
-                for (let d of internList) {
-                    const result = receiverList.filter((i) => {
-                        return i.floId === d.floId;
-                    });
+                console.log("Inter: ", r)
 
-                    finalList.push({
-                        name: d.floUserName,
-                        floId: d.floId,
-                        transactions: [...result],
-                    });
+                if (r) {
+                    console.log("intern Data from the server ", r);
+                    let i = floGlobals.appObjects.RIBC.internList 
+                    for (let key in i) {
+
+                        internList.push({
+                            floId: key,
+                            floUserName: i[key],
+                        });
+
+                        console.log(key, i[key])
+                    }
+
+                    fetchInternData();
                 }
+            } catch (e) {
+                console.log("Error Occur while fetching the Intern Data", e);
+                _rootDiv.innerHTML = `
+                    <div style="flex: 1; padding: 1em;">
+                        <h1>Flosight is not Working ! [keep Refreshing the page ...]</h1>
+                        <p style="color: red;">${e}</p>
+                    </div>
+                `
+            }
+        }
 
-                console.log(finalList);
+        setTimeout(() => {
+            getInternData();
+        }, 1000);
 
-                _rootDiv.innerHTML = renderList();
-            }, console.error);
+        function fetchInternData() {
+            floBlockchainAPI
+                .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
+                .then((r) => {
+                    console.log(r);
+                    r.forEach((user) => {
+                        console.log(user);
+                        receiverList.push({
+                            floId: user.vout[0].scriptPubKey.addresses[0],
+                            transaction: user,
+                        });
+                    });
+
+                    for (let d of internList) {
+                        const result = receiverList.filter((i) => {
+                            return i.floId === d.floId;
+                        });
+
+                        finalList.push({
+                            name: d.floUserName,
+                            floId: d.floId,
+                            transactions: [...result],
+                        });
+                    }
+
+                    console.log(finalList);
+
+                    _rootDiv.innerHTML = renderList();
+                }, console.error);
+        }
     }
 })(true);
