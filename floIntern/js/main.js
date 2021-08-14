@@ -92,8 +92,9 @@
                 }
 
                 async fetchTokenInfo() {
+                    console.log(this.userid)
                     try {
-                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid}`)
+                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`)
 
                     console.log(r)
                     } catch(e) {
@@ -144,12 +145,18 @@
                             username.innerText = r.name;
                             username.style.textAlign = "center";
                             let txData = document.createElement("ul");
+                            if(r.transactions.length) {
                             r.transactions.forEach((t) => {
                                 let li = document.createElement("li");
                                 li.style.margin = "1em 0em";
                                 li.innerText = t.transaction.floData;
                                 txData.appendChild(li);
                             });
+                            } else {
+                                let li = document.createElement("div");
+                                li.innerText = "No Transaction Found"
+                                txData.appendChild(li);
+                            }
                             el.appendChild(username);
                             el.appendChild(txData);
                         });
@@ -254,7 +261,7 @@
                             floUserName: i[key],
                         });
 
-                        console.log(key, i[key])
+                        console.table(i)
                     }
 
                     fetchInternData();
@@ -272,7 +279,7 @@
 
         setTimeout(() => {
             getInternData();
-        }, 1000);
+        }, 3000);
 
         function fetchInternData() {
             floBlockchainAPI
@@ -299,7 +306,7 @@
                         });
                     }
 
-                    console.log(finalList);
+                    console.table(finalList);
 
                     _rootDiv.innerHTML = renderList();
                 }, console.error);
