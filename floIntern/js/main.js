@@ -270,7 +270,7 @@
                 console.log("Error Occur while fetching the Intern Data", e);
                 _rootDiv.innerHTML = `
                     <div style="flex: 1; padding: 1em;">
-                        <h1>Flosight is not Working ! [keep Refreshing the page ...]</h1>
+                        <h1>[keep Refreshing the page ...]</h1>
                         <p style="color: red;">${e}</p>
                     </div>
                 `
