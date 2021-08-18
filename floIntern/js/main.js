@@ -149,7 +149,15 @@
                             r.transactions.forEach((t) => {
                                 let li = document.createElement("li");
                                 li.style.margin = "1em 0em";
-                                li.innerText = t.transaction.floData;
+                                let amount = t.transaction.floData.match(/([0-9]+)/)
+                                let senderAddress = t.transaction.vin[0].addr
+                                li.innerHTML = `
+                                    <div style="padding: 1em;">
+                                        <div style="font-size: 35px;">RS.${amount[0]}/-</div>
+                                        <div>Message - ${t.transaction.floData}</div>
+                                        <div>Send By - ${senderAddress}</div>
+                                    </div>
+                                `
                                 txData.appendChild(li);
                             });
                             } else {
@@ -187,6 +195,7 @@
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
                     card.innerHTML = `
+                        <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                     `;

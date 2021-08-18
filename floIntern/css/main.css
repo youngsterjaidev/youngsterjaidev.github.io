@@ -36,6 +36,11 @@ body[data-theme=dark] * {
   --danger-color: rgb(255, 106, 106);
 }
 
+li > div > div:nth-of-type(1) {
+    text-align: right;
+    font-size: 35px;
+}
+
 p {
   font-size: 0.8;
   max-width: 65ch;
@@ -74,7 +79,16 @@ sm-button {
 }
 
 ul {
-  list-style: none;
+  list-style-type: none;
+  padding: 0.5em;
+}
+
+.profile {
+    width: 50px;
+    height: 50px;
+    background: #64b5f6;
+    border-radius: 50%;
+    margin-bottom: 1em;
 }
 
 .app {
