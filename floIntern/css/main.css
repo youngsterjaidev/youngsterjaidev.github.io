@@ -312,6 +312,23 @@ ul {
   margin-left: 0.5rem;
 }
 
+#loading {
+    text-align: center;
+    amimation: load 1s infinite;
+}
+
+@keyframes load {
+    0% {
+        color: red;
+    }
+    50% {
+        color: white;
+    }
+    100% {
+        color: red;
+    }
+}
+
 #confirmation_popup,
 #prompt_popup {
   flex-direction: column;
@@ -354,6 +371,7 @@ ul {
   grid-template-columns: auto 1fr;
   gap: 0 0.5rem;
   margin-right: 1rem;
+  cursor: pointer;
 }
 #logo h4 {
   text-transform: capitalize;

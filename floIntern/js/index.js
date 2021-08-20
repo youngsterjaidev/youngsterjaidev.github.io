@@ -1,23 +1,17 @@
-type Path = {
-    current: string,
-    printPath: () => void
-}
-
-((ready: boolean): void => {
+((ready) => {
     if (ready) {
         console.log("JS On Fire");
 
-        let _input: HTMLInputElement = document.querySelector("#input");
-        let _logo: HTMLElement = document.getElementById("logo")
+        let _input = document.querySelector("#input");
 
-        _input.addEventListener("input", (e: MouseEvent) => {
+        _input.addEventListener("input", (e) => {
             let val = e.target.value;
 
             console.log(val);
 
             if (finalList.length !== 0) {
-                const list = finalList.filter((element): boolean => {
-                    let newUserName: string = element.name.slice(0, val.length);
+                const list = finalList.filter((element) => {
+                    let newUserName = element.name.slice(0, val.length);
                     return newUserName.toLowerCase() === val.toLowerCase();
                 });
 
@@ -25,13 +19,12 @@ type Path = {
 
                 if (list.length) {
                     //
-                    let el: HTMLDivElement= document.createElement("div");
+                    let el = document.createElement("div");
                     for (let i of list) {
-                        let card: HTMLAnchorElement = document.createElement("a");
+                        let card = document.createElement("a");
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
                         card.innerHTML = `
-                        <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                     `;
@@ -39,13 +32,12 @@ type Path = {
                     }
                     _rootDiv.innerHTML = el.innerHTML;
                 } else {
-                    let el: HTMLDivElement = document.createElement("div");
+                    let el = document.createElement("div");
                     for (let i of finalList) {
-                        let card: HTMLAnchorElement = document.createElement("a");
+                        let card = document.createElement("a");
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
                         card.innerHTML = `
-                        <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                     `;
@@ -54,9 +46,7 @@ type Path = {
                     _rootDiv.innerHTML = el.innerHTML;
                 }
             } else {
-                return `<div>
-                        <h1 id="loading">Loading...</h1>
-                    </div>`;
+                return `<div>Loading</div>`;
             }
         });
 
@@ -66,26 +56,22 @@ type Path = {
         //
         // filter the transaction of interns from the distributer
 
-        const receiverList: any[] = [];
+        const receiverList = [];
 
-        const internList: any[] = [];
+        const internList = [];
 
-        const finalList: any[] = [];
+        const finalList = [];
 
         customElements.define(
             "my-card",
             class MyCard extends HTMLElement {
-                displayUsername: HTMLElement
-                displayUserId: HTMLElement
-                
-                // look all the value we have to look on change
                 static get observedAttributes() {
                     return ["username", "userid"];
                 }
 
                 constructor() {
                     super();
-                    // attach the shadow DOM
+                    // attach the shadow DO
                     this.attachShadow({ mode: "open" });
                 }
 
@@ -105,7 +91,7 @@ type Path = {
                     this.setAttribute("userid", val);
                 }
 
-                async fetchTokenInfo(): Promise<void> {
+                async fetchTokenInfo() {
                     console.log(this.userid)
                     try {
                     let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`)
@@ -142,10 +128,9 @@ type Path = {
                     this.fetchTokenInfo()
                 }
 
-                // render the element to the DOM
-                render(): string {
+                render() {
                     if (finalList.length) {
-                        let el: HTMLDivElement = document.createElement("div");
+                        let el = document.createElement("div");
 
                         console.log(this.userid.slice(1));
 
@@ -157,12 +142,8 @@ type Path = {
 
                         myResult.forEach((r) => {
                             let username = document.createElement("h2");
-                            let floId = document.createElement("h3");
-                            let profile = document.createElement("div");
-                            profile.classList.add("profile")
                             username.innerText = r.name;
-                            floId.innerText = this.userid.slice(1);
-                            username.style.textAlign = "left";
+                            username.style.textAlign = "center";
                             let txData = document.createElement("ul");
                             if(r.transactions.length) {
                             r.transactions.forEach((t) => {
@@ -171,9 +152,8 @@ type Path = {
                                 let amount = t.transaction.floData.match(/([0-9]+)/)
                                 let senderAddress = t.transaction.vin[0].addr
                                 li.innerHTML = `
-                                    <div class="card">
-                                        <div>RS.${amount[0]}/-</div>
-                                        <h5>Transaction Message</h5>
+                                    <div style="padding: 1em;">
+                                        <div style="font-size: 35px;">RS.${amount[0]}/-</div>
                                         <div>Message - ${t.transaction.floData}</div>
                                         <div>Send By - ${senderAddress}</div>
                                     </div>
@@ -185,54 +165,7 @@ type Path = {
                                 li.innerText = "No Transaction Found"
                                 txData.appendChild(li);
                             }
-
-                            let styling = document.createElement("style")
-
-                            styling.innerHTML = `
-                                * { box-sizing: border-box; }
-
-                                ul {
-                                    padding: 0em;
-                                    list-style-type: none;
-                                }
-
-                                h3 {
-                                    margin-bottom: 4em;
-                                }
-
-                                h5 {
-                                    margin: 1em 0em;
-                                }
-
-                                .profile {
-                                    width: 50px;
-                                    height: 50px;
-                                    background: #64b5f6;
-                                    border-radius: 50%;
-                                    margin-bottom: 1em;
-                                }
-
-                                .card {
-                                    padding: 1.5rem;
-                                    display: flex;
-                                    flex-direction: column;
-                                    width: 100%;
-                                    min-width: 20rem;
-                                    border-radius: 0.5rem;
-                                    flex: 1 0;
-                                    cursor: pointer;
-                                    background-color: rgba(var(--text-color), 0.06);
-                                }
-
-                                .card > div:nth-of-type(1) {
-                                    margin: 0.5em 0em;
-                                    font-size: 3.5em;
-                                }
-                            `
-                            el.appendChild(styling);
-                            el.appendChild(profile);
                             el.appendChild(username);
-                            el.appendChild(floId);
                             el.appendChild(txData);
                         });
 
@@ -241,7 +174,6 @@ type Path = {
                         return el.innerHTML;
                     }
                 }
-
             }
         );
 
@@ -252,15 +184,14 @@ type Path = {
             },
         };
 
-        const _rootDiv: HTMLElement = document.getElementById("uInfo");
+        const _rootDiv = document.getElementById("uInfo");
 
-        // render all the list of the use on to the DOM
         function renderList() {
             console.log("==============", receiverList.length);
             if (finalList.length !== 0) {
-                let el: HTMLDivElement = document.createElement("div");
+                let el = document.createElement("div");
                 for (let i of finalList) {
-                    let card: HTMLAnchorElement = document.createElement("a");
+                    let card = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
                     card.innerHTML = `
@@ -276,13 +207,9 @@ type Path = {
             }
         }
 
-        // render the details page 
         function renderDetail() {
             return `
-                <my-card username="red" style="
-                    flex: 1;
-                    padding: 1em;
-                    " userid="${window.location.hash}"></my-card>
+                <my-card username="red" style="flex: 1;" userid="${window.location.hash}"></my-card>
             `;
         }
 
@@ -291,12 +218,7 @@ type Path = {
             "#detail": renderDetail(),
         };
 
-        /**
-         * Run when there is change of hash on the window
-         * - get the first value from the routes object
-         * - check the value is matching to the comming route value
-         * - if so, render the home page otherwise detail page
-         */
+        // run the function when change the has change
         const handleRender = (route) => {
             // ...
             let val = Object.keys(routes)[0];
@@ -308,39 +230,20 @@ type Path = {
             }
         };
 
-        // check the change in hash
         window.addEventListener("hashchange", (e) => {
-            // get the current path
             path.current = window.location.hash || "#";
 
-            /**
-             * @param always be the path of the window
-             */
             handleRender(path.current);
         });
 
-        // render the home page default
         _rootDiv.innerHTML = renderList();
-
-        // Go the home page
-        _logo.addEventListener("click", () => {
-            window.location.hash = ""
-            _rootDiv.innerHTML = renderDetail()
-        })
 
         /**
          * Creating a list in which store all the
          * flo addresses of the receiver
          */
 
-        /**
-         * get the intern data from the RanchiMall
-         * - request the server for data
-         * - loop over the response 
-         * - push the each data to the "finalList arrary"
-         * - call the fetchInternData()
-         */
-        async function getInternData(): Promise<void> {
+        async function getInternData() {
             try {
                 let r = await floCloudAPI.requestObjectData("RIBC", {
                     application: "RIBC",
@@ -373,54 +276,38 @@ type Path = {
                     fetchInternData();
                 }
             } catch (e) {
-                // ERROR HANDLING
                 console.log("Error Occur while fetching the Intern Data", e);
                 _rootDiv.innerHTML = `
                     <div style="flex: 1; padding: 1em;">
-                        <h1>Something Went Wrong [keep Refreshing the page ...]</h1>
+                        <h1>[keep Refreshing the page ...]</h1>
                         <p style="color: red;">${e}</p>
                     </div>
                 `
             }
         }
 
-        // get the internData after the 3sec I don't know why
         setTimeout(() => {
             getInternData();
         }, 3000);
 
-        /**
-         * Fetch initial transactions
-         * - request the distributer transactions from  the server
-         * - push all these transactions to the "receiverList array"
-         * - then loop over to the interList array in which we collect interns data
-         * - filter out the transactions of the intern from the distributer transactions
-         * - push all the data to the new called finalList array
-         * - render the home page to the DOM
-         */
         function fetchInternData() {
             floBlockchainAPI
                 .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
                 .then((r) => {
                     console.log(r);
-                    // loop over the response transactions
                     r.forEach((user) => {
                         console.log(user);
-                        // sending all the transaction to the new array
                         receiverList.push({
                             floId: user.vout[0].scriptPubKey.addresses[0],
                             transaction: user,
                         });
                     });
 
-                    // loop over the intern data
                     for (let d of internList) {
-                        // filter the intern transactions
                         const result = receiverList.filter((i) => {
                             return i.floId === d.floId;
                         });
 
-                        // add all the transaction to the new Array
                         finalList.push({
                             name: d.floUserName,
                             floId: d.floId,
@@ -430,7 +317,6 @@ type Path = {
 
                     console.table(finalList);
 
-                    // re-render the DOM
                     _rootDiv.innerHTML = renderList();
                 }, console.error);
         }
