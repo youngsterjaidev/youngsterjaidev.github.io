@@ -176,7 +176,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                                 }
 
                                 h3 {
-                                    margin-bottom: 4em;
+                                    margin-bottom: 2.5em;
                                 }
 
                                 h5 {

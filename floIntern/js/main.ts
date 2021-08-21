@@ -216,7 +216,7 @@ type Path = {
                                 }
 
                                 h3 {
-                                    margin-bottom: 4em;
+                                    margin-bottom: 2.5em;
                                 }
 
                                 h5 {
