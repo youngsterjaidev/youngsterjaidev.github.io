@@ -120,7 +120,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 this.fetchTokenInfo();
             }
             getDate(time) {
-                let stringTime = time + '000';
+                let stringTime = time + "000";
                 let newTime = new Date(+stringTime).toDateString();
                 return newTime;
             }
@@ -153,6 +153,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                                     <div class="card">
                                         <div>RS.${amount[0]}/-</div>
                                         <div>${time}</div>
+                                        <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
                                         <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
                                     </div>
@@ -258,7 +259,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                 return `<div>Loading</div>`;
             }
         }
-        // render the details page 
+        // render the details page
         function renderDetail() {
             return `
                 <my-card username="red" style="
@@ -389,12 +390,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                     const result = receiverList.filter((i) => {
                         return i.floId === d.floId;
                     });
-                    // add all the transaction to the new Array
-                    finalList.push({
-                        name: d.floUserName,
-                        floId: d.floId,
-                        transactions: [...result],
-                    });
+                    // check if the transaction are available
+                    if (result.length) {
+                        // add all the transaction to the new Array
+                        finalList.push({
+                            name: d.floUserName,
+                            floId: d.floId,
+                            transactions: [...result],
+                        });
+                    }
                 }
                 console.table(finalList);
                 // re-render the DOM

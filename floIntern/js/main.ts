@@ -1,14 +1,14 @@
 type Path = {
-    current: string,
-    printPath: () => void
-}
+    current: string;
+    printPath: () => void;
+};
 
 ((ready: boolean): void => {
     if (ready) {
         console.log("JS On Fire");
 
         let _input: HTMLInputElement = document.querySelector("#input");
-        let _logo: HTMLElement = document.getElementById("logo")
+        let _logo: HTMLElement = document.getElementById("logo");
 
         _input.addEventListener("input", (e: MouseEvent) => {
             let val = e.target.value;
@@ -25,9 +25,11 @@ type Path = {
 
                 if (list.length) {
                     //
-                    let el: HTMLDivElement= document.createElement("div");
+                    let el: HTMLDivElement = document.createElement("div");
                     for (let i of list) {
-                        let card: HTMLAnchorElement = document.createElement("a");
+                        let card: HTMLAnchorElement = document.createElement(
+                            "a"
+                        );
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
                         card.innerHTML = `
@@ -41,7 +43,9 @@ type Path = {
                 } else {
                     let el: HTMLDivElement = document.createElement("div");
                     for (let i of finalList) {
-                        let card: HTMLAnchorElement = document.createElement("a");
+                        let card: HTMLAnchorElement = document.createElement(
+                            "a"
+                        );
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
                         card.innerHTML = `
@@ -75,9 +79,9 @@ type Path = {
         customElements.define(
             "my-card",
             class MyCard extends HTMLElement {
-                displayUsername: HTMLElement
-                displayUserId: HTMLElement
-                
+                displayUsername: HTMLElement;
+                displayUserId: HTMLElement;
+
                 // look all the value we have to look on change
                 static get observedAttributes() {
                     return ["username", "userid"];
@@ -106,13 +110,17 @@ type Path = {
                 }
 
                 async fetchTokenInfo(): Promise<void> {
-                    console.log(this.userid)
+                    console.log(this.userid);
                     try {
-                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`)
+                        let r = await fetch(
+                            `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(
+                                1
+                            )}`
+                        );
 
-                    console.log(r)
-                    } catch(e) {
-                        console.log("Error Occured ", e)
+                        console.log(r);
+                    } catch (e) {
+                        console.log("Error Occured ", e);
                     }
                 }
 
@@ -139,13 +147,13 @@ type Path = {
                         ".userid"
                     );
 
-                    this.fetchTokenInfo()
+                    this.fetchTokenInfo();
                 }
 
                 getDate(time: number): string {
-                   let stringTime = time + '000'
-                    let newTime = new Date(+stringTime).toDateString()
-                    return newTime
+                    let stringTime = time + "000";
+                    let newTime = new Date(+stringTime).toDateString();
+                    return newTime;
                 }
 
                 // render the element to the DOM
@@ -165,35 +173,39 @@ type Path = {
                             let username = document.createElement("h2");
                             let floId = document.createElement("h3");
                             let profile = document.createElement("div");
-                            profile.classList.add("profile")
+                            profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
-                            if(r.transactions.length) {
-                            r.transactions.forEach((t) => {
-                                let li = document.createElement("li");
-                                li.style.margin = "1em 0em";
-                                let amount = t.transaction.floData.match(/([0-9]+)/)
-                                let senderAddress = t.transaction.vin[0].addr
-                                let time = this.getDate(t.transaction.time)
-                                li.innerHTML = `
+                            if (r.transactions.length) {
+                                r.transactions.forEach((t) => {
+                                    let li = document.createElement("li");
+                                    li.style.margin = "1em 0em";
+                                    let amount = t.transaction.floData.match(
+                                        /([0-9]+)/
+                                    );
+                                    let senderAddress =
+                                        t.transaction.vin[0].addr;
+                                    let time = this.getDate(t.transaction.time);
+                                    li.innerHTML = `
                                     <div class="card">
                                         <div>RS.${amount[0]}/-</div>
                                         <div>${time}</div>
+                                        <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
                                         <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
                                     </div>
-                                `
-                                txData.appendChild(li);
-                            });
+                                `;
+                                    txData.appendChild(li);
+                                });
                             } else {
                                 let li = document.createElement("div");
-                                li.innerText = "No Transaction Found"
+                                li.innerText = "No Transaction Found";
                                 txData.appendChild(li);
                             }
 
-                            let styling = document.createElement("style")
+                            let styling = document.createElement("style");
 
                             styling.innerHTML = `
                                 * { box-sizing: border-box; }
@@ -246,7 +258,7 @@ type Path = {
                                     padding: 0.4em;
                                     border-radius: 0.5rem;
                                 }
-                            `
+                            `;
                             el.appendChild(styling);
                             el.appendChild(profile);
                             el.appendChild(username);
@@ -259,7 +271,6 @@ type Path = {
                         return el.innerHTML;
                     }
                 }
-
             }
         );
 
@@ -294,7 +305,7 @@ type Path = {
             }
         }
 
-        // render the details page 
+        // render the details page
         function renderDetail() {
             return `
                 <my-card username="red" style="
@@ -342,9 +353,9 @@ type Path = {
 
         // Go the home page
         _logo.addEventListener("click", () => {
-            window.location.hash = ""
-            _rootDiv.innerHTML = renderDetail()
-        })
+            window.location.hash = "";
+            _rootDiv.innerHTML = renderDetail();
+        });
 
         /**
          * Creating a list in which store all the
@@ -354,7 +365,7 @@ type Path = {
         /**
          * get the intern data from the RanchiMall
          * - request the server for data
-         * - loop over the response 
+         * - loop over the response
          * - push the each data to the "finalList arrary"
          * - call the fetchInternData()
          */
@@ -373,19 +384,18 @@ type Path = {
                     ],
                 });
 
-                console.log("Inter: ", r)
+                console.log("Inter: ", r);
 
                 if (r) {
                     console.log("intern Data from the server ", r);
-                    let i = floGlobals.appObjects.RIBC.internList 
+                    let i = floGlobals.appObjects.RIBC.internList;
                     for (let key in i) {
-
                         internList.push({
                             floId: key,
                             floUserName: i[key],
                         });
 
-                        console.table(i)
+                        console.table(i);
                     }
 
                     fetchInternData();
@@ -398,7 +408,7 @@ type Path = {
                         <h1>Something Went Wrong [keep Refreshing the page ...]</h1>
                         <p style="color: red;">${e}</p>
                     </div>
-                `
+                `;
             }
         }
 
@@ -438,12 +448,15 @@ type Path = {
                             return i.floId === d.floId;
                         });
 
-                        // add all the transaction to the new Array
-                        finalList.push({
-                            name: d.floUserName,
-                            floId: d.floId,
-                            transactions: [...result],
-                        });
+                        // check if the transaction are available
+                        if (result.length) {
+                            // add all the transaction to the new Array
+                            finalList.push({
+                                name: d.floUserName,
+                                floId: d.floId,
+                                transactions: [...result],
+                            });
+                        }
                     }
 
                     console.table(finalList);
