@@ -142,6 +142,12 @@ type Path = {
                     this.fetchTokenInfo()
                 }
 
+                getDate(time: number): string {
+                   let stringTime = time + '000'
+                    let newTime = new Date(+stringTime).toDateString()
+                    return newTime
+                }
+
                 // render the element to the DOM
                 render(): string {
                     if (finalList.length) {
@@ -170,12 +176,13 @@ type Path = {
                                 li.style.margin = "1em 0em";
                                 let amount = t.transaction.floData.match(/([0-9]+)/)
                                 let senderAddress = t.transaction.vin[0].addr
+                                let time = this.getDate(t.transaction.time)
                                 li.innerHTML = `
                                     <div class="card">
                                         <div>RS.${amount[0]}/-</div>
-                                        <h5>Transaction Message</h5>
+                                        <div>${time}</div>
                                         <div>Message - ${t.transaction.floData}</div>
-                                        <div>Send By - ${senderAddress}</div>
+                                        <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
                                     </div>
                                 `
                                 txData.appendChild(li);
@@ -216,6 +223,7 @@ type Path = {
                                     padding: 1.5rem;
                                     display: flex;
                                     flex-direction: column;
+                                    position: relative;
                                     width: 100%;
                                     min-width: 20rem;
                                     border-radius: 0.5rem;
@@ -227,6 +235,16 @@ type Path = {
                                 .card > div:nth-of-type(1) {
                                     margin: 0.5em 0em;
                                     font-size: 3.5em;
+                                }
+
+                                .card > div:nth-of-type(2) {
+                                    position: absolute;
+                                    right: 1em;
+                                    top: 1em;
+                                    width: max-content;
+                                    background: rgba(var(--background-color), 1);
+                                    padding: 0.4em;
+                                    border-radius: 0.5rem;
                                 }
                             `
                             el.appendChild(styling);
