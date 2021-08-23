@@ -172,10 +172,12 @@ type Path = {
                         myResult.forEach((r) => {
                             let username = document.createElement("h2");
                             let floId = document.createElement("h3");
+                            let projectName = document.createElement("h4");
                             let profile = document.createElement("div");
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
+                            projectName.innerText = `Project - ${r.projectName || "can not find"}`
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
                             if (r.transactions.length) {
@@ -215,7 +217,7 @@ type Path = {
                                     list-style-type: none;
                                 }
 
-                                h3 {
+                                h4 {
                                     margin-bottom: 2.5em;
                                 }
 
@@ -263,6 +265,7 @@ type Path = {
                             el.appendChild(profile);
                             el.appendChild(username);
                             el.appendChild(floId);
+                            el.appendChild(projectName);
                             el.appendChild(txData);
                         });
 
@@ -389,6 +392,7 @@ type Path = {
                 if (r) {
                     console.log("intern Data from the server ", r);
                     let i = floGlobals.appObjects.RIBC.internList;
+
                     for (let key in i) {
                         internList.push({
                             floId: key,
@@ -398,6 +402,7 @@ type Path = {
                         console.table(i);
                     }
 
+                    // fetch all the data and pack together
                     fetchInternData();
                 }
             } catch (e) {
@@ -410,6 +415,66 @@ type Path = {
                     </div>
                 `;
             }
+        }
+
+        function bundleAllData() {
+            // get the internList from the server
+            let internList = floGlobals.appObjects.RIBC.internList
+            // get the intern Assigned project from the server
+            // get the value of internAssigned project
+            let internsAssigned = floGlobals.appObjects.RIBC.internsAssigned
+            const internsAssignedArr = Object.entries(internsAssigned);
+            // get the project details from the server
+            let projectDetails = floGlobals.appObjects.RIBC.projectDetails
+
+            // set the tragetList
+            let tragetList = []
+
+            // loop over the intern data
+            for (let internId in internList) {
+                // loop over the intern assigned project so we get the 
+                // associated projects
+                for (let [k, v] of internsAssignedArr) {
+                    // find the value have correct key
+                    let value = v.find(el => {
+                        return el === internId
+                    })
+
+                    // if we find a value find its project Details also
+                    if (value) {
+                        // loop over the project details
+                        for (let i in projectDetails) {
+                            // find out the key by the slicing it
+                            let key = k.slice(0, 14)
+                            // get the value
+                            let newVal = projectDetails[key]
+                            // send it ot targetList
+                            tragetList.push({
+                                internId: internId,
+                                project: k,
+                                projectName: newVal.projectName
+                            })
+                        }
+                    }
+                }
+            }
+
+            // loop over to the finalList to attach the projectName
+            for (let key in tragetList) {
+                // get the internId from the tragetList
+                let val = tragetList[key].internId
+
+                // get the index out of that
+                let index = finalList.findIndex((el) => el.floId === val)
+
+                // if it exists
+                if (index > -1) {
+                    finalList[index].projectName = tragetList[key].projectName
+                }
+            }
+
+            console.log("red", finalList)
+
         }
 
         // get the internData after the 3sec I don't know why
@@ -459,6 +524,7 @@ type Path = {
                         }
                     }
 
+                    bundleAllData()
                     console.table(finalList);
 
                     // re-render the DOM

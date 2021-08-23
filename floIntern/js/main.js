@@ -1,12 +1,3 @@
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 ((ready) => {
     if (ready) {
         console.log("JS On Fire");
@@ -68,14 +59,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         const internList = [];
         const finalList = [];
         customElements.define("my-card", class MyCard extends HTMLElement {
+            displayUsername;
+            displayUserId;
+            // look all the value we have to look on change
+            static get observedAttributes() {
+                return ["username", "userid"];
+            }
             constructor() {
                 super();
                 // attach the shadow DOM
                 this.attachShadow({ mode: "open" });
-            }
-            // look all the value we have to look on change
-            static get observedAttributes() {
-                return ["username", "userid"];
             }
             get username() {
                 return this.getAttribute("username");
@@ -89,17 +82,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
             set userid(val) {
                 this.setAttribute("userid", val);
             }
-            fetchTokenInfo() {
-                return __awaiter(this, void 0, void 0, function* () {
-                    console.log(this.userid);
-                    try {
-                        let r = yield fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`);
-                        console.log(r);
-                    }
-                    catch (e) {
-                        console.log("Error Occured ", e);
-                    }
-                });
+            async fetchTokenInfo() {
+                console.log(this.userid);
+                try {
+                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`);
+                    console.log(r);
+                }
+                catch (e) {
+                    console.log("Error Occured ", e);
+                }
             }
             attributeChangedCallback(name, oldValue, newValue) {
                 if (oldValue !== newValue && this.displayUsername) {
@@ -136,10 +127,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                     myResult.forEach((r) => {
                         let username = document.createElement("h2");
                         let floId = document.createElement("h3");
+                        let projectName = document.createElement("h4");
                         let profile = document.createElement("div");
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
+                        projectName.innerText = `Project - ${r.projectName || "can not find"}`;
                         username.style.textAlign = "left";
                         let txData = document.createElement("ul");
                         if (r.transactions.length) {
@@ -175,7 +168,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                                     list-style-type: none;
                                 }
 
-                                h3 {
+                                h4 {
                                     margin-bottom: 2.5em;
                                 }
 
@@ -223,6 +216,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                         el.appendChild(profile);
                         el.appendChild(username);
                         el.appendChild(floId);
+                        el.appendChild(projectName);
                         el.appendChild(txData);
                     });
                     console.log(el);
@@ -316,46 +310,96 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
          * - push the each data to the "finalList arrary"
          * - call the fetchInternData()
          */
-        function getInternData() {
-            return __awaiter(this, void 0, void 0, function* () {
-                try {
-                    let r = yield floCloudAPI.requestObjectData("RIBC", {
-                        application: "RIBC",
-                        receiverID: "FMeiptdJNtYQEtzyYAVNP8fjsDJ1i4EPfE",
-                        senderIDs: [
-                            "F7TxecSPV8oFZE6Y2giVuP8hfsqfAD6erj",
-                            "FCja6sLv58e3RMy41T5AmWyvXEWesqBCkX",
-                            "FPFeL5PXzW9bGosUjQYCxTHSMHidnygvvd",
-                            "FS4jMAcSimRMrhoRhk5cjuJERS2otiwq4A",
-                            "FU2fkubqGD5ynbr7qhvaPe9DPqrNdGB6mw",
-                            "FUkY9k9mVVxPzYA8uUGxUuLVH6CB83Nb9r",
-                        ],
-                    });
-                    console.log("Inter: ", r);
-                    if (r) {
-                        console.log("intern Data from the server ", r);
-                        let i = floGlobals.appObjects.RIBC.internList;
-                        for (let key in i) {
-                            internList.push({
-                                floId: key,
-                                floUserName: i[key],
-                            });
-                            console.table(i);
-                        }
-                        fetchInternData();
+        async function getInternData() {
+            try {
+                let r = await floCloudAPI.requestObjectData("RIBC", {
+                    application: "RIBC",
+                    receiverID: "FMeiptdJNtYQEtzyYAVNP8fjsDJ1i4EPfE",
+                    senderIDs: [
+                        "F7TxecSPV8oFZE6Y2giVuP8hfsqfAD6erj",
+                        "FCja6sLv58e3RMy41T5AmWyvXEWesqBCkX",
+                        "FPFeL5PXzW9bGosUjQYCxTHSMHidnygvvd",
+                        "FS4jMAcSimRMrhoRhk5cjuJERS2otiwq4A",
+                        "FU2fkubqGD5ynbr7qhvaPe9DPqrNdGB6mw",
+                        "FUkY9k9mVVxPzYA8uUGxUuLVH6CB83Nb9r",
+                    ],
+                });
+                console.log("Inter: ", r);
+                if (r) {
+                    console.log("intern Data from the server ", r);
+                    let i = floGlobals.appObjects.RIBC.internList;
+                    for (let key in i) {
+                        internList.push({
+                            floId: key,
+                            floUserName: i[key],
+                        });
+                        console.table(i);
                     }
+                    // fetch all the data and pack together
+                    fetchInternData();
                 }
-                catch (e) {
-                    // ERROR HANDLING
-                    console.log("Error Occur while fetching the Intern Data", e);
-                    _rootDiv.innerHTML = `
+            }
+            catch (e) {
+                // ERROR HANDLING
+                console.log("Error Occur while fetching the Intern Data", e);
+                _rootDiv.innerHTML = `
                     <div style="flex: 1; padding: 1em;">
                         <h1>Something Went Wrong [keep Refreshing the page ...]</h1>
                         <p style="color: red;">${e}</p>
                     </div>
                 `;
+            }
+        }
+        function bundleAllData() {
+            // get the internList from the server
+            let internList = floGlobals.appObjects.RIBC.internList;
+            // get the intern Assigned project from the server
+            // get the value of internAssigned project
+            let internsAssigned = floGlobals.appObjects.RIBC.internsAssigned;
+            const internsAssignedArr = Object.entries(internsAssigned);
+            // get the project details from the server
+            let projectDetails = floGlobals.appObjects.RIBC.projectDetails;
+            // set the tragetList
+            let tragetList = [];
+            // loop over the intern data
+            for (let internId in internList) {
+                // loop over the intern assigned project so we get the 
+                // associated projects
+                for (let [k, v] of internsAssignedArr) {
+                    // find the value have correct key
+                    let value = v.find(el => {
+                        return el === internId;
+                    });
+                    // if we find a value find its project Details also
+                    if (value) {
+                        // loop over the project details
+                        for (let i in projectDetails) {
+                            // find out the key by the slicing it
+                            let key = k.slice(0, 14);
+                            // get the value
+                            let newVal = projectDetails[key];
+                            // send it ot targetList
+                            tragetList.push({
+                                internId: internId,
+                                project: k,
+                                projectName: newVal.projectName
+                            });
+                        }
+                    }
                 }
-            });
+            }
+            // loop over to the finalList to attach the projectName
+            for (let key in tragetList) {
+                // get the internId from the tragetList
+                let val = tragetList[key].internId;
+                // get the index out of that
+                let index = finalList.findIndex((el) => el.floId === val);
+                // if it exists
+                if (index > -1) {
+                    finalList[index].projectName = tragetList[key].projectName;
+                }
+            }
+            console.log("red", finalList);
         }
         // get the internData after the 3sec I don't know why
         setTimeout(() => {
@@ -400,6 +444,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
                         });
                     }
                 }
+                bundleAllData();
                 console.table(finalList);
                 // re-render the DOM
                 _rootDiv.innerHTML = renderList();

@@ -1,13 +1,4 @@
 //== Intern ==//
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 const intern = () => {
     console.log("intern");
     let data;
@@ -72,11 +63,11 @@ const intern = () => {
         _rootElement.appendChild(el);
     };
     // get all the data of the floId
-    const fetchUserInfo = () => __awaiter(this, void 0, void 0, function* () {
+    const fetchUserInfo = async () => {
         try {
             let uri = `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressTransactions?floAddress=FKa43RxHUAdJbgV6KipQ4PvXi6Kgw4HmFn`;
-            let res = yield fetch(uri);
-            data = yield res.json();
+            let res = await fetch(uri);
+            data = await res.json();
             console.log(data);
             _rootElement.innerHTML = "";
             if (data.result === 'ok') {
@@ -91,7 +82,7 @@ const intern = () => {
             // ERROR HANDLING
             console.log("Error Occured while fetching the User Data : ", e);
         }
-    });
+    };
     fetchUserInfo();
 };
 intern();
