@@ -174,12 +174,14 @@ type Path = {
                             let floId = document.createElement("h3");
                             let projectName = document.createElement("h4");
                             let profile = document.createElement("div");
+                            let totalMoneyEarned = document.createElement("div");
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
                             projectName.innerText = `Project - ${r.projectName || "can not find"}`
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
+                            let totalAmount: number = 0
                             if (r.transactions.length) {
                                 r.transactions.forEach((t) => {
                                     let li = document.createElement("li");
@@ -187,6 +189,9 @@ type Path = {
                                     let amount = t.transaction.floData.match(
                                         /([0-9]+)/
                                     );
+                                    let num = Number(amount[0])
+                                    console.log(num)
+                                    totalAmount += num
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
                                     let time = this.getDate(t.transaction.time);
@@ -206,6 +211,10 @@ type Path = {
                                 li.innerText = "No Transaction Found";
                                 txData.appendChild(li);
                             }
+
+                            console.log(totalAmount)
+                            totalMoneyEarned.classList.add("totalAmount")
+                            totalMoneyEarned.innerText = `RS.${totalAmount}`
 
                             let styling = document.createElement("style");
 
@@ -231,6 +240,13 @@ type Path = {
                                     background: #64b5f6;
                                     border-radius: 50%;
                                     margin-bottom: 1em;
+                                }
+
+                                .totalAmount {
+                                    position: absolute;
+                                    top: 1em;
+                                    right: 1em;
+                                    font-size: 1.5em;
                                 }
 
                                 .card {
@@ -266,6 +282,7 @@ type Path = {
                             el.appendChild(username);
                             el.appendChild(floId);
                             el.appendChild(projectName);
+                            el.appendChild(totalMoneyEarned);
                             el.appendChild(txData);
                         });
 
@@ -314,6 +331,7 @@ type Path = {
                 <my-card username="red" style="
                     flex: 1;
                     padding: 1em;
+                    position: relative;
                     " userid="${window.location.hash}"></my-card>
             `;
         }
@@ -357,7 +375,7 @@ type Path = {
         // Go the home page
         _logo.addEventListener("click", () => {
             window.location.hash = "";
-            _rootDiv.innerHTML = renderDetail();
+            _rootDiv.innerHTML = renderList();
         });
 
         /**
