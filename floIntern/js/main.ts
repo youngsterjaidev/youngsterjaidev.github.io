@@ -36,6 +36,7 @@ type Path = {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                         el.appendChild(card);
                     }
@@ -52,6 +53,7 @@ type Path = {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                         el.appendChild(card);
                     }
@@ -174,14 +176,18 @@ type Path = {
                             let floId = document.createElement("h3");
                             let projectName = document.createElement("h4");
                             let profile = document.createElement("div");
-                            let totalMoneyEarned = document.createElement("div");
+                            let totalMoneyEarned = document.createElement(
+                                "div"
+                            );
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
-                            projectName.innerText = `Project - ${r.projectName || "can not find"}`
+                            projectName.innerText = `Project - ${
+                                r.projectName || "can not find"
+                            }`;
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
-                            let totalAmount: number = 0
+                            let totalAmount: number = 0;
                             if (r.transactions.length) {
                                 r.transactions.forEach((t) => {
                                     let li = document.createElement("li");
@@ -189,9 +195,9 @@ type Path = {
                                     let amount = t.transaction.floData.match(
                                         /([0-9]+)/
                                     );
-                                    let num = Number(amount[0])
-                                    console.log(num)
-                                    totalAmount += num
+                                    let num = Number(amount[0]);
+                                    console.log(num);
+                                    totalAmount += num;
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
                                     let time = this.getDate(t.transaction.time);
@@ -212,9 +218,9 @@ type Path = {
                                 txData.appendChild(li);
                             }
 
-                            console.log(totalAmount)
-                            totalMoneyEarned.classList.add("totalAmount")
-                            totalMoneyEarned.innerText = `RS.${totalAmount}`
+                            console.log(totalAmount);
+                            totalMoneyEarned.classList.add("totalAmount");
+                            totalMoneyEarned.innerText = `RS.${totalAmount}`;
 
                             let styling = document.createElement("style");
 
@@ -316,6 +322,7 @@ type Path = {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                     el.appendChild(card);
                 }
@@ -437,41 +444,41 @@ type Path = {
 
         function bundleAllData() {
             // get the internList from the server
-            let internList = floGlobals.appObjects.RIBC.internList
+            let internList = floGlobals.appObjects.RIBC.internList;
             // get the intern Assigned project from the server
             // get the value of internAssigned project
-            let internsAssigned = floGlobals.appObjects.RIBC.internsAssigned
+            let internsAssigned = floGlobals.appObjects.RIBC.internsAssigned;
             const internsAssignedArr = Object.entries(internsAssigned);
             // get the project details from the server
-            let projectDetails = floGlobals.appObjects.RIBC.projectDetails
+            let projectDetails = floGlobals.appObjects.RIBC.projectDetails;
 
             // set the tragetList
-            let tragetList = []
+            let tragetList = [];
 
             // loop over the intern data
             for (let internId in internList) {
-                // loop over the intern assigned project so we get the 
+                // loop over the intern assigned project so we get the
                 // associated projects
                 for (let [k, v] of internsAssignedArr) {
                     // find the value have correct key
-                    let value = v.find(el => {
-                        return el === internId
-                    })
+                    let value = v.find((el) => {
+                        return el === internId;
+                    });
 
                     // if we find a value find its project Details also
                     if (value) {
                         // loop over the project details
                         for (let i in projectDetails) {
                             // find out the key by the slicing it
-                            let key = k.slice(0, 14)
+                            let key = k.slice(0, 14);
                             // get the value
-                            let newVal = projectDetails[key]
+                            let newVal = projectDetails[key];
                             // send it ot targetList
                             tragetList.push({
                                 internId: internId,
                                 project: k,
-                                projectName: newVal.projectName
-                            })
+                                projectName: newVal.projectName,
+                            });
                         }
                     }
                 }
@@ -480,19 +487,40 @@ type Path = {
             // loop over to the finalList to attach the projectName
             for (let key in tragetList) {
                 // get the internId from the tragetList
-                let val = tragetList[key].internId
+                let val = tragetList[key].internId;
 
                 // get the index out of that
-                let index = finalList.findIndex((el) => el.floId === val)
+                let index = finalList.findIndex((el) => el.floId === val);
+
+                console.log("++++++++++++++", index, val);
 
                 // if it exists
                 if (index > -1) {
-                    finalList[index].projectName = tragetList[key].projectName
+                    finalList[index].projectName = tragetList[key].projectName;
                 }
             }
 
-            console.log("red", finalList)
+            for (let index of finalList) {
+                let totalAmount: number = 0;
+                /*finalList[index].transactions.forEach((intern) => {
+                    let amount = intern.transaction.floData.match(/([0-9]+)/);
+                    let num = Number(amount[0]);
+                    totalAmount += num;
+                });
+                finalList[index].totalMoneyEarned = totalAmount;*/
+            }
 
+            finalList.forEach(list => {
+                let totalAmount: number = 0;
+                list.transactions.forEach((intern) => {
+                    let amount = intern.transaction.floData.match(/([0-9]+)/);
+                    let num = Number(amount[0]);
+                    totalAmount += num;
+                });
+                list.totalMoneyEarned = totalAmount;
+            })
+
+            console.log("red", finalList);
         }
 
         // get the internData after the 3sec I don't know why
@@ -542,7 +570,7 @@ type Path = {
                         }
                     }
 
-                    bundleAllData()
+                    bundleAllData();
                     console.table(finalList);
 
                     // re-render the DOM

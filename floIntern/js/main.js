@@ -23,6 +23,7 @@
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                         el.appendChild(card);
                     }
@@ -38,6 +39,7 @@
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                         el.appendChild(card);
                     }
@@ -260,6 +262,7 @@
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
+                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                     `;
                     el.appendChild(card);
                 }
@@ -380,11 +383,11 @@
             let tragetList = [];
             // loop over the intern data
             for (let internId in internList) {
-                // loop over the intern assigned project so we get the 
+                // loop over the intern assigned project so we get the
                 // associated projects
                 for (let [k, v] of internsAssignedArr) {
                     // find the value have correct key
-                    let value = v.find(el => {
+                    let value = v.find((el) => {
                         return el === internId;
                     });
                     // if we find a value find its project Details also
@@ -399,7 +402,7 @@
                             tragetList.push({
                                 internId: internId,
                                 project: k,
-                                projectName: newVal.projectName
+                                projectName: newVal.projectName,
                             });
                         }
                     }
@@ -411,11 +414,30 @@
                 let val = tragetList[key].internId;
                 // get the index out of that
                 let index = finalList.findIndex((el) => el.floId === val);
+                console.log("++++++++++++++", index, val);
                 // if it exists
                 if (index > -1) {
                     finalList[index].projectName = tragetList[key].projectName;
                 }
             }
+            for (let index of finalList) {
+                let totalAmount = 0;
+                /*finalList[index].transactions.forEach((intern) => {
+                    let amount = intern.transaction.floData.match(/([0-9]+)/);
+                    let num = Number(amount[0]);
+                    totalAmount += num;
+                });
+                finalList[index].totalMoneyEarned = totalAmount;*/
+            }
+            finalList.forEach(list => {
+                let totalAmount = 0;
+                list.transactions.forEach((intern) => {
+                    let amount = intern.transaction.floData.match(/([0-9]+)/);
+                    let num = Number(amount[0]);
+                    totalAmount += num;
+                });
+                list.totalMoneyEarned = totalAmount;
+            });
             console.log("red", finalList);
         }
         // get the internData after the 3sec I don't know why
