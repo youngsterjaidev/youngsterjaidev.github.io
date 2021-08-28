@@ -11929,6 +11929,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                 console.error(log)
             );
         </script>
+        <script src="js/main.js"></script>
         <script id="onLoadStartUp">
             function onLoadStartUp() {
                 //floDapps.addStartUpFunction('Sample', Promised Function)
@@ -11939,13 +11940,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
                     .launchStartUp()
                     .then((result) => {
                         console.log(result);
-                        alert(`Welcome FLO_ID: ${myFloID}`);
+                        //alert(`Welcome FLO_ID: ${myFloID}`);
                         //App functions....
+                    }).then(() => {
+                        main(true)
                     })
                     .catch((error) => console.error(error));
             }
         </script>
-        <script src="js/main.js"></script>
         <script>
         </script>
     </body>

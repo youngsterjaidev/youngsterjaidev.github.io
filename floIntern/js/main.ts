@@ -3,7 +3,7 @@ type Path = {
     printPath: () => void;
 };
 
-((ready: boolean): void => {
+const main =(ready: boolean): void => {
     if (ready) {
         console.log("JS On Fire");
 
@@ -60,9 +60,15 @@ type Path = {
                     _rootDiv.innerHTML = el.innerHTML;
                 }
             } else {
-                return `<div>
-                        <h1 id="loading">Loading...</h1>
-                    </div>`;
+                return `
+                        <h1 style="
+                            text-align: center;
+                            width: 100%;
+                            display: grid;
+                            place-items: center;
+                            height: 50vh;
+                        ">Loading...</h1>
+                    `;
             }
         });
 
@@ -328,7 +334,15 @@ type Path = {
                 }
                 return el.innerHTML;
             } else {
-                return `<div>Loading</div>`;
+                return `
+                        <h1 style="
+                            text-align: center;
+                            width: 100%;
+                            display: grid;
+                            place-items: center;
+                            height: 50vh;
+                        ">Loading...</h1>
+                    `;
             }
         }
 
@@ -578,4 +592,4 @@ type Path = {
                 }, console.error);
         }
     }
-})(true);
+}

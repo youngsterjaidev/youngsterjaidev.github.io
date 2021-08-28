@@ -1,4 +1,4 @@
-((ready) => {
+const main = (ready) => {
     if (ready) {
         console.log("JS On Fire");
         let _input = document.querySelector("#input");
@@ -47,9 +47,15 @@
                 }
             }
             else {
-                return `<div>
-                        <h1 id="loading">Loading...</h1>
-                    </div>`;
+                return `
+                        <h1 style="
+                            text-align: center;
+                            width: 100%;
+                            display: grid;
+                            place-items: center;
+                            height: 50vh;
+                        ">Loading...</h1>
+                    `;
             }
         });
         // intern Data "const internList = []"
@@ -269,7 +275,15 @@
                 return el.innerHTML;
             }
             else {
-                return `<div>Loading</div>`;
+                return `
+                        <h1 style="
+                            text-align: center;
+                            width: 100%;
+                            display: grid;
+                            place-items: center;
+                            height: 50vh;
+                        ">Loading...</h1>
+                    `;
             }
         }
         // render the details page
@@ -490,4 +504,4 @@
             }, console.error);
         }
     }
-})(true);
+};
