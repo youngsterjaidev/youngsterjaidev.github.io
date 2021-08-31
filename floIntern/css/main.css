@@ -91,6 +91,14 @@ ul {
     margin-bottom: 1em;
 }
 
+.last-tx {
+    padding: 1em 0em;
+}
+
+.last-tx > div:nth-of-type(1) {
+    font-weight: 700;
+}
+
 .app {
     padding: 0.5em;
     display: flex;
@@ -426,8 +434,19 @@ sm-tab {
   margin: 1rem 0.5em;
   flex: 1 0;
   cursor: pointer;
+  position: relative;
   background-color: rgba(var(--text-color), 0.06);
 }
+
+.card > div:nth-of-type(3) {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        padding: 0.5em;
+        border-radius: 1rem;
+        background-color: rgba(var(--background-color));
+}
+
 .card h3 {
   font-weight: 500;
 }

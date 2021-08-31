@@ -9,9 +9,11 @@ const main =(ready: boolean): void => {
 
         let _input: HTMLInputElement = document.querySelector("#input");
         let _logo: HTMLElement = document.getElementById("logo");
+        let internRating: any{} = {}
 
         _input.addEventListener("input", (e: MouseEvent) => {
             let val = e.target.value;
+            window.location.hash = "";
 
             console.log(val);
 
@@ -24,7 +26,7 @@ const main =(ready: boolean): void => {
                 console.log(list);
 
                 if (list.length) {
-                    //
+                    // ...
                     let el: HTMLDivElement = document.createElement("div");
                     for (let i of list) {
                         let card: HTMLAnchorElement = document.createElement(
@@ -37,6 +39,12 @@ const main =(ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <div class="last-tx">
+                            <div>Last transaction </div>
+                            <hr />
+                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                        </div>
+                        <div>${internRating[i.floId]}</div>
                     `;
                         el.appendChild(card);
                     }
@@ -54,6 +62,12 @@ const main =(ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <div class="last-tx">
+                            <div>Last transaction </div>
+                            <hr />
+                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                        </div>
+                        <div>${internRating[i.floId]}</div>
                     `;
                         el.appendChild(card);
                     }
@@ -209,7 +223,7 @@ const main =(ready: boolean): void => {
                                     let time = this.getDate(t.transaction.time);
                                     li.innerHTML = `
                                     <div class="card">
-                                        <div>RS.${amount[0]}/-</div>
+                                        <div>Rs.${amount[0]}/-</div>
                                         <div>${time}</div>
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
@@ -226,7 +240,7 @@ const main =(ready: boolean): void => {
 
                             console.log(totalAmount);
                             totalMoneyEarned.classList.add("totalAmount");
-                            totalMoneyEarned.innerText = `RS.${totalAmount}`;
+                            totalMoneyEarned.innerText = `Rs.${totalAmount}`;
 
                             let styling = document.createElement("style");
 
@@ -321,6 +335,7 @@ const main =(ready: boolean): void => {
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
                 for (let i of finalList) {
+                    console.log(i.transactions[i.transactions.length - 1])
                     let card: HTMLAnchorElement = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
@@ -328,7 +343,13 @@ const main =(ready: boolean): void => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
+                        <div class="last-tx">
+                            <div>Last transaction </div>
+                            <hr />
+                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                        </div>
+                        <div>${internRating[i.floId]}</div>
                     `;
                     el.appendChild(card);
                 }
@@ -459,6 +480,7 @@ const main =(ready: boolean): void => {
         function bundleAllData() {
             // get the internList from the server
             let internList = floGlobals.appObjects.RIBC.internList;
+            internRating = floGlobals.appObjects.RIBC.internRating;
             // get the intern Assigned project from the server
             // get the value of internAssigned project
             let internsAssigned = floGlobals.appObjects.RIBC.internsAssigned;
