@@ -33,8 +33,10 @@ const main = (ready) => {
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
-                            <hr />
-                            <div>${i.transactions[0].transaction.floData}</div>
+                            <div class="last-tx-content">
+                                <div>${getDate(i.transactions[0].transaction.time)}</div>
+                                <div>${i.transactions[0].transaction.floData}</div>
+                            </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -55,8 +57,10 @@ const main = (ready) => {
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
-                            <hr />
-                            <div>${i.transactions[0].transaction.floData}</div>
+                            <div class="last-tx-content">
+                                <div>${getDate(i.transactions[0].transaction.time)}</div>
+                                <div>${i.transactions[0].transaction.floData}</div>
+                            </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
