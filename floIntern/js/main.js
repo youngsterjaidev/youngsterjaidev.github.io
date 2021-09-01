@@ -175,7 +175,7 @@ const main = (ready) => {
                                 let time = getDate(t.transaction.time);
                                 li.innerHTML = `
                                     <div class="card">
-                                        <div>Rs.${amount[0]}/-</div>
+                                        <div>₹.${amount[0]}/-</div>
                                         <div>${time}</div>
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
@@ -192,7 +192,7 @@ const main = (ready) => {
                         }
                         console.log(totalAmount);
                         totalMoneyEarned.classList.add("totalAmount");
-                        totalMoneyEarned.innerText = `Rs.${totalAmount}`;
+                        totalMoneyEarned.innerText = `₹.${totalAmount}`;
                         let styling = document.createElement("style");
                         styling.innerHTML = `
                                 * { box-sizing: border-box; }
@@ -287,7 +287,7 @@ const main = (ready) => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹.${i.totalMoneyEarned}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
