@@ -159,7 +159,7 @@ const main = (ready) => {
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
-                        projectName.innerText = `Project - ${r.projectName || "Project Inactive"}`;
+                        projectName.innerText = `Project - ${r.projectName || "Intern Inactive"}`;
                         username.style.textAlign = "left";
                         let txData = document.createElement("ul");
                         let totalAmount = 0;
