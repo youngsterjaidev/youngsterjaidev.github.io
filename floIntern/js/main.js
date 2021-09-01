@@ -3,7 +3,12 @@ const main = (ready) => {
         console.log("JS On Fire");
         let _input = document.querySelector("#input");
         let _logo = document.getElementById("logo");
-        let internRating, {} = {};
+        let internRating = {};
+        function getDate(time) {
+            let stringTime = time + "000";
+            let newTime = new Date(+stringTime).toDateString();
+            return newTime;
+        }
         _input.addEventListener("input", (e) => {
             let val = e.target.value;
             window.location.hash = "";
@@ -29,7 +34,7 @@ const main = (ready) => {
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div>${i.transactions[0].transaction.floData}</div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -51,7 +56,7 @@ const main = (ready) => {
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div>${i.transactions[0].transaction.floData}</div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -132,11 +137,6 @@ const main = (ready) => {
                 this.displayUserId = this.shadowRoot.querySelector(".userid");
                 this.fetchTokenInfo();
             }
-            getDate(time) {
-                let stringTime = time + "000";
-                let newTime = new Date(+stringTime).toDateString();
-                return newTime;
-            }
             // render the element to the DOM
             render() {
                 if (finalList.length) {
@@ -155,7 +155,7 @@ const main = (ready) => {
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
-                        projectName.innerText = `Project - ${r.projectName || "can not find"}`;
+                        projectName.innerText = `Project - ${r.projectName || "Project Inactive"}`;
                         username.style.textAlign = "left";
                         let txData = document.createElement("ul");
                         let totalAmount = 0;
@@ -168,7 +168,7 @@ const main = (ready) => {
                                 console.log(num);
                                 totalAmount += num;
                                 let senderAddress = t.transaction.vin[0].addr;
-                                let time = this.getDate(t.transaction.time);
+                                let time = getDate(t.transaction.time);
                                 li.innerHTML = `
                                     <div class="card">
                                         <div>Rs.${amount[0]}/-</div>
@@ -286,8 +286,10 @@ const main = (ready) => {
                         <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
-                            <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div class="last-tx-content">
+                                <div>${getDate(i.transactions[0].transaction.time)}</div>
+                                <div>${i.transactions[0].transaction.floData}</div>
+                            </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -465,7 +467,7 @@ const main = (ready) => {
                 });
                 finalList[index].totalMoneyEarned = totalAmount;*/
             }
-            finalList.forEach(list => {
+            finalList.forEach((list) => {
                 let totalAmount = 0;
                 list.transactions.forEach((intern) => {
                     let amount = intern.transaction.floData.match(/([0-9]+)/);

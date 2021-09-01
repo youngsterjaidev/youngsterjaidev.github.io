@@ -3,13 +3,19 @@ type Path = {
     printPath: () => void;
 };
 
-const main =(ready: boolean): void => {
+const main = (ready: boolean): void => {
     if (ready) {
         console.log("JS On Fire");
 
         let _input: HTMLInputElement = document.querySelector("#input");
         let _logo: HTMLElement = document.getElementById("logo");
-        let internRating: any{} = {}
+        let internRating = {};
+
+        function getDate(time: number): string {
+            let stringTime = time + "000";
+            let newTime = new Date(+stringTime).toDateString();
+            return newTime;
+        }
 
         _input.addEventListener("input", (e: MouseEvent) => {
             let val = e.target.value;
@@ -42,7 +48,7 @@ const main =(ready: boolean): void => {
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div>${i.transactions[0].transaction.floData}</div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -65,7 +71,7 @@ const main =(ready: boolean): void => {
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div>${i.transactions[0].transaction.floData}</div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -172,12 +178,6 @@ const main =(ready: boolean): void => {
                     this.fetchTokenInfo();
                 }
 
-                getDate(time: number): string {
-                    let stringTime = time + "000";
-                    let newTime = new Date(+stringTime).toDateString();
-                    return newTime;
-                }
-
                 // render the element to the DOM
                 render(): string {
                     if (finalList.length) {
@@ -203,7 +203,7 @@ const main =(ready: boolean): void => {
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
                             projectName.innerText = `Project - ${
-                                r.projectName || "can not find"
+                                r.projectName || "Project Inactive"
                             }`;
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
@@ -220,7 +220,7 @@ const main =(ready: boolean): void => {
                                     totalAmount += num;
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
-                                    let time = this.getDate(t.transaction.time);
+                                    let time = getDate(t.transaction.time);
                                     li.innerHTML = `
                                     <div class="card">
                                         <div>Rs.${amount[0]}/-</div>
@@ -335,7 +335,7 @@ const main =(ready: boolean): void => {
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
                 for (let i of finalList) {
-                    console.log(i.transactions[i.transactions.length - 1])
+                    console.log(i.transactions[i.transactions.length - 1]);
                     let card: HTMLAnchorElement = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
@@ -346,8 +346,10 @@ const main =(ready: boolean): void => {
                         <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
-                            <hr />
-                            <div>${i.transactions[i.transactions.length - 1].transaction.floData}</div>
+                            <div class="last-tx-content">
+                                <div>${getDate(i.transactions[0].transaction.time)}</div>
+                                <div>${i.transactions[0].transaction.floData}</div>
+                            </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                     `;
@@ -546,15 +548,17 @@ const main =(ready: boolean): void => {
                 finalList[index].totalMoneyEarned = totalAmount;*/
             }
 
-            finalList.forEach(list => {
+            finalList.forEach((list) => {
                 let totalAmount: number = 0;
                 list.transactions.forEach((intern) => {
                     let amount = intern.transaction.floData.match(/([0-9]+)/);
                     let num = Number(amount[0]);
+
                     totalAmount += num;
                 });
+
                 list.totalMoneyEarned = totalAmount;
-            })
+            });
 
             console.log("red", finalList);
         }
@@ -614,4 +618,4 @@ const main =(ready: boolean): void => {
                 }, console.error);
         }
     }
-}
+};

@@ -99,6 +99,26 @@ ul {
     font-weight: 700;
 }
 
+.last-tx-content {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-flow: column nowrap;
+}
+
+
+.last-tx-content > div:nth-of-type(1) {
+    padding: 0.5em;
+    margin: 0.5em 0em;
+    border-radius: 1rem;
+    background: red;
+    color: white;
+}
+
+.last-tx-content > div:nth-of-type(2) {
+    width: 100%;
+}
+
 .app {
     padding: 0.5em;
     display: flex;
@@ -455,4 +475,13 @@ sm-tab {
   sm-popup {
     --width: 24rem;
   }
+}
+
+@media screen and (min-width: 1000px) {
+    .app {
+        justify-content: space-around;
+    }
+    .card {
+        flex: 0 0;
+    }
 }
