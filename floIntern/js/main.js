@@ -179,7 +179,7 @@ const main = (ready) => {
                                 let time = getDate(t.transaction.time);
                                 li.innerHTML = `
                                     <div class="card">
-                                        <div>Rs.${amount[0]}/-</div>
+                                        <div>₹.${amount[0]}/-</div>
                                         <div>${time}</div>
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
@@ -513,37 +513,37 @@ const main = (ready) => {
             floBlockchainAPI
                 .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
                 .then((r) => {
-                console.log(r);
-                // loop over the response transactions
-                r.forEach((user) => {
-                    console.log(user);
-                    // sending all the transaction to the new array
-                    receiverList.push({
-                        floId: user.vout[0].scriptPubKey.addresses[0],
-                        transaction: user,
-                    });
-                });
-                // loop over the intern data
-                for (let d of internList) {
-                    // filter the intern transactions
-                    const result = receiverList.filter((i) => {
-                        return i.floId === d.floId;
-                    });
-                    // check if the transaction are available
-                    if (result.length) {
-                        // add all the transaction to the new Array
-                        finalList.push({
-                            name: d.floUserName,
-                            floId: d.floId,
-                            transactions: [...result],
+                    console.log(r);
+                    // loop over the response transactions
+                    r.forEach((user) => {
+                        console.log(user);
+                        // sending all the transaction to the new array
+                        receiverList.push({
+                            floId: user.vout[0].scriptPubKey.addresses[0],
+                            transaction: user,
                         });
+                    });
+                    // loop over the intern data
+                    for (let d of internList) {
+                        // filter the intern transactions
+                        const result = receiverList.filter((i) => {
+                            return i.floId === d.floId;
+                        });
+                        // check if the transaction are available
+                        if (result.length) {
+                            // add all the transaction to the new Array
+                            finalList.push({
+                                name: d.floUserName,
+                                floId: d.floId,
+                                transactions: [...result],
+                            });
+                        }
                     }
-                }
-                bundleAllData();
-                console.table(finalList);
-                // re-render the DOM
-                _rootDiv.innerHTML = renderList();
-            }, console.error);
+                    bundleAllData();
+                    console.table(finalList);
+                    // re-render the DOM
+                    _rootDiv.innerHTML = renderList();
+                }, console.error);
         }
     }
 };
