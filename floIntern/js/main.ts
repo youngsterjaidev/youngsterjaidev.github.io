@@ -45,6 +45,7 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
@@ -70,6 +71,7 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
@@ -203,12 +205,13 @@ const main = (ready: boolean): void => {
                             let totalMoneyEarned = document.createElement(
                                 "div"
                             );
+                            let totalNumberOfTransaction = document.createElement("div")
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
-                            projectName.innerText = `Project - ${
-                                r.projectName || "Project Inactive"
-                            }`;
+                            projectName.innerText = `Project - ${r.projectName || "Project Inactive"
+                                }`;
+                            totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`
                             username.style.textAlign = "left";
                             let txData = document.createElement("ul");
                             let totalAmount: number = 0;
@@ -232,6 +235,7 @@ const main = (ready: boolean): void => {
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
                                         <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
+                                        <a target="_blank" href="${t.transaction.blockChainLink}">${t.transaction.blockChainLink}</a>
                                     </div>
                                 `;
                                     txData.appendChild(li);
@@ -244,7 +248,10 @@ const main = (ready: boolean): void => {
 
                             console.log(totalAmount);
                             totalMoneyEarned.classList.add("totalAmount");
-                            totalMoneyEarned.innerText = `Rs.${totalAmount}`;
+                            totalMoneyEarned.innerHTML = `
+                                <div>Rs.${totalAmount}</div>
+                                <div style="font-size: xx-small; text-align: right;">Total Amount Paid</div>
+                            `;
 
                             let styling = document.createElement("style");
 
@@ -288,7 +295,6 @@ const main = (ready: boolean): void => {
                                     min-width: 20rem;
                                     border-radius: 0.5rem;
                                     flex: 1 0;
-                                    cursor: pointer;
                                     background-color: rgba(var(--text-color), 0.06);
                                 }
 
@@ -313,6 +319,7 @@ const main = (ready: boolean): void => {
                             el.appendChild(floId);
                             el.appendChild(projectName);
                             el.appendChild(totalMoneyEarned);
+                            el.appendChild(totalNumberOfTransaction);
                             el.appendChild(txData);
                         });
 
@@ -348,6 +355,7 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
+                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
@@ -552,6 +560,9 @@ const main = (ready: boolean): void => {
                 finalList[index].totalMoneyEarned = totalAmount;*/
             }
 
+            /**
+             * Loop over the final List to get the totalAmount
+             */
             finalList.forEach((list) => {
                 let totalAmount: number = 0;
                 list.transactions.forEach((intern) => {
@@ -559,6 +570,8 @@ const main = (ready: boolean): void => {
                     let num = Number(amount[0]);
 
                     totalAmount += num;
+                    // add the blockChainLink key
+                    intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`
                 });
 
                 list.totalMoneyEarned = totalAmount;
