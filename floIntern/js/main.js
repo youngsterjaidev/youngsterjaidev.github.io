@@ -30,7 +30,7 @@ const main = (ready) => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
@@ -55,7 +55,7 @@ const main = (ready) => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
@@ -162,7 +162,7 @@ const main = (ready) => {
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
-                        projectName.innerText = `Project - ${r.projectName || "Project Inactive"}`;
+                        projectName.innerText = `Project - ${r.projectName || "Intern Inactive"}`;
                         totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`;
                         username.style.textAlign = "left";
                         let txData = document.createElement("ul");
@@ -179,7 +179,7 @@ const main = (ready) => {
                                 let time = getDate(t.transaction.time);
                                 li.innerHTML = `
                                     <div class="card">
-                                        <div>₹.${amount[0]}/-</div>
+                                        <div>₹${amount[0]}/-</div>
                                         <div>${time}</div>
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
@@ -198,7 +198,7 @@ const main = (ready) => {
                         console.log(totalAmount);
                         totalMoneyEarned.classList.add("totalAmount");
                         totalMoneyEarned.innerHTML = `
-                                <div>Rs.${totalAmount}</div>
+                                <div>₹${totalAmount}</div>
                                 <div style="font-size: xx-small; text-align: right;">Total Amount Paid</div>
                             `;
                         let styling = document.createElement("style");
@@ -295,7 +295,7 @@ const main = (ready) => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
@@ -513,37 +513,37 @@ const main = (ready) => {
             floBlockchainAPI
                 .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
                 .then((r) => {
-                    console.log(r);
-                    // loop over the response transactions
-                    r.forEach((user) => {
-                        console.log(user);
-                        // sending all the transaction to the new array
-                        receiverList.push({
-                            floId: user.vout[0].scriptPubKey.addresses[0],
-                            transaction: user,
-                        });
+                console.log(r);
+                // loop over the response transactions
+                r.forEach((user) => {
+                    console.log(user);
+                    // sending all the transaction to the new array
+                    receiverList.push({
+                        floId: user.vout[0].scriptPubKey.addresses[0],
+                        transaction: user,
                     });
-                    // loop over the intern data
-                    for (let d of internList) {
-                        // filter the intern transactions
-                        const result = receiverList.filter((i) => {
-                            return i.floId === d.floId;
+                });
+                // loop over the intern data
+                for (let d of internList) {
+                    // filter the intern transactions
+                    const result = receiverList.filter((i) => {
+                        return i.floId === d.floId;
+                    });
+                    // check if the transaction are available
+                    if (result.length) {
+                        // add all the transaction to the new Array
+                        finalList.push({
+                            name: d.floUserName,
+                            floId: d.floId,
+                            transactions: [...result],
                         });
-                        // check if the transaction are available
-                        if (result.length) {
-                            // add all the transaction to the new Array
-                            finalList.push({
-                                name: d.floUserName,
-                                floId: d.floId,
-                                transactions: [...result],
-                            });
-                        }
                     }
-                    bundleAllData();
-                    console.table(finalList);
-                    // re-render the DOM
-                    _rootDiv.innerHTML = renderList();
-                }, console.error);
+                }
+                bundleAllData();
+                console.table(finalList);
+                // re-render the DOM
+                _rootDiv.innerHTML = renderList();
+            }, console.error);
         }
     }
 };

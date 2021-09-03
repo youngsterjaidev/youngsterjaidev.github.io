@@ -44,7 +44,7 @@ const main = (ready: boolean): void => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
@@ -70,7 +70,7 @@ const main = (ready: boolean): void => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: RS.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
@@ -209,7 +209,7 @@ const main = (ready: boolean): void => {
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
-                            projectName.innerText = `Project - ${r.projectName || "Project Inactive"
+                            projectName.innerText = `Project - ${r.projectName || "Intern Inactive"
                                 }`;
                             totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`
                             username.style.textAlign = "left";
@@ -230,7 +230,7 @@ const main = (ready: boolean): void => {
                                     let time = getDate(t.transaction.time);
                                     li.innerHTML = `
                                     <div class="card">
-                                        <div>Rs.${amount[0]}/-</div>
+                                        <div>₹${amount[0]}/-</div>
                                         <div>${time}</div>
                                         <h3>Transaction Detail</h3>
                                         <div>Message - ${t.transaction.floData}</div>
@@ -249,7 +249,7 @@ const main = (ready: boolean): void => {
                             console.log(totalAmount);
                             totalMoneyEarned.classList.add("totalAmount");
                             totalMoneyEarned.innerHTML = `
-                                <div>Rs.${totalAmount}</div>
+                                <div>₹${totalAmount}</div>
                                 <div style="font-size: xx-small; text-align: right;">Total Amount Paid</div>
                             `;
 
@@ -354,7 +354,7 @@ const main = (ready: boolean): void => {
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: Rs.${i.totalMoneyEarned}</h5>
+                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
                         <h5>Total No. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
