@@ -3,12 +3,22 @@ const main = (ready) => {
         console.log("JS On Fire");
         let _input = document.querySelector("#input");
         let _logo = document.getElementById("logo");
+        let searchToggle = document.getElementById("searchToggle");
+        let searchOverlay = document.querySelector(".search-overlay");
+        let searchWrapper = document.querySelector(".search-wrapper");
         let internRating = {};
         function getDate(time) {
             let stringTime = time + "000";
             let newTime = new Date(+stringTime).toDateString();
             return newTime;
         }
+        searchToggle.addEventListener("click", e => {
+            searchWrapper.classList.add('open');
+            _input.focus();
+        });
+        searchOverlay.addEventListener("click", e => {
+            searchWrapper.classList.remove('open');
+        });
         _input.addEventListener("input", (e) => {
             let val = e.target.value;
             window.location.hash = "";

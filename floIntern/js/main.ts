@@ -9,6 +9,9 @@ const main = (ready: boolean): void => {
 
         let _input: HTMLInputElement = document.querySelector("#input");
         let _logo: HTMLElement = document.getElementById("logo");
+        let searchToggle: HTMLElement = document.getElementById("searchToggle")
+        let searchOverlay: HTMLElement = document.querySelector(".search-overlay")
+        let searchWrapper: HTMLElement = document.querySelector(".search-wrapper")
         let internRating = {};
 
         function getDate(time: number): string {
@@ -16,6 +19,15 @@ const main = (ready: boolean): void => {
             let newTime = new Date(+stringTime).toDateString();
             return newTime;
         }
+
+        searchToggle.addEventListener("click", e => {
+            searchWrapper.classList.add('open')
+            _input.focus()
+        })
+
+        searchOverlay.addEventListener("click", e => {
+            searchWrapper.classList.remove('open')
+        })
 
         _input.addEventListener("input", (e: MouseEvent) => {
             let val = e.target.value;
