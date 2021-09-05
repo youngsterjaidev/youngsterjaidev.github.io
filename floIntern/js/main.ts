@@ -8,7 +8,7 @@ const main = (ready: boolean): void => {
         console.log("JS On Fire");
 
         let _input: HTMLInputElement = document.querySelector("#input");
-        let _logo: HTMLElement = document.getElementById("logo");
+        let _backBtn: HTMLElement = document.getElementById("backBtn");
         let searchToggle: HTMLElement = document.getElementById("searchToggle")
         let searchOverlay: HTMLElement = document.querySelector(".search-overlay")
         let searchWrapper: HTMLElement = document.querySelector(".search-wrapper")
@@ -441,7 +441,7 @@ const main = (ready: boolean): void => {
         _rootDiv.innerHTML = renderList();
 
         // Go the home page
-        _logo.addEventListener("click", () => {
+        _backBtn.addEventListener("click", () => {
             window.location.hash = "";
             _rootDiv.innerHTML = renderList();
         });

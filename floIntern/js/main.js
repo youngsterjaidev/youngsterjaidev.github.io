@@ -2,7 +2,7 @@ const main = (ready) => {
     if (ready) {
         console.log("JS On Fire");
         let _input = document.querySelector("#input");
-        let _logo = document.getElementById("logo");
+        let _backBtn = document.getElementById("backBtn");
         let searchToggle = document.getElementById("searchToggle");
         let searchOverlay = document.querySelector(".search-overlay");
         let searchWrapper = document.querySelector(".search-wrapper");
@@ -375,7 +375,7 @@ const main = (ready) => {
         // render the home page default
         _rootDiv.innerHTML = renderList();
         // Go the home page
-        _logo.addEventListener("click", () => {
+        _backBtn.addEventListener("click", () => {
             window.location.hash = "";
             _rootDiv.innerHTML = renderList();
         });
