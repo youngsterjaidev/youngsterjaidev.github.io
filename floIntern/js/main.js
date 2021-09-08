@@ -336,7 +336,7 @@ const main = (ready) => {
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">Rs.${amount[0]}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
                                 <div>${i.transactions[0].transaction.blockChainLink}</div>
                             </div>
                         </div>

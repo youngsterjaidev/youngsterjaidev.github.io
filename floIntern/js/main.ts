@@ -422,7 +422,7 @@ const main = (ready: boolean): void => {
                                 <div>${getDate(
                                     i.transactions[0].transaction.time
                                 )}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">Rs.${
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
                                     amount[0]
                                 }</div>
                                 <div>${i.transactions[0].transaction.blockChainLink}</div>
