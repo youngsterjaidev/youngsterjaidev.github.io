@@ -172,7 +172,6 @@ const main = (ready: boolean): void => {
                     this.setAttribute("userid", val);
                 }
 
-
                 attributeChangedCallback(name, oldValue, newValue) {
                     if (oldValue !== newValue && this.displayUsername) {
                         console.log("----------", this.userid);
@@ -196,6 +195,11 @@ const main = (ready: boolean): void => {
                         ".userid"
                     );
 
+                    this.shadowRoot.querySelector("span").addEventListener("click", e => {
+                        // back to the home page
+                        window.location.hash = "";
+                    _rootDiv.innerHTML = renderList();
+                    })
                 }
 
                 // render the element to the DOM
@@ -203,30 +207,27 @@ const main = (ready: boolean): void => {
                     if (finalList.length) {
                         let el: HTMLDivElement = document.createElement("div");
 
+                        let backBtn = document.createElement("div");
+                        let username = document.createElement("h2");
+                        let floId = document.createElement("h3");
+                        let projectName = document.createElement("h4");
+                        let profile = document.createElement("div");
+                        let totalMoneyEarned = document.createElement("div");
+                        let totalNumberOfTransaction = document.createElement(
+                            "div"
+                        );
+                        let txData = document.createElement("ul");
+                        let red = document.createElement("span");
+                        let totalAmount: number = 0;
+                        let li = document.createElement("li");
+
                         console.log(this.userid.slice(1));
 
                         const myResult = finalList.filter((l) => {
                             return this.userid.slice(1) === l.floId;
                         });
 
-                        console.log(myResult);
-
                         myResult.forEach((r) => {
-                            let backBtn = document.createElement("div");
-                            let username = document.createElement("h2");
-                            let floId = document.createElement("h3");
-                            let projectName = document.createElement("h4");
-                            let profile = document.createElement("div");
-                            let totalMoneyEarned = document.createElement(
-                                "div"
-                            );
-                            let totalNumberOfTransaction = document.createElement(
-                                "div"
-                            );
-                            let txData = document.createElement("ul");
-                            let red = document.createElement("span");
-                            let totalAmount: number = 0;
-
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
@@ -244,7 +245,6 @@ const main = (ready: boolean): void => {
                                     let amount = t.transaction.floData.match(
                                         /([0-9]+)/
                                     );
-                                    let li = document.createElement("li");
                                     let num = Number(amount[0]);
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
@@ -387,9 +387,16 @@ const main = (ready: boolean): void => {
         function renderList() {
             console.log("==============", receiverList.length);
 
-            console.log("red");
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
+                let heading: HTMLHeadElement = document.createElement("h2")
+                heading.innerText = "RanchiMall Internship BlockChain Contract"
+                heading.style.textAlign = "center"
+                heading.style.width = "100%"
+                heading.style.padding = "2em 0.5em"
+
+                el.appendChild(heading)
+
                 for (let i of finalList) {
                     console.log(
                         "length",
