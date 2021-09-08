@@ -441,7 +441,7 @@ ul {
   gap: 1rem;
   align-items: center;
   position: sticky;
-  padding: 0rem 1.5rem;
+  padding: 0.5rem 1.5rem;
   background: rgba(var(--background-color), 1);
   border-bottom: solid 1px rgba(var(--text-color), 0.16);
   z-index: 2;

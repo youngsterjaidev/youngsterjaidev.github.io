@@ -315,7 +315,7 @@ const main = (ready) => {
             if (finalList.length !== 0) {
                 let el = document.createElement("div");
                 let heading = document.createElement("h2");
-                heading.innerText = "RanchiMall Internship BlockChain Contract";
+                heading.innerText = "RanchiMall Internship Blockchain Contract";
                 heading.style.textAlign = "center";
                 heading.style.width = "100%";
                 heading.style.padding = "2em 0.5em";
@@ -325,17 +325,19 @@ const main = (ready) => {
                     let card = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
+                    let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
                     card.innerHTML = `
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">Rs.${amount[0]}</div>
+                                <div>${i.transactions[0].transaction.blockChainLink}</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
@@ -524,7 +526,8 @@ const main = (ready) => {
                     let num = Number(amount[0]);
                     totalAmount += num;
                     // add the blockChainLink key
-                    intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`;
+                    //intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`;
+                    intern.transaction.blockChainLink = `https://livenet.flocha.in/tx/${intern.transaction.txid}`;
                 });
                 list.totalMoneyEarned = totalAmount;
             });
