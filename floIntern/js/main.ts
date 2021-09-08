@@ -8,10 +8,15 @@ const main = (ready: boolean): void => {
         console.log("JS On Fire");
 
         let _input: HTMLInputElement = document.querySelector("#input");
-        let _backBtn: HTMLElement = document.getElementById("backBtn");
-        let searchToggle: HTMLElement = document.getElementById("searchToggle")
-        let searchOverlay: HTMLElement = document.querySelector(".search-overlay")
-        let searchWrapper: HTMLElement = document.querySelector(".search-wrapper")
+        let _backBtn: HTMLElement = document.querySelector("#logo");
+        let home: HTMLElement = document.getElementById("home");
+        let searchToggle: HTMLElement = document.getElementById("searchToggle");
+        let searchOverlay: HTMLElement = document.querySelector(
+            ".search-overlay"
+        );
+        let searchWrapper: HTMLElement = document.querySelector(
+            ".search-wrapper"
+        );
         let internRating = {};
 
         function getDate(time: number): string {
@@ -20,14 +25,14 @@ const main = (ready: boolean): void => {
             return newTime;
         }
 
-        searchToggle.addEventListener("click", e => {
-            searchWrapper.classList.add('open')
-            _input.focus()
-        })
+        searchToggle.addEventListener("click", (e) => {
+            searchWrapper.classList.add("open");
+            _input.focus();
+        });
 
-        searchOverlay.addEventListener("click", e => {
-            searchWrapper.classList.remove('open')
-        })
+        searchOverlay.addEventListener("click", (e) => {
+            searchWrapper.classList.remove("open");
+        });
 
         _input.addEventListener("input", (e: MouseEvent) => {
             let val = e.target.value;
@@ -57,12 +62,18 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total No. of transaction: ${
+                            i.transactions.length
+                        }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div>${getDate(
+                                    i.transactions[0].transaction.time
+                                )}</div>
+                                <div>${
+                                    i.transactions[0].transaction.floData
+                                }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
@@ -83,12 +94,18 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total No. of transaction: ${
+                            i.transactions.length
+                        }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div>${getDate(
+                                    i.transactions[0].transaction.time
+                                )}</div>
+                                <div>${
+                                    i.transactions[0].transaction.floData
+                                }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
@@ -155,20 +172,6 @@ const main = (ready: boolean): void => {
                     this.setAttribute("userid", val);
                 }
 
-                async fetchTokenInfo(): Promise<void> {
-                    console.log(this.userid);
-                    try {
-                        let r = await fetch(
-                            `https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(
-                                1
-                            )}`
-                        );
-
-                        console.log(r);
-                    } catch (e) {
-                        console.log("Error Occured ", e);
-                    }
-                }
 
                 attributeChangedCallback(name, oldValue, newValue) {
                     if (oldValue !== newValue && this.displayUsername) {
@@ -193,7 +196,6 @@ const main = (ready: boolean): void => {
                         ".userid"
                     );
 
-                    this.fetchTokenInfo();
                 }
 
                 // render the element to the DOM
@@ -210,6 +212,7 @@ const main = (ready: boolean): void => {
                         console.log(myResult);
 
                         myResult.forEach((r) => {
+                            let backBtn = document.createElement("div");
                             let username = document.createElement("h2");
                             let floId = document.createElement("h3");
                             let projectName = document.createElement("h4");
@@ -217,38 +220,46 @@ const main = (ready: boolean): void => {
                             let totalMoneyEarned = document.createElement(
                                 "div"
                             );
-                            let totalNumberOfTransaction = document.createElement("div")
+                            let totalNumberOfTransaction = document.createElement(
+                                "div"
+                            );
+                            let txData = document.createElement("ul");
+                            let red = document.createElement("span");
+                            let totalAmount: number = 0;
+
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
-                            projectName.innerText = `Project - ${r.projectName || "Intern Inactive"
-                                }`;
-                            totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`
+                            projectName.innerText = `Project - ${
+                                r.projectName || "Intern Inactive"
+                            }`;
+                            totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`;
                             username.style.textAlign = "left";
-                            let txData = document.createElement("ul");
-                            let totalAmount: number = 0;
+                            red.innerHTML = "&#8249;";
+                            backBtn.classList.add("back-btn");
+                            backBtn.append(red);
+
                             if (r.transactions.length) {
                                 r.transactions.forEach((t) => {
-                                    let li = document.createElement("li");
-                                    li.style.margin = "1em 0em";
                                     let amount = t.transaction.floData.match(
                                         /([0-9]+)/
                                     );
+                                    let li = document.createElement("li");
                                     let num = Number(amount[0]);
-                                    console.log(num);
-                                    totalAmount += num;
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
                                     let time = getDate(t.transaction.time);
+                                    li.style.margin = "1em 0em";
+                                    totalAmount += num;
                                     li.innerHTML = `
-                                    <div class="card">
-                                        <div>₹${amount[0]}/-</div>
-                                        <div>${time}</div>
-                                        <h3>Transaction Detail</h3>
-                                        <div>Message - ${t.transaction.floData}</div>
-                                        <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
-                                        <a target="_blank" href="${t.transaction.blockChainLink}">${t.transaction.blockChainLink}</a>
-                                    </div>
+                                        <div class="card">
+                                            <div>₹${amount[0]}/-</div>
+                                            <div>${time}</div>
+                                            <h3>Transaction Detail</h3>
+                                            <div>Message - ${t.transaction.floData}</div>
+                                            <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
+                                            <a target="_blank" href="${t.transaction.blockChainLink}">${t.transaction.blockChainLink}</a>
+                                        </div>
                                 `;
                                     txData.appendChild(li);
                                 });
@@ -283,6 +294,11 @@ const main = (ready: boolean): void => {
                                     margin: 1em 0em;
                                 }
 
+                                a {
+                                    padding: 1em 0em;
+                                    color: #64b5f6;
+                                }
+
                                 .profile {
                                     width: 50px;
                                     height: 50px;
@@ -291,9 +307,23 @@ const main = (ready: boolean): void => {
                                     margin-bottom: 1em;
                                 }
 
+                                .back-btn {
+                                    background: rgba(var(--background-color), 1);
+                                    position: sticky;
+                                    top: 0;
+                                    z-index: 2;
+                                }
+
+                                span {
+                                    font-size: 4em;
+                                    display: flex;
+                                    align-items: center;
+                                    cursor: pointer;
+                                }
+
                                 .totalAmount {
                                     position: absolute;
-                                    top: 1em;
+                                    top: 4em;
                                     right: 1em;
                                     font-size: 1.5em;
                                 }
@@ -325,6 +355,7 @@ const main = (ready: boolean): void => {
                                     border-radius: 0.5rem;
                                 }
                             `;
+                            el.appendChild(backBtn);
                             el.appendChild(styling);
                             el.appendChild(profile);
                             el.appendChild(username);
@@ -355,10 +386,15 @@ const main = (ready: boolean): void => {
         // render all the list of the use on to the DOM
         function renderList() {
             console.log("==============", receiverList.length);
+
+            console.log("red");
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
                 for (let i of finalList) {
-                    console.log(i.transactions[i.transactions.length - 1]);
+                    console.log(
+                        "length",
+                        i.transactions[i.transactions.length - 1]
+                    );
                     let card: HTMLAnchorElement = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
@@ -367,12 +403,18 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total No. of transaction: ${
+                            i.transactions.length
+                        }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div>${getDate(
+                                    i.transactions[0].transaction.time
+                                )}</div>
+                                <div>${
+                                    i.transactions[0].transaction.floData
+                                }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
@@ -583,7 +625,7 @@ const main = (ready: boolean): void => {
 
                     totalAmount += num;
                     // add the blockChainLink key
-                    intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`
+                    intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`;
                 });
 
                 list.totalMoneyEarned = totalAmount;

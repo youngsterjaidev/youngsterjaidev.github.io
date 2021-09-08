@@ -2,7 +2,8 @@ const main = (ready) => {
     if (ready) {
         console.log("JS On Fire");
         let _input = document.querySelector("#input");
-        let _backBtn = document.getElementById("backBtn");
+        let _backBtn = document.querySelector("#logo");
+        let home = document.getElementById("home");
         let searchToggle = document.getElementById("searchToggle");
         let searchOverlay = document.querySelector(".search-overlay");
         let searchWrapper = document.querySelector(".search-wrapper");
@@ -12,12 +13,12 @@ const main = (ready) => {
             let newTime = new Date(+stringTime).toDateString();
             return newTime;
         }
-        searchToggle.addEventListener("click", e => {
-            searchWrapper.classList.add('open');
+        searchToggle.addEventListener("click", (e) => {
+            searchWrapper.classList.add("open");
             _input.focus();
         });
-        searchOverlay.addEventListener("click", e => {
-            searchWrapper.classList.remove('open');
+        searchOverlay.addEventListener("click", (e) => {
+            searchWrapper.classList.remove("open");
         });
         _input.addEventListener("input", (e) => {
             let val = e.target.value;
@@ -125,16 +126,6 @@ const main = (ready) => {
             set userid(val) {
                 this.setAttribute("userid", val);
             }
-            async fetchTokenInfo() {
-                console.log(this.userid);
-                try {
-                    let r = await fetch(`https://ranchimallflo.duckdns.org/api/v1.0/getFloAddressDetails?floAddress=${this.userid.slice(1)}`);
-                    console.log(r);
-                }
-                catch (e) {
-                    console.log("Error Occured ", e);
-                }
-            }
             attributeChangedCallback(name, oldValue, newValue) {
                 if (oldValue !== newValue && this.displayUsername) {
                     console.log("----------", this.userid);
@@ -151,7 +142,6 @@ const main = (ready) => {
                 // select the element from the shadow DOM and set the value
                 this.displayUsername = this.shadowRoot.querySelector(".username");
                 this.displayUserId = this.shadowRoot.querySelector(".userid");
-                this.fetchTokenInfo();
             }
             // render the element to the DOM
             render() {
@@ -163,39 +153,43 @@ const main = (ready) => {
                     });
                     console.log(myResult);
                     myResult.forEach((r) => {
+                        let backBtn = document.createElement("div");
                         let username = document.createElement("h2");
                         let floId = document.createElement("h3");
                         let projectName = document.createElement("h4");
                         let profile = document.createElement("div");
                         let totalMoneyEarned = document.createElement("div");
                         let totalNumberOfTransaction = document.createElement("div");
+                        let txData = document.createElement("ul");
+                        let red = document.createElement("span");
+                        let totalAmount = 0;
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
                         projectName.innerText = `Project - ${r.projectName || "Intern Inactive"}`;
                         totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`;
                         username.style.textAlign = "left";
-                        let txData = document.createElement("ul");
-                        let totalAmount = 0;
+                        red.innerHTML = "&#8249;";
+                        backBtn.classList.add("back-btn");
+                        backBtn.append(red);
                         if (r.transactions.length) {
                             r.transactions.forEach((t) => {
-                                let li = document.createElement("li");
-                                li.style.margin = "1em 0em";
                                 let amount = t.transaction.floData.match(/([0-9]+)/);
+                                let li = document.createElement("li");
                                 let num = Number(amount[0]);
-                                console.log(num);
-                                totalAmount += num;
                                 let senderAddress = t.transaction.vin[0].addr;
                                 let time = getDate(t.transaction.time);
+                                li.style.margin = "1em 0em";
+                                totalAmount += num;
                                 li.innerHTML = `
-                                    <div class="card">
-                                        <div>₹${amount[0]}/-</div>
-                                        <div>${time}</div>
-                                        <h3>Transaction Detail</h3>
-                                        <div>Message - ${t.transaction.floData}</div>
-                                        <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
-                                        <a target="_blank" href="${t.transaction.blockChainLink}">${t.transaction.blockChainLink}</a>
-                                    </div>
+                                        <div class="card">
+                                            <div>₹${amount[0]}/-</div>
+                                            <div>${time}</div>
+                                            <h3>Transaction Detail</h3>
+                                            <div>Message - ${t.transaction.floData}</div>
+                                            <div>Sent from - RanchiMall Distribution Address "${senderAddress}"</div>
+                                            <a target="_blank" href="${t.transaction.blockChainLink}">${t.transaction.blockChainLink}</a>
+                                        </div>
                                 `;
                                 txData.appendChild(li);
                             });
@@ -228,6 +222,11 @@ const main = (ready) => {
                                     margin: 1em 0em;
                                 }
 
+                                a {
+                                    padding: 1em 0em;
+                                    color: #64b5f6;
+                                }
+
                                 .profile {
                                     width: 50px;
                                     height: 50px;
@@ -236,9 +235,23 @@ const main = (ready) => {
                                     margin-bottom: 1em;
                                 }
 
+                                .back-btn {
+                                    background: rgba(var(--background-color), 1);
+                                    position: sticky;
+                                    top: 0;
+                                    z-index: 2;
+                                }
+
+                                span {
+                                    font-size: 4em;
+                                    display: flex;
+                                    align-items: center;
+                                    cursor: pointer;
+                                }
+
                                 .totalAmount {
                                     position: absolute;
-                                    top: 1em;
+                                    top: 4em;
                                     right: 1em;
                                     font-size: 1.5em;
                                 }
@@ -270,6 +283,7 @@ const main = (ready) => {
                                     border-radius: 0.5rem;
                                 }
                             `;
+                        el.appendChild(backBtn);
                         el.appendChild(styling);
                         el.appendChild(profile);
                         el.appendChild(username);
@@ -294,10 +308,11 @@ const main = (ready) => {
         // render all the list of the use on to the DOM
         function renderList() {
             console.log("==============", receiverList.length);
+            console.log("red");
             if (finalList.length !== 0) {
                 let el = document.createElement("div");
                 for (let i of finalList) {
-                    console.log(i.transactions[i.transactions.length - 1]);
+                    console.log("length", i.transactions[i.transactions.length - 1]);
                     let card = document.createElement("a");
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
