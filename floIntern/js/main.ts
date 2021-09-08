@@ -216,10 +216,7 @@ const main = (ready: boolean): void => {
                         let totalNumberOfTransaction = document.createElement(
                             "div"
                         );
-                        let txData = document.createElement("ul");
-                        let red = document.createElement("span");
-                        let totalAmount: number = 0;
-                        let li = document.createElement("li");
+                        
 
                         console.log(this.userid.slice(1));
 
@@ -228,6 +225,10 @@ const main = (ready: boolean): void => {
                         });
 
                         myResult.forEach((r) => {
+                        let txData = document.createElement("ul");
+                        let red = document.createElement("span");
+                        let totalAmount: number = 0;
+
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
@@ -249,6 +250,7 @@ const main = (ready: boolean): void => {
                                     let senderAddress =
                                         t.transaction.vin[0].addr;
                                     let time = getDate(t.transaction.time);
+                                    let li = document.createElement("li");
                                     li.style.margin = "1em 0em";
                                     totalAmount += num;
                                     li.innerHTML = `

@@ -159,15 +159,14 @@ const main = (ready) => {
                     let profile = document.createElement("div");
                     let totalMoneyEarned = document.createElement("div");
                     let totalNumberOfTransaction = document.createElement("div");
-                    let txData = document.createElement("ul");
-                    let red = document.createElement("span");
-                    let totalAmount = 0;
-                    let li = document.createElement("li");
                     console.log(this.userid.slice(1));
                     const myResult = finalList.filter((l) => {
                         return this.userid.slice(1) === l.floId;
                     });
                     myResult.forEach((r) => {
+                        let txData = document.createElement("ul");
+                        let red = document.createElement("span");
+                        let totalAmount = 0;
                         profile.classList.add("profile");
                         username.innerText = r.name;
                         floId.innerText = this.userid.slice(1);
@@ -183,6 +182,7 @@ const main = (ready) => {
                                 let num = Number(amount[0]);
                                 let senderAddress = t.transaction.vin[0].addr;
                                 let time = getDate(t.transaction.time);
+                                let li = document.createElement("li");
                                 li.style.margin = "1em 0em";
                                 totalAmount += num;
                                 li.innerHTML = `
