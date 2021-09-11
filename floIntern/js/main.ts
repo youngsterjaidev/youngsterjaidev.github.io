@@ -404,13 +404,21 @@ const main = (ready: boolean): void => {
                         "length",
                         i.transactions[i.transactions.length - 1]
                     );
-                    let card: HTMLAnchorElement = document.createElement("a");
+                    let card: HTMLAnchorElement = document.createElement("div");
+                    let link = document.createElement("a")
+
+                    link.innerText = i.transactions[0].transaction.blockChainLink
+                    link.href = i.transactions[0].transaction.blockChainLink
+                    link.target = "_blank"
+                    link.style.marginTop = "0em"
+
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
                     let amount = i.transactions[0].transaction.floData.match(
                                         /([0-9]+)/
                                     );
                     card.innerHTML = `
+                        <a href="#fdshfjh" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
@@ -427,10 +435,11 @@ const main = (ready: boolean): void => {
                                 <div style="font-size: 2em; padding: 0.5em 0em;">₹${
                                     amount[0]
                                 }</div>
-                                <div>${i.transactions[0].transaction.blockChainLink}</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
+                        </a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                     el.appendChild(card);
                 }
