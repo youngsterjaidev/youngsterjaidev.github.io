@@ -20,6 +20,11 @@ const main = (ready) => {
         searchOverlay.addEventListener("click", (e) => {
             searchWrapper.classList.remove("open");
         });
+        /**
+         * On changing the search input
+         * - Update the DOM and fill the result
+         * - if there is nothing set all the element to the DOM
+         */
         _input.addEventListener("input", (e) => {
             let val = e.target.value;
             window.location.hash = "";
@@ -34,50 +39,74 @@ const main = (ready) => {
                     // ...
                     let el = document.createElement("div");
                     for (let i of list) {
-                        let card = document.createElement("a");
+                        let card = document.createElement("div");
+                        let link = document.createElement("a");
+                        link.innerText =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.href =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.target = "_blank";
+                        link.style.marginTop = "0em";
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
+                        let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
                         card.innerHTML = `
+                        <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
+                        </a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
+                        //
                     }
                     _rootDiv.innerHTML = el.innerHTML;
                 }
                 else {
                     let el = document.createElement("div");
                     for (let i of finalList) {
-                        let card = document.createElement("a");
+                        let card = document.createElement("div");
+                        let link = document.createElement("a");
+                        link.innerText =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.href =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.target = "_blank";
+                        link.style.marginTop = "0em";
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
+                        let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
                         card.innerHTML = `
+                        <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div>${i.transactions[0].transaction.floData}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
+                        </a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
+                        //
                     }
                     _rootDiv.innerHTML = el.innerHTML;
                 }
@@ -101,7 +130,7 @@ const main = (ready) => {
         // filter the transaction of interns from the distributer
         const receiverList = [];
         const internList = [];
-        const finalList = [];
+        let finalList = [];
         customElements.define("my-card", class MyCard extends HTMLElement {
             displayUsername;
             displayUserId;
@@ -142,7 +171,9 @@ const main = (ready) => {
                 // select the element from the shadow DOM and set the value
                 this.displayUsername = this.shadowRoot.querySelector(".username");
                 this.displayUserId = this.shadowRoot.querySelector(".userid");
-                this.shadowRoot.querySelector("span").addEventListener("click", e => {
+                this.shadowRoot
+                    .querySelector("span")
+                    .addEventListener("click", (e) => {
                     // back to the home page
                     window.location.hash = "";
                     _rootDiv.innerHTML = renderList();
@@ -324,7 +355,8 @@ const main = (ready) => {
                     console.log("length", i.transactions[i.transactions.length - 1]);
                     let card = document.createElement("div");
                     let link = document.createElement("a");
-                    link.innerText = i.transactions[0].transaction.blockChainLink;
+                    link.innerText =
+                        i.transactions[0].transaction.blockChainLink;
                     link.href = i.transactions[0].transaction.blockChainLink;
                     link.target = "_blank";
                     link.style.marginTop = "0em";
@@ -536,14 +568,23 @@ const main = (ready) => {
                     //intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`;
                     intern.transaction.blockChainLink = `https://livenet.flocha.in/tx/${intern.transaction.txid}`;
                 });
+                const transactionsDetails = list.transactions.sort((first, second) => {
+                    return second.transaction.time - first.transaction.time;
+                });
                 list.totalMoneyEarned = totalAmount;
+                list.transactions = transactionsDetails;
             });
             console.log("red", finalList);
+            const myArr = finalList.sort((first, second) => {
+                return (second.transactions[0].transaction.time -
+                    first.transactions[0].transaction.time);
+            });
+            finalList = myArr;
         }
         // get the internData after the 3sec I don't know why
         setTimeout(() => {
             getInternData();
-        }, 3000);
+        }, 1000);
         /**
          * Fetch initial transactions
          * - request the distributer transactions from  the server

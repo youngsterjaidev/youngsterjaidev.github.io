@@ -17,6 +17,7 @@ const main = (ready: boolean): void => {
         let searchWrapper: HTMLElement = document.querySelector(
             ".search-wrapper"
         );
+
         let internRating = {};
 
         function getDate(time: number): string {
@@ -34,7 +35,12 @@ const main = (ready: boolean): void => {
             searchWrapper.classList.remove("open");
         });
 
-        _input.addEventListener("input", (e: MouseEvent) => {
+        /**
+         * On changing the search input
+         * - Update the DOM and fill the result
+         * - if there is nothing set all the element to the DOM
+         */
+        _input.addEventListener("input", (e: HashChangeEvent) => {
             let val = e.target.value;
             window.location.hash = "";
 
@@ -53,16 +59,29 @@ const main = (ready: boolean): void => {
                     let el: HTMLDivElement = document.createElement("div");
                     for (let i of list) {
                         let card: HTMLAnchorElement = document.createElement(
-                            "a"
+                            "div"
                         );
+                        let link = document.createElement("a");
+
+                        link.innerText =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.href =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.target = "_blank";
+                        link.style.marginTop = "0em";
+
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
+                        let amount = i.transactions[0].transaction.floData.match(
+                            /([0-9]+)/
+                        );
                         card.innerHTML = `
+                        <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${
+                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
+                        <h5>Total no. of transaction: ${
                             i.transactions.length
                         }</h5>
                         <div class="last-tx">
@@ -71,30 +90,48 @@ const main = (ready: boolean): void => {
                                 <div>${getDate(
                                     i.transactions[0].transaction.time
                                 )}</div>
-                                <div>${
-                                    i.transactions[0].transaction.floData
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
+                                    amount[0]
                                 }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
+                        </a>
+                        <a target="_blank" href="${
+                            i.transactions[0].transaction.blockChainLink
+                        }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
+                        //
                     }
                     _rootDiv.innerHTML = el.innerHTML;
                 } else {
                     let el: HTMLDivElement = document.createElement("div");
                     for (let i of finalList) {
                         let card: HTMLAnchorElement = document.createElement(
-                            "a"
+                            "div"
                         );
+                        let link = document.createElement("a");
+
+                        link.innerText =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.href =
+                            i.transactions[0].transaction.blockChainLink;
+                        link.target = "_blank";
+                        link.style.marginTop = "0em";
+
                         card.classList.add("card");
                         card.href = `#${i.floId}`;
+                        let amount = i.transactions[0].transaction.floData.match(
+                            /([0-9]+)/
+                        );
                         card.innerHTML = `
+                        <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
-                        <h5>Total Amount Paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total No. of transaction: ${
+                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
+                        <h5>Total no. of transaction: ${
                             i.transactions.length
                         }</h5>
                         <div class="last-tx">
@@ -103,14 +140,19 @@ const main = (ready: boolean): void => {
                                 <div>${getDate(
                                     i.transactions[0].transaction.time
                                 )}</div>
-                                <div>${
-                                    i.transactions[0].transaction.floData
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
+                                    amount[0]
                                 }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
+                        </a>
+                        <a target="_blank" href="${
+                            i.transactions[0].transaction.blockChainLink
+                        }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
+                        //
                     }
                     _rootDiv.innerHTML = el.innerHTML;
                 }
@@ -137,7 +179,7 @@ const main = (ready: boolean): void => {
 
         const internList: any[] = [];
 
-        const finalList: any[] = [];
+        let finalList: any[] = [];
 
         customElements.define(
             "my-card",
@@ -195,11 +237,13 @@ const main = (ready: boolean): void => {
                         ".userid"
                     );
 
-                    this.shadowRoot.querySelector("span").addEventListener("click", e => {
-                        // back to the home page
-                        window.location.hash = "";
-                    _rootDiv.innerHTML = renderList();
-                    })
+                    this.shadowRoot
+                        .querySelector("span")
+                        .addEventListener("click", (e) => {
+                            // back to the home page
+                            window.location.hash = "";
+                            _rootDiv.innerHTML = renderList();
+                        });
                 }
 
                 // render the element to the DOM
@@ -216,7 +260,6 @@ const main = (ready: boolean): void => {
                         let totalNumberOfTransaction = document.createElement(
                             "div"
                         );
-                        
 
                         console.log(this.userid.slice(1));
 
@@ -225,9 +268,9 @@ const main = (ready: boolean): void => {
                         });
 
                         myResult.forEach((r) => {
-                        let txData = document.createElement("ul");
-                        let red = document.createElement("span");
-                        let totalAmount: number = 0;
+                            let txData = document.createElement("ul");
+                            let red = document.createElement("span");
+                            let totalAmount: number = 0;
 
                             profile.classList.add("profile");
                             username.innerText = r.name;
@@ -391,13 +434,13 @@ const main = (ready: boolean): void => {
 
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
-                let heading: HTMLHeadElement = document.createElement("h2")
-                heading.innerText = "RanchiMall Internship Blockchain Contract"
-                heading.style.textAlign = "center"
-                heading.style.width = "100%"
-                heading.style.padding = "2em 0.5em"
+                let heading: HTMLHeadElement = document.createElement("h2");
+                heading.innerText = "RanchiMall Internship Blockchain Contract";
+                heading.style.textAlign = "center";
+                heading.style.width = "100%";
+                heading.style.padding = "2em 0.5em";
 
-                el.appendChild(heading)
+                el.appendChild(heading);
 
                 for (let i of finalList) {
                     console.log(
@@ -405,18 +448,19 @@ const main = (ready: boolean): void => {
                         i.transactions[i.transactions.length - 1]
                     );
                     let card: HTMLAnchorElement = document.createElement("div");
-                    let link = document.createElement("a")
+                    let link = document.createElement("a");
 
-                    link.innerText = i.transactions[0].transaction.blockChainLink
-                    link.href = i.transactions[0].transaction.blockChainLink
-                    link.target = "_blank"
-                    link.style.marginTop = "0em"
+                    link.innerText =
+                        i.transactions[0].transaction.blockChainLink;
+                    link.href = i.transactions[0].transaction.blockChainLink;
+                    link.target = "_blank";
+                    link.style.marginTop = "0em";
 
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
                     let amount = i.transactions[0].transaction.floData.match(
-                                        /([0-9]+)/
-                                    );
+                        /([0-9]+)/
+                    );
                     card.innerHTML = `
                         <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
@@ -439,7 +483,9 @@ const main = (ready: boolean): void => {
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
-                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
+                        <a target="_blank" href="${
+                            i.transactions[0].transaction.blockChainLink
+                        }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                     el.appendChild(card);
                 }
@@ -648,19 +694,35 @@ const main = (ready: boolean): void => {
                     totalAmount += num;
                     // add the blockChainLink key
                     //intern.transaction.blockChainLink = `https://livenet.flocha.in/block/${intern.transaction.blockhash}`;
-                    intern.transaction.blockChainLink = `https://livenet.flocha.in/tx/${intern.transaction.txid}`
+                    intern.transaction.blockChainLink = `https://livenet.flocha.in/tx/${intern.transaction.txid}`;
                 });
 
+                const transactionsDetails = list.transactions.sort(
+                    (first, second) => {
+                        return second.transaction.time - first.transaction.time;
+                    }
+                );
+
                 list.totalMoneyEarned = totalAmount;
+                list.transactions = transactionsDetails;
             });
 
             console.log("red", finalList);
+
+            const myArr = finalList.sort((first, second) => {
+                return (
+                    second.transactions[0].transaction.time -
+                    first.transactions[0].transaction.time
+                );
+            });
+
+            finalList = myArr;
         }
 
         // get the internData after the 3sec I don't know why
         setTimeout(() => {
             getInternData();
-        }, 3000);
+        }, 1000);
 
         /**
          * Fetch initial transactions
