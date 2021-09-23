@@ -1,6 +1,13 @@
 const main = (ready) => {
     if (ready) {
-        console.log("JS On Fire");
+        document.body.addEventListener("keypress", e => {
+            console.log(e);
+            if (e.key === "/") {
+                searchWrapper.classList.add("open");
+                let el = document.getElementById("input");
+                el.focusIn();
+            }
+        });
         let _input = document.querySelector("#input");
         let _backBtn = document.querySelector("#logo");
         let home = document.getElementById("home");
@@ -28,13 +35,11 @@ const main = (ready) => {
         _input.addEventListener("input", (e) => {
             let val = e.target.value;
             window.location.hash = "";
-            console.log(val);
             if (finalList.length !== 0) {
                 const list = finalList.filter((element) => {
                     let newUserName = element.name.slice(0, val.length);
                     return newUserName.toLowerCase() === val.toLowerCase();
                 });
-                console.log(list);
                 if (list.length) {
                     // ...
                     let el = document.createElement("div");
@@ -157,7 +162,6 @@ const main = (ready) => {
             }
             attributeChangedCallback(name, oldValue, newValue) {
                 if (oldValue !== newValue && this.displayUsername) {
-                    console.log("----------", this.userid);
                     this.displayUsername.innerText = this.username;
                     this.displayUserId.innerText = this.userid;
                 }
@@ -190,7 +194,6 @@ const main = (ready) => {
                     let profile = document.createElement("div");
                     let totalMoneyEarned = document.createElement("div");
                     let totalNumberOfTransaction = document.createElement("div");
-                    console.log(this.userid.slice(1));
                     const myResult = finalList.filter((l) => {
                         return this.userid.slice(1) === l.floId;
                     });
@@ -234,7 +237,6 @@ const main = (ready) => {
                             li.innerText = "No Transaction Found";
                             txData.appendChild(li);
                         }
-                        console.log(totalAmount);
                         totalMoneyEarned.classList.add("totalAmount");
                         totalMoneyEarned.innerHTML = `
                                 <div>₹${totalAmount}</div>
@@ -320,7 +322,7 @@ const main = (ready) => {
                             `;
                         el.appendChild(backBtn);
                         el.appendChild(styling);
-                        el.appendChild(profile);
+                        //el.appendChild(profile);
                         el.appendChild(username);
                         el.appendChild(floId);
                         el.appendChild(projectName);
@@ -328,7 +330,6 @@ const main = (ready) => {
                         el.appendChild(totalNumberOfTransaction);
                         el.appendChild(txData);
                     });
-                    console.log(el);
                     return el.innerHTML;
                 }
             }
@@ -342,7 +343,6 @@ const main = (ready) => {
         const _rootDiv = document.getElementById("uInfo");
         // render all the list of the use on to the DOM
         function renderList() {
-            console.log("==============", receiverList.length);
             if (finalList.length !== 0) {
                 let el = document.createElement("div");
                 let heading = document.createElement("h2");
@@ -352,7 +352,6 @@ const main = (ready) => {
                 heading.style.padding = "2em 0.5em";
                 el.appendChild(heading);
                 for (let i of finalList) {
-                    console.log("length", i.transactions[i.transactions.length - 1]);
                     let card = document.createElement("div");
                     let link = document.createElement("a");
                     link.innerText =
@@ -379,6 +378,7 @@ const main = (ready) => {
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
+                        <div style="margin: 0.5em 0em;">View last payment blockchain</div>
                         <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                     el.appendChild(card);
@@ -422,7 +422,6 @@ const main = (ready) => {
             let val = Object.keys(routes)[0];
             if (val === route) {
                 _rootDiv.innerHTML = renderList();
-                console.log(receiverList.length);
             }
             else {
                 _rootDiv.innerHTML = renderDetail();
@@ -469,7 +468,6 @@ const main = (ready) => {
                         "FUkY9k9mVVxPzYA8uUGxUuLVH6CB83Nb9r",
                     ],
                 });
-                console.log("Inter: ", r);
                 if (r) {
                     console.log("intern Data from the server ", r);
                     let i = floGlobals.appObjects.RIBC.internList;
@@ -478,7 +476,6 @@ const main = (ready) => {
                             floId: key,
                             floUserName: i[key],
                         });
-                        console.table(i);
                     }
                     // fetch all the data and pack together
                     fetchInternData();
@@ -540,7 +537,6 @@ const main = (ready) => {
                 let val = tragetList[key].internId;
                 // get the index out of that
                 let index = finalList.findIndex((el) => el.floId === val);
-                console.log("++++++++++++++", index, val);
                 // if it exists
                 if (index > -1) {
                     finalList[index].projectName = tragetList[key].projectName;
@@ -574,7 +570,6 @@ const main = (ready) => {
                 list.totalMoneyEarned = totalAmount;
                 list.transactions = transactionsDetails;
             });
-            console.log("red", finalList);
             const myArr = finalList.sort((first, second) => {
                 return (second.transactions[0].transaction.time -
                     first.transactions[0].transaction.time);
@@ -598,10 +593,8 @@ const main = (ready) => {
             floBlockchainAPI
                 .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
                 .then((r) => {
-                console.log(r);
                 // loop over the response transactions
                 r.forEach((user) => {
-                    console.log(user);
                     // sending all the transaction to the new array
                     receiverList.push({
                         floId: user.vout[0].scriptPubKey.addresses[0],
@@ -625,7 +618,6 @@ const main = (ready) => {
                     }
                 }
                 bundleAllData();
-                console.table(finalList);
                 // re-render the DOM
                 _rootDiv.innerHTML = renderList();
             }, console.error);

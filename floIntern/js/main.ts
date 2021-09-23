@@ -5,7 +5,15 @@ type Path = {
 
 const main = (ready: boolean): void => {
     if (ready) {
-        console.log("JS On Fire");
+
+        document.body.addEventListener("keypress", e => {
+            console.log(e)
+            if (e.key === "/") {
+                searchWrapper.classList.add("open");
+                let el = document.getElementById("input")
+                el.focusIn()
+            }
+        })
 
         let _input: HTMLInputElement = document.querySelector("#input");
         let _backBtn: HTMLElement = document.querySelector("#logo");
@@ -44,15 +52,12 @@ const main = (ready: boolean): void => {
             let val = e.target.value;
             window.location.hash = "";
 
-            console.log(val);
 
             if (finalList.length !== 0) {
                 const list = finalList.filter((element): boolean => {
                     let newUserName: string = element.name.slice(0, val.length);
                     return newUserName.toLowerCase() === val.toLowerCase();
                 });
-
-                console.log(list);
 
                 if (list.length) {
                     // ...
@@ -81,25 +86,22 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${
-                            i.transactions.length
-                        }</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length
+                            }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(
-                                    i.transactions[0].transaction.time
-                                )}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
-                                    amount[0]
-                                }</div>
+                                i.transactions[0].transaction.time
+                            )}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]
+                            }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
-                        <a target="_blank" href="${
-                            i.transactions[0].transaction.blockChainLink
-                        }">${i.transactions[0].transaction.blockChainLink}</a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink
+                            }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
                         //
@@ -131,25 +133,22 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${
-                            i.transactions.length
-                        }</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length
+                            }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(
-                                    i.transactions[0].transaction.time
-                                )}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
-                                    amount[0]
-                                }</div>
+                                i.transactions[0].transaction.time
+                            )}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]
+                            }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
-                        <a target="_blank" href="${
-                            i.transactions[0].transaction.blockChainLink
-                        }">${i.transactions[0].transaction.blockChainLink}</a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink
+                            }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                         el.appendChild(card);
                         //
@@ -216,7 +215,6 @@ const main = (ready: boolean): void => {
 
                 attributeChangedCallback(name, oldValue, newValue) {
                     if (oldValue !== newValue && this.displayUsername) {
-                        console.log("----------", this.userid);
                         this.displayUsername.innerText = this.username;
                         this.displayUserId.innerText = this.userid;
                     }
@@ -261,8 +259,6 @@ const main = (ready: boolean): void => {
                             "div"
                         );
 
-                        console.log(this.userid.slice(1));
-
                         const myResult = finalList.filter((l) => {
                             return this.userid.slice(1) === l.floId;
                         });
@@ -275,9 +271,8 @@ const main = (ready: boolean): void => {
                             profile.classList.add("profile");
                             username.innerText = r.name;
                             floId.innerText = this.userid.slice(1);
-                            projectName.innerText = `Project - ${
-                                r.projectName || "Intern Inactive"
-                            }`;
+                            projectName.innerText = `Project - ${r.projectName || "Intern Inactive"
+                                }`;
                             totalNumberOfTransaction.innerText = `Total Number of transactions - ${r.transactions.length}`;
                             username.style.textAlign = "left";
                             red.innerHTML = "&#8249;";
@@ -314,7 +309,6 @@ const main = (ready: boolean): void => {
                                 txData.appendChild(li);
                             }
 
-                            console.log(totalAmount);
                             totalMoneyEarned.classList.add("totalAmount");
                             totalMoneyEarned.innerHTML = `
                                 <div>₹${totalAmount}</div>
@@ -402,7 +396,7 @@ const main = (ready: boolean): void => {
                             `;
                             el.appendChild(backBtn);
                             el.appendChild(styling);
-                            el.appendChild(profile);
+                            //el.appendChild(profile);
                             el.appendChild(username);
                             el.appendChild(floId);
                             el.appendChild(projectName);
@@ -410,8 +404,6 @@ const main = (ready: boolean): void => {
                             el.appendChild(totalNumberOfTransaction);
                             el.appendChild(txData);
                         });
-
-                        console.log(el);
 
                         return el.innerHTML;
                     }
@@ -430,7 +422,6 @@ const main = (ready: boolean): void => {
 
         // render all the list of the use on to the DOM
         function renderList() {
-            console.log("==============", receiverList.length);
 
             if (finalList.length !== 0) {
                 let el: HTMLDivElement = document.createElement("div");
@@ -443,10 +434,6 @@ const main = (ready: boolean): void => {
                 el.appendChild(heading);
 
                 for (let i of finalList) {
-                    console.log(
-                        "length",
-                        i.transactions[i.transactions.length - 1]
-                    );
                     let card: HTMLAnchorElement = document.createElement("div");
                     let link = document.createElement("a");
 
@@ -467,24 +454,22 @@ const main = (ready: boolean): void => {
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${
-                            i.transactions.length
+                        <h5>Total no. of transaction: ${i.transactions.length
                         }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
                                 <div>${getDate(
-                                    i.transactions[0].transaction.time
-                                )}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${
-                                    amount[0]
-                                }</div>
+                            i.transactions[0].transaction.time
+                        )}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]
+                        }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
-                        <a target="_blank" href="${
-                            i.transactions[0].transaction.blockChainLink
+                        <div style="margin: 0.5em 0em;">View last payment blockchain</div>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink
                         }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                     el.appendChild(card);
@@ -530,7 +515,6 @@ const main = (ready: boolean): void => {
             let val = Object.keys(routes)[0];
             if (val === route) {
                 _rootDiv.innerHTML = renderList();
-                console.log(receiverList.length);
             } else {
                 _rootDiv.innerHTML = renderDetail();
             }
@@ -583,8 +567,6 @@ const main = (ready: boolean): void => {
                     ],
                 });
 
-                console.log("Inter: ", r);
-
                 if (r) {
                     console.log("intern Data from the server ", r);
                     let i = floGlobals.appObjects.RIBC.internList;
@@ -595,7 +577,6 @@ const main = (ready: boolean): void => {
                             floUserName: i[key],
                         });
 
-                        console.table(i);
                     }
 
                     // fetch all the data and pack together
@@ -664,7 +645,6 @@ const main = (ready: boolean): void => {
                 // get the index out of that
                 let index = finalList.findIndex((el) => el.floId === val);
 
-                console.log("++++++++++++++", index, val);
 
                 // if it exists
                 if (index > -1) {
@@ -707,7 +687,6 @@ const main = (ready: boolean): void => {
                 list.transactions = transactionsDetails;
             });
 
-            console.log("red", finalList);
 
             const myArr = finalList.sort((first, second) => {
                 return (
@@ -737,10 +716,8 @@ const main = (ready: boolean): void => {
             floBlockchainAPI
                 .readAllTxs("FThgnJLcuStugLc24FJQggmp2WgaZjrBSn", "", "")
                 .then((r) => {
-                    console.log(r);
                     // loop over the response transactions
                     r.forEach((user) => {
-                        console.log(user);
                         // sending all the transaction to the new array
                         receiverList.push({
                             floId: user.vout[0].scriptPubKey.addresses[0],
@@ -767,7 +744,6 @@ const main = (ready: boolean): void => {
                     }
 
                     bundleAllData();
-                    console.table(finalList);
 
                     // re-render the DOM
                     _rootDiv.innerHTML = renderList();
