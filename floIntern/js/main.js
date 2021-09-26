@@ -1,8 +1,8 @@
 const main = (ready) => {
     if (ready) {
-        document.body.addEventListener("keypress", e => {
-            console.log(e);
+        document.body.addEventListener("keydown", e => {
             if (e.key === "/") {
+                e.preventDefault();
                 searchWrapper.classList.add("open");
                 let el = document.getElementById("input");
                 el.focusIn();
@@ -14,17 +14,19 @@ const main = (ready) => {
         let searchToggle = document.getElementById("searchToggle");
         let searchOverlay = document.querySelector(".search-overlay");
         let searchWrapper = document.querySelector(".search-wrapper");
+        let _getTemplate = document.getElementById("myTemplate");
+        let _cardTemplate = document.getElementById("cardTemplate");
         let internRating = {};
         function getDate(time) {
             let stringTime = time + "000";
             let newTime = new Date(+stringTime).toDateString();
             return newTime;
         }
-        searchToggle.addEventListener("click", (e) => {
+        searchToggle.addEventListener("click", () => {
             searchWrapper.classList.add("open");
             _input.focus();
         });
-        searchOverlay.addEventListener("click", (e) => {
+        searchOverlay.addEventListener("click", () => {
             searchWrapper.classList.remove("open");
         });
         /**
@@ -41,79 +43,10 @@ const main = (ready) => {
                     return newUserName.toLowerCase() === val.toLowerCase();
                 });
                 if (list.length) {
-                    // ...
-                    let el = document.createElement("div");
-                    for (let i of list) {
-                        let card = document.createElement("div");
-                        let link = document.createElement("a");
-                        link.innerText =
-                            i.transactions[0].transaction.blockChainLink;
-                        link.href =
-                            i.transactions[0].transaction.blockChainLink;
-                        link.target = "_blank";
-                        link.style.marginTop = "0em";
-                        card.classList.add("card");
-                        card.href = `#${i.floId}`;
-                        let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
-                        card.innerHTML = `
-                        <a href="#${i.floId}" style="position: relative;">
-                        <div class="profile"></div>
-                        <h3>${i.name}</h3>
-                        <h5>${i.floId}</h5>
-                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
-                        <div class="last-tx">
-                            <div>Last transaction </div>
-                            <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
-                            </div>
-                        </div>
-                        <div>${internRating[i.floId]}</div>
-                        </a>
-                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
-                    `;
-                        el.appendChild(card);
-                        //
-                    }
-                    _rootDiv.innerHTML = el.innerHTML;
+                    _rootDiv.innerHTML = renderList(list);
                 }
                 else {
-                    let el = document.createElement("div");
-                    for (let i of finalList) {
-                        let card = document.createElement("div");
-                        let link = document.createElement("a");
-                        link.innerText =
-                            i.transactions[0].transaction.blockChainLink;
-                        link.href =
-                            i.transactions[0].transaction.blockChainLink;
-                        link.target = "_blank";
-                        link.style.marginTop = "0em";
-                        card.classList.add("card");
-                        card.href = `#${i.floId}`;
-                        let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
-                        card.innerHTML = `
-                        <a href="#${i.floId}" style="position: relative;">
-                        <div class="profile"></div>
-                        <h3>${i.name}</h3>
-                        <h5>${i.floId}</h5>
-                        <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
-                        <div class="last-tx">
-                            <div>Last transaction </div>
-                            <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
-                            </div>
-                        </div>
-                        <div>${internRating[i.floId]}</div>
-                        </a>
-                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
-                    `;
-                        el.appendChild(card);
-                        //
-                    }
-                    _rootDiv.innerHTML = el.innerHTML;
+                    _rootDiv.innerHTML = renderList(finalList);
                 }
             }
             else {
@@ -288,7 +221,7 @@ const main = (ready) => {
 
                                 .totalAmount {
                                     position: absolute;
-                                    top: 4em;
+                                    top: 1em;
                                     right: 1em;
                                     font-size: 1.5em;
                                 }
@@ -320,7 +253,7 @@ const main = (ready) => {
                                     border-radius: 0.5rem;
                                 }
                             `;
-                        el.appendChild(backBtn);
+                        //el.appendChild(backBtn);
                         el.appendChild(styling);
                         //el.appendChild(profile);
                         el.appendChild(username);
@@ -342,47 +275,96 @@ const main = (ready) => {
         };
         const _rootDiv = document.getElementById("uInfo");
         // render all the list of the use on to the DOM
-        function renderList() {
+        /*function renderList() {
+
             if (finalList.length !== 0) {
-                let el = document.createElement("div");
-                let heading = document.createElement("h2");
+                let el: HTMLDivElement = document.createElement("div");
+                let heading: HTMLHeadElement = document.createElement("h2");
                 heading.innerText = "RanchiMall Internship Blockchain Contract";
                 heading.style.textAlign = "center";
                 heading.style.width = "100%";
                 heading.style.padding = "2em 0.5em";
+
                 el.appendChild(heading);
+
                 for (let i of finalList) {
-                    let card = document.createElement("div");
+                    let card: HTMLAnchorElement = document.createElement("div");
                     let link = document.createElement("a");
+
                     link.innerText =
                         i.transactions[0].transaction.blockChainLink;
                     link.href = i.transactions[0].transaction.blockChainLink;
                     link.target = "_blank";
                     link.style.marginTop = "0em";
+
                     card.classList.add("card");
                     card.href = `#${i.floId}`;
-                    let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
+                    let amount = i.transactions[0].transaction.floData.match(
+                        /([0-9]+)/
+                    );
                     card.innerHTML = `
                         <a href="#${i.floId}" style="position: relative;">
                         <div class="profile"></div>
                         <h3>${i.name}</h3>
                         <h5>${i.floId}</h5>
                         <h5>Total amount paid: ₹${i.totalMoneyEarned}</h5>
-                        <h5>Total no. of transaction: ${i.transactions.length}</h5>
+                        <h5>Total no. of transaction: ${i.transactions.length
+                        }</h5>
                         <div class="last-tx">
                             <div>Last transaction </div>
                             <div class="last-tx-content">
-                                <div>${getDate(i.transactions[0].transaction.time)}</div>
-                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]}</div>
+                                <div>${getDate(
+                            i.transactions[0].transaction.time
+                        )}</div>
+                                <div style="font-size: 2em; padding: 0.5em 0em;">₹${amount[0]
+                        }</div>
                             </div>
                         </div>
                         <div>${internRating[i.floId]}</div>
                         </a>
                         <div style="margin: 0.5em 0em;">View last payment blockchain</div>
-                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink}">${i.transactions[0].transaction.blockChainLink}</a>
+                        <a target="_blank" href="${i.transactions[0].transaction.blockChainLink
+                        }">${i.transactions[0].transaction.blockChainLink}</a>
                     `;
                     el.appendChild(card);
                 }
+                return el.innerHTML;
+            } else {
+                return `
+                        <h1 style="
+                            text-align: center;
+                            width: 100%;
+                            display: grid;
+                            place-items: center;
+                            height: 50vh;
+                        ">Loading...</h1>
+                    `;
+            }
+        }*/
+        function renderList(data) {
+            // check if the finallist have any length
+            if (data.length !== 0) {
+                // get the template from the DOM
+                // get the deep copy the template
+                let node = _getTemplate.content.cloneNode(true);
+                for (let i of data) {
+                    let amount = i.transactions[0].transaction.floData.match(/([0-9]+)/);
+                    //
+                    let cardNode = _cardTemplate.content.cloneNode(true);
+                    cardNode.querySelector(".link").href = `#${i.floId}`;
+                    cardNode.querySelector(".heading-name").textContent = i.name;
+                    cardNode.querySelector(".heading-floId").textContent = i.floId;
+                    cardNode.querySelector(".total-money-earned").textContent = `Total Amount Paid:₹${i.totalMoneyEarned}`;
+                    cardNode.querySelector(".number-of-transaction").textContent = `Total Number of transaction : ${i.transactions.length}`;
+                    cardNode.querySelector(".last-tx-content").textContent = getDate(i.transactions[0].transaction.time);
+                    cardNode.querySelector(".last-tx-amount").textContent = `₹${amount[0]}`;
+                    cardNode.querySelector(".intern-rating").textContent = internRating[i.floId];
+                    cardNode.querySelector(".blockchain-link").href = i.transactions[0].transaction.blockChainLink;
+                    node.querySelector(".card-wrapper").appendChild(cardNode);
+                }
+                let el = document.createElement("div");
+                el.appendChild(node);
+                console.log(el.innerHTML);
                 return el.innerHTML;
             }
             else {
@@ -408,7 +390,7 @@ const main = (ready) => {
             `;
         }
         let routes = {
-            "#": renderList(),
+            "#": renderList(finalList),
             "#detail": renderDetail(),
         };
         /**
@@ -421,7 +403,7 @@ const main = (ready) => {
             // ...
             let val = Object.keys(routes)[0];
             if (val === route) {
-                _rootDiv.innerHTML = renderList();
+                _rootDiv.innerHTML = renderList(finalList);
             }
             else {
                 _rootDiv.innerHTML = renderDetail();
@@ -437,7 +419,7 @@ const main = (ready) => {
             handleRender(path.current);
         });
         // render the home page default
-        _rootDiv.innerHTML = renderList();
+        _rootDiv.innerHTML = renderList(finalList);
         // Go the home page
         _backBtn.addEventListener("click", () => {
             window.location.hash = "";
@@ -619,7 +601,7 @@ const main = (ready) => {
                 }
                 bundleAllData();
                 // re-render the DOM
-                _rootDiv.innerHTML = renderList();
+                _rootDiv.innerHTML = renderList(finalList);
             }, console.error);
         }
     }
