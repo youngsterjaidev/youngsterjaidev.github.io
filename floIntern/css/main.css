@@ -91,6 +91,12 @@ ul {
   padding: 0.5em;
 }
 
+.input-icon {
+    padding: 0.2em 0.4em;
+    border-radius: 5px;
+    border: 1px solid rgba(var(--text-color), 1);
+}
+
 .profile {
     width: 50px;
     height: 50px;
@@ -503,8 +509,8 @@ sm-tab {
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  width: 100%;
-  min-width: 20rem;
+  /*width: 100%;*/
+  /*min-width: 20rem;*/
   border-radius: 0.5rem;
   margin: 1rem 0.5em;
   margin-bottom: 0.4em;
@@ -516,8 +522,8 @@ sm-tab {
 
 .card > a > div:nth-of-type(3) {
         position: absolute;
-        right: 0em;
-        top: 0em;
+        right: 1em;
+        top: 1em;
         padding: 0.5em;
         border-radius: 1rem;
         background-color: rgba(var(--background-color));
@@ -539,11 +545,4 @@ sm-tab {
   }
 }
 
-@media screen and (min-width: 1000px) {
-    .app {
-        justify-content: space-around;
-    }
-    .card {
-        flex: 0 0;
-    }
-}
+
