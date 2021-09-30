@@ -354,10 +354,10 @@ const main = (ready) => {
                     cardNode.querySelector(".link").href = `#${i.floId}`;
                     cardNode.querySelector(".heading-name").textContent = i.name;
                     cardNode.querySelector(".heading-floId").textContent = i.floId;
-                    cardNode.querySelector(".total-money-earned").textContent = `Total Amount Paid:₹${i.totalMoneyEarned}`;
-                    cardNode.querySelector(".number-of-transaction").textContent = `Total Number of transaction : ${i.transactions.length}`;
+                    cardNode.querySelector(".total-money-earned").textContent = `Total amount paid: ₹${i.totalMoneyEarned}`;
+                    cardNode.querySelector(".number-of-transaction").textContent = `Total number of transactions: ${i.transactions.length}`;
                     cardNode.querySelector(".last-tx-content").textContent = getDate(i.transactions[0].transaction.time);
-                    cardNode.querySelector(".last-tx-amount").textContent = `₹${amount[0]}`;
+                    cardNode.querySelector(".last-tx-amount").textContent = `₹${amount[0]}/-`;
                     cardNode.querySelector(".intern-rating").textContent = internRating[i.floId];
                     cardNode.querySelector(".blockchain-link").href = i.transactions[0].transaction.blockChainLink;
                     node.querySelector(".card-wrapper").appendChild(cardNode);
