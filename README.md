@@ -1,5 +1,7 @@
 # youngsterjaidev.github.io
 
+### [Resume](https://youngsterjaidev.github.io/assets/resumes/jai_resume.pdf)
+
 Protfolio versions:
 
 ### [v1 - With Service Worker](https://youngsterjaidev.github.io/v1)
