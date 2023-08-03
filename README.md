@@ -11,3 +11,9 @@ Protfolio versions:
 ### [v3 - With HTML and CSS](https://youngsterjaidev.github.io/v2)
 
 ### [v4 - With ThreeJS](https://youngsterjaidev.github.io/v4)
+
+Projects
+
+### - [BlackBaas](/docs/baas)
+
+### - [Alaric](https://alaric.co.in)
