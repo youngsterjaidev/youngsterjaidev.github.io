@@ -1,0 +1,48 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Oswald", sans-serif;
+}
+
+h1 {
+  font-size: 6rem;
+  margin: 0;
+}
+
+h3 {
+  margin: 0;
+}
+
+body > main {
+  height: 100vh;
+  display: flex;
+}
+
+body section {
+  background-color: #fff;
+  flex: 1;
+  display: flex;
+  padding: 5rem 0 5rem 6rem;
+}
+
+body section:nth-of-type(2) {
+  background-color: #d89c55;
+  padding: 5rem 6rem 5rem 0rem;
+}
+
+body section > div {
+  background-color: #000000e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  width: 100%;
+  box-shadow: 0px 0px 11px 0px #000000ad;
+}
+
+body section:nth-of-type(2) > div {
+  background: url("/assets/profile.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* filter: grayscale(1); */
+}
