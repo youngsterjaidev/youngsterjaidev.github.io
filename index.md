@@ -17,3 +17,5 @@ Projects
 ### - [BlackBaas](/docs/baas)
 
 ### - [Alaric](https://alaric.co.in)
+
+### - [Themysticroutes](https://themysticroutes.netlify.app/)
