@@ -1,4 +1,3 @@
-# Hi I am JAI DEV 
 ## I am an experienced Web Developer and DevOps Professional with a passion for web development and cloud computing
 
 # [Resume](https://youngsterjaidev.github.io/assets/resumes/jai_resume.pdf)
@@ -58,6 +57,7 @@ Technology Used
 - GCP (Google Cloud Plateform)
 
 ### [Themysticroutes](https://themysticroutes.netlify.app/)
+TheMyticRoutes is a complete web platform that simplifies the process of booking memorable hill station trips. Our user-friendly website seeks to meet the different demands of visitors looking to experience the spectacular beauty and quiet of the hills.
 
 #### [https://github.com/youngsterjaidev/themysticroutes](https://github.com/youngsterjaidev/themysticroutes)
 
