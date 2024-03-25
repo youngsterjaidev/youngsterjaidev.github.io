@@ -1,6 +1,6 @@
 ## I am an experienced Web Developer and DevOps Professional with a passion for web development and cloud computing
 
-# [Resume](https://youngsterjaidev.github.io/assets/resumes/jai-resume.pdf)
+# [Resume](https://youngsterjaidev.github.io/resumes/jai-resume.pdf)
 
 ### Lets Connect 
 - [LINKED IN  - /in/devjai](https://www.linkedin.com/in/devjai/) 
