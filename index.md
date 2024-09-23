@@ -68,3 +68,5 @@ Technology Used
 - ReactJS
 - NodeJS
 - MongoDB
+
+https://www.figma.com/board/SA4XK9vzaOtrZL3Fd6Hp2c/Untitled?node-id=0-1&t=em7o15PqdIMLn4r9-1
