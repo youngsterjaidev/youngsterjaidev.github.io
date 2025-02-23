@@ -416,6 +416,19 @@ body.dark-theme footer .social-icons a:hover {
   color: #f39c12; /* Change hover color to match the dark theme */
 }
 
+.profile-info #skills > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+#projects a::after {
+  content: attr(href);
+  color: #000;
+  display: block;
+  font-style: italic;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .header-profile-container {

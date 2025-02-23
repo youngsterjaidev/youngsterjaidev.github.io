@@ -1,280 +1,412 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portfolio</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    <style>
-      body {
-        overflow: hidden;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="theme-toggle">
-      <input type="checkbox" id="theme-toggle-checkbox" />
-      <label for="theme-toggle-checkbox" class="theme-toggle-label">
-        <i class="fas fa-sun"></i>
-        <i class="fas fa-moon"></i>
-      </label>
-    </div>
-    <div class="header-profile-container">
-      <!-- Removed header element -->
-      <div class="profile-container">
-        <div class="profile-pic">
-          <!-- <img src="https://via.placeholder.com/150" alt="Profile Picture" /> -->
-          <!-- <img src="/assets/profile.webp" alt="Profile Picture" /> -->
-          <nav>
-            <ul>
-              <li><a href="#profile">Profile</a></li>
-              <li><a href="#skills">Skills</a></li>
-              <li><a href="#certifications">Certifications</a></li>
-              <li><a href="#experience">Experience</a></li>
-              <li><a href="#projects">Projects</a></li>
-              <li><a href="#contact">Contact</a></li>
-            </ul>
-          </nav>
-        </div>
-        <div class="profile-info">
-          <section id="profile">
-            <h1>Jai Dev</h1>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <style>
+    body {
+      overflow: hidden;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="theme-toggle">
+    <input type="checkbox" id="theme-toggle-checkbox" />
+    <label for="theme-toggle-checkbox" class="theme-toggle-label">
+      <i class="fas fa-sun"></i>
+      <i class="fas fa-moon"></i>
+    </label>
+  </div>
+  <div class="header-profile-container">
+    <!-- Removed header element -->
+    <div class="profile-container">
+      <div class="profile-pic">
+        <!-- <img src="https://via.placeholder.com/150" alt="Profile Picture" /> -->
+        <!-- <img src="/assets/profile.webp" alt="Profile Picture" /> -->
+        <nav>
+          <ul>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#certifications">Certifications</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="profile-info">
+        <section id="profile">
+          <h1>Jai Dev</h1>
+          <p>
+            I am an experienced web developer and DevOps professional with a passion for web development and cloud
+            computing. I have a strong foundation in both front-end and back-end technologies. I am well-versed in cloud
+            computing platforms and use cloud services to create scalable and robust solutions. I am dedicated to
+            lifelong
+            learning and remaining current on industry trends, offering a dynamic and adaptive approach to every project
+            I
+            work on
+          </p>
+          <p>
+            Worked on various projects including natural language processing,
+            computer vision, and predictive analytics. Adept at developing
+            machine learning models and deploying them in production.
+          </p>
+        </section>
+        <section id="skills">
+          <h2>Skills</h2>
+          <div>
+            <article>
+              <h3>Programming Languages</h3>
+              <ul>
+                <li>Python</li>
+                <li>Java</li>
+                <li>C</li>
+                <li>C++</li>
+                <li>PHP</li>
+                <li>Rust</li>
+                <li>JavaScript</li>
+                <li>TypeScript</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Web Development</h3>
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>ReactJS</li>
+                <li>VueJS</li>
+                <li>AngularJs</li>
+                <li>Node.js</li>
+                <li>Full Stack Development</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Databases</h3>
+              <ul>
+                <li>MongoDB</li>
+                <li>MySQL</li>
+                <li>AWS RDS</li>
+                <li>AWS Aurora</li>
+                <li>Azure Cosmos DB</li>
+                <li>PostgreSQL</li>
+              </ul>
+            </article>
+            <article>
+              <h3>DevOps Tools</h3>
+              <ul>
+                <li>AWS</li>
+                <li>Azure</li>
+                <li>Google Cloud Platform (GCP)</li>
+                <li>Docker</li>
+                <li>Kubernetes</li>
+                <li>Linux</li>
+                <li>Bash</li>
+                <li>Shell Scripting</li>
+                <li>Git</li>
+                <li>GitHub</li>
+                <li>GitLab</li>
+                <li>Azure Repos</li>
+              </ul>
+            </article>
+            <article>
+              <h3>Productivity Tools</h3>
+              <ul>
+                <li>JIRA</li>
+                <li>Heroku</li>
+                <li>Netlify</li>
+                <li>Blender</li>
+              </ul>
+            </article>
+            <article>
+              <h3>AI and Machine Learning</h3>
+              <ul>
+                <li>AI Training</li>
+                <li>Machine Learning</li>
+                <li>Deep Learning</li>
+                <li>Natural Language Processing</li>
+                <li>Data Science</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+        <section id="certifications">
+          <h2>Certifications</h2>
+          <div class="certification-grid">
+            <div class="certification-item">
+              <img src="https://images.credly.com/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png"
+                alt="AWS Solution Architect Associate Badge" width="100" />
+              <div class="certification-info">
+                <h3>AWS Solution Architect Associate</h3>
+                <p>
+                  Certified AWS Solution Architect with expertise in designing
+                  and deploying scalable systems on AWS.
+                </p>
+              </div>
+            </div>
+            <div class="certification-item">
+              <img
+                src="https://learn.microsoft.com/en-gb/media/learn/certification/badges/microsoft-certified-associate-badge.svg"
+                alt="Azure Developer Associate Badge" width="100" />
+              <div class="certification-info">
+                <h3>Azure Developer Associate</h3>
+                <p>
+                  Certified Azure Developer with experience in building,
+                  testing, and maintaining cloud applications and services on
+                  Microsoft Azure.
+                </p>
+              </div>
+            </div>
+            <div class="certification-item">
+              <img src="https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png"
+                alt="AWS Cloud Practitioner Badge" width="100" />
+              <div class="certification-info">
+                <h3>AWS Cloud Practitioner</h3>
+                <p>
+                  Certified AWS Cloud Practitioner with a fundamental
+                  understanding of AWS cloud concepts, services, and
+                  terminology.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="experience">
+          <h2>Experience</h2>
+          <div class="experience-item">
+            <h3>Frontend Associate</h3>
             <p>
-              AI Trainer with 2 years of experience in machine learning and data
-              science. Skilled in Python, TensorFlow, and data visualization.
-              Passionate about teaching and sharing knowledge.
+              AntWalk Pvt. Ltd | High Impact Enterprise Learning
+            </p>
+            <ul>
+              <li>
+                Engineered a cloud migration strategy for a mid-sized company,
+                enabling the transition of over 30 applications to Azure
+                within a 6-month timeframe, and reduced operational costs by
+                20% through effective resource allocation and automation
+                scripts.
+              </li>
+              <li>
+                Help senior consultants create, deploy, and manage cloud
+                solutions with Microsoft Azure tools and services.
+              </li>
+              <li>
+                Diagnose and resolve technical issues with Azure security,
+                apps, and infrastructure. Work with stakeholders and clients
+                to identify and meet their company's objectives and goals.
+              </li>
+              <li>
+                To enhance the functionality and effectiveness of cloud
+                solutions, become knowledgeable about emerging technologies
+                and industry best practices.
+              </li>
+              <li>
+                Keep track of and inform the appropriate parties of the
+                project's progress, status, and results.
+              </li>
+            </ul>
+          </div>
+          <div class="experience-item">
+            <h3>Sr Technical Azure Consultant</h3>
+            <p>
+              Mapping Skills Technology Pvt. Ltd <b>March 2024 - September 2023</b>
+            </p>
+            <ul>
+              <li>
+                Engineered a cloud migration strategy for a mid-sized company,
+                enabling the transition of over 30 applications to Azure
+                within a 6-month timeframe, and reduced operational costs by
+                20% through effective resource allocation and automation
+                scripts.
+              </li>
+              <li>
+                Help senior consultants create, deploy, and manage cloud
+                solutions with Microsoft Azure tools and services.
+              </li>
+              <li>
+                Diagnose and resolve technical issues with Azure security,
+                apps, and infrastructure. Work with stakeholders and clients
+                to identify and meet their company's objectives and goals.
+              </li>
+              <li>
+                To enhance the functionality and effectiveness of cloud
+                solutions, become knowledgeable about emerging technologies
+                and industry best practices.
+              </li>
+              <li>
+                Keep track of and inform the appropriate parties of the
+                project's progress, status, and results.
+              </li>
+            </ul>
+          </div>
+          <div class="experience-item">
+            <h3>Jr Technical Azure Consultant</h3>
+            <p>
+              Mapping Skills Technology Pvt. Ltd March 2024 - September 2023
+            </p>
+            <ul>
+              <li>
+                Engineered a cloud migration strategy for a mid-sized company,
+                enabling the transition of over 30 applications to Azure
+                within a 6-month timeframe, and reduced operational costs by
+                20% through effective resource allocation and automation
+                scripts.
+              </li>
+              <li>
+                Help senior consultants create, deploy, and manage cloud
+                solutions with Microsoft Azure tools and services.
+              </li>
+              <li>
+                Diagnose and resolve technical issues with Azure security,
+                apps, and infrastructure. Work with stakeholders and clients
+                to identify and meet their company's objectives and goals.
+              </li>
+              <li>
+                To enhance the functionality and effectiveness of cloud
+                solutions, become knowledgeable about emerging technologies
+                and industry best practices.
+              </li>
+              <li>
+                Keep track of and inform the appropriate parties of the
+                project's progress, status, and results.
+              </li>
+            </ul>
+          </div>
+          <div class="experience-item">
+            <h3>JavaScript Developer</h3>
+            <p>RanchiMall June 2023 - September 2023</p>
+            <ul>
+              <li>JavaScript Development for Blockchain Product</li>
+              <li>
+                I created a real-time data visualization tool in JavaScript
+                that processed and displayed complex datasets 50% faster than
+                the previous solution, improving decision-making processes for
+                cross-functional teams.
+              </li>
+            </ul>
+          </div>
+        </section>
+        <section id="projects">
+          <h2>Projects</h2>
+          <div class="project-item">
+            <h3>BlackBass</h3>
+            <p>
+              This project is a Backend as a Service (BaaS) that provides a
+              unified interface for integrating different services from
+              various cloud providers such as Google Cloud Platform (GCP),
+              Microsoft Azure, and Amazon Web Services (AWS).
+            </p>
+            <div>
+              <a href="https://github.com/youngsterjaidev/blackbaas" target="_blank"></a>
+              <a href="https://blackbaas.vercel.app" target="_blank"></a>
+            </div>
+            <!-- <h4>Technology Used</h4> -->
+            <ul>
+              <li>Designed a solid backend system with Node.js and a RESTful API that acts as a uniform interface for
+                AWS and Azure cloud storage services.</li>
+              <li>JSON Web Tokens (JWT) were used to provide a secure authentication server that controls user access
+                and safeguards API endpoints.</li>
+              <li>Used Node.js and a RESTful API to construct a dependable backend system that acts as a standard
+                interface for cloud storage services provided by AWS and Azure.</li>
+              <li>A unified, uniform API that hides the underlying storage provider from the client and makes it simple
+                for users to upload images and videos to Amazon S3 or Azure Blob Storage.</li>
+              <li>To ensure that only appropriate images and videos are sent, file types must be validated and size
+                restrictions applied.</li>
+              <li>Error management strategies are designed to manage and alert users to issues related to file uploads
+                or storage service interactions.</li>
+            </ul>
+          </div>
+          <div class="project-item">
+            <h3>Alaric</h3>
+            <p>
+              This web application aims to provide real-time information about
+              the location of buses running in a city and to enable passengers
+              to book and pay for tickets online. It will utilize an embedded
+              system-based GPS module installed on each bus to capture and
+              transmit the real-time location data to the server.
             </p>
             <p>
-              Worked on various projects including natural language processing,
-              computer vision, and predictive analytics. Adept at developing
-              machine learning models and deploying them in production.
+              <a href="https://github.com/youngsterjaidev/alaric" target="_blank"></a>
+              <a href="https://alaric.co.in" target="_blank"></a>
             </p>
-          </section>
-          <section id="skills">
-            <h2>Skills</h2>
+            <!-- <h4>Technology Used</h4> -->
             <ul>
-              <li>AI Training</li>
-              <li>Machine Learning</li>
-              <li>Deep Learning</li>
-              <li>Natural Language Processing</li>
-              <li>Data Science</li>
-              <li>AWS</li>
-              <li>Azure</li>
-              <li>Node.js</li>
-              <li>JavaScript</li>
-              <li>Full Stack Development</li>
-              <li>Blender</li>
+              <li>Designed and constructed the web application's frontend using ReactJS, resulting in an intuitive and
+                responsive user experience for passengers to explore bus routes and bus tickets.</li>
+              <li>Real-time location changes on the frontend were implemented using React hooks and Firebase's real-time
+                database, resulting in seamless and efficient data flow.</li>
+              <li>The backend was built using Node.js, with RESTful APIs for ticket purchasing, user authentication, and
+                data administration.</li>
+              <li>Firebase is integrated for user authentication, real-time database capabilities, and cloud storage for
+                bus and route information.</li>
+              <li>Developed and implemented Cloud Functions to handle server-side functionality such as payment
+                processing and booking confirmation management.</li>
+              <li>Set up automated testing using Cypress.io, including end-to-end tests to ensure application
+                reliability and detect regressions.</li>
+              <li>The frontend was deployed to Firebase Hosting, while the backend was moved to Google Cloud Platform,
+                ensuring scalability and high availability.</li>
+              <li>Create continuous integration and deployment (CI/CD) pipelines with GitHub Actions to automate the
+                build and deployment processes.</li>
             </ul>
-          </section>
-          <section id="certifications">
-            <h2>Certifications</h2>
-            <div class="certification-grid">
-              <div class="certification-item">
-                <img
-                  src="https://images.credly.com/images/0e284c3f-5164-4b21-8660-0d84737941bc/image.png"
-                  alt="AWS Solution Architect Associate Badge"
-                  width="100"
-                />
-                <div class="certification-info">
-                  <h3>AWS Solution Architect Associate</h3>
-                  <p>
-                    Certified AWS Solution Architect with expertise in designing
-                    and deploying scalable systems on AWS.
-                  </p>
-                </div>
-              </div>
-              <div class="certification-item">
-                <img
-                  src="https://learn.microsoft.com/en-gb/media/learn/certification/badges/microsoft-certified-associate-badge.svg"
-                  alt="Azure Developer Associate Badge"
-                  width="100"
-                />
-                <div class="certification-info">
-                  <h3>Azure Developer Associate</h3>
-                  <p>
-                    Certified Azure Developer with experience in building,
-                    testing, and maintaining cloud applications and services on
-                    Microsoft Azure.
-                  </p>
-                </div>
-              </div>
-              <div class="certification-item">
-                <img
-                  src="https://images.credly.com/images/00634f82-b07f-4bbd-a6bb-53de397fc3a6/image.png"
-                  alt="AWS Cloud Practitioner Badge"
-                  width="100"
-                />
-                <div class="certification-info">
-                  <h3>AWS Cloud Practitioner</h3>
-                  <p>
-                    Certified AWS Cloud Practitioner with a fundamental
-                    understanding of AWS cloud concepts, services, and
-                    terminology.
-                  </p>
-                </div>
-              </div>
+          </div>
+          <div class="project-item">
+            <h3>TheMysticRoutes</h3>
+            <p>
+              TheMysticRoutes is a complete web platform that simplifies the
+              process of booking memorable hill station trips. Our
+              user-friendly website seeks to meet the different demands of
+              visitors looking to experience the spectacular beauty and quiet
+              of the hills.
+            </p>
+            <div>
+              <a href="https://github.com/youngsterjaidev/themysticroutes" target="_blank"></a>
+              <a href="https://themysticroutes.netlify.app" target="_blank"></a>
             </div>
-          </section>
-          <section id="experience">
-            <h2>Experience</h2>
-            <div class="experience-item">
-              <h3>Jr Technical Azure Consultant</h3>
-              <p>
-                Mapping Skills Technology Pvt. Ltd March 2024 - September 2023
-              </p>
-              <ul>
-                <li>
-                  Engineered a cloud migration strategy for a mid-sized company,
-                  enabling the transition of over 30 applications to Azure
-                  within a 6-month timeframe, and reduced operational costs by
-                  20% through effective resource allocation and automation
-                  scripts.
-                </li>
-                <li>
-                  Help senior consultants create, deploy, and manage cloud
-                  solutions with Microsoft Azure tools and services.
-                </li>
-                <li>
-                  Diagnose and resolve technical issues with Azure security,
-                  apps, and infrastructure. Work with stakeholders and clients
-                  to identify and meet their company's objectives and goals.
-                </li>
-                <li>
-                  To enhance the functionality and effectiveness of cloud
-                  solutions, become knowledgeable about emerging technologies
-                  and industry best practices.
-                </li>
-                <li>
-                  Keep track of and inform the appropriate parties of the
-                  project's progress, status, and results.
-                </li>
-              </ul>
-            </div>
-            <div class="experience-item">
-              <h3>JavaScript Developer</h3>
-              <p>RanchiMall June 2023 - September 2023</p>
-              <ul>
-                <li>JavaScript Development for Blockchain Product</li>
-                <li>
-                  I created a real-time data visualization tool in JavaScript
-                  that processed and displayed complex datasets 50% faster than
-                  the previous solution, improving decision-making processes for
-                  cross-functional teams.
-                </li>
-              </ul>
-            </div>
-          </section>
-          <section id="projects">
-            <h2>Projects</h2>
-            <div class="project-item">
-              <h3>BlackBass</h3>
-              <p>
-                This project is a Backend as a Service (BaaS) that provides a
-                unified interface for integrating different services from
-                various cloud providers such as Google Cloud Platform (GCP),
-                Microsoft Azure, and Amazon Web Services (AWS).
-              </p>
-              <p>
-                <a
-                  href="https://github.com/youngsterjaidev/blackbaas"
-                  target="_blank"
-                  >GitHub Repository</a
-                >
-              </p>
-              <h4>Technology Used</h4>
-              <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>ReactJS</li>
-                <li>NodeJS</li>
-                <li>MongoDB</li>
-                <li>AWS (Amazon Web Service)</li>
-                <li>Microsoft Azure</li>
-                <li>GCP (Google Cloud Platform)</li>
-              </ul>
-            </div>
-            <div class="project-item">
-              <h3>Alaric</h3>
-              <p>
-                This web application aims to provide real-time information about
-                the location of buses running in a city and to enable passengers
-                to book and pay for tickets online. It will utilize an embedded
-                system-based GPS module installed on each bus to capture and
-                transmit the real-time location data to the server.
-              </p>
-              <p>
-                <a
-                  href="https://github.com/youngsterjaidev/alaric"
-                  target="_blank"
-                  >GitHub Repository</a
-                >
-              </p>
-              <h4>Technology Used</h4>
-              <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>ReactJS</li>
-                <li>NodeJS</li>
-                <li>MongoDB</li>
-                <li>Mapbox</li>
-                <li>Arduino</li>
-                <li>GCP (Google Cloud Platform)</li>
-              </ul>
-            </div>
-            <div class="project-item">
-              <h3>TheMysticRoutes</h3>
-              <p>
-                TheMysticRoutes is a complete web platform that simplifies the
-                process of booking memorable hill station trips. Our
-                user-friendly website seeks to meet the different demands of
-                visitors looking to experience the spectacular beauty and quiet
-                of the hills.
-              </p>
-              <p>
-                <a
-                  href="https://github.com/youngsterjaidev/themysticroutes"
-                  target="_blank"
-                  >GitHub Repository</a
-                >
-              </p>
-              <h4>Technology Used</h4>
-              <ul>
-                <li>HTML</li>
-                <li>CSS</li>
-                <li>JavaScript</li>
-                <li>ReactJS</li>
-                <li>NodeJS</li>
-                <li>MongoDB</li>
-              </ul>
-            </div>
-          </section>
-          <section id="contact">
-            <h2>Contact</h2>
-            <div class="contact-item">
-              <a href="https://www.linkedin.com/in/devjai/" target="_blank">
-                <i class="fab fa-linkedin"></i> LinkedIn
-              </a>
-            </div>
-            <div class="contact-item">
-              <a href="https://github.com/youngsterjaidev" target="_blank">
-                <i class="fab fa-github"></i> GitHub
-              </a>
-            </div>
-            <div class="contact-item">
-              <a href="mailto:jaidevv999@outlook.com">
-                <i class="fas fa-envelope"></i> Email
-              </a>
-            </div>
-          </section>
-        </div>
+            <!-- <h4>Technology Used</h4> -->
+            <ul>
+              <li>Created an easy-to-use travel agency website where customers can browse, order vacation packages, and
+                seamlessly plan their trips.</li>
+              <li>Created and developed interactive elements that allow users to compare packages, view itineraries, and
+                make informed decisions.</li>
+              <li>RESTful APIs were integrated to provide real-time data about travel packages, availability, and cost.
+              </li>
+              <li>Created responsive and dynamic UI components with React.js to offer a consistent experience across
+                devices.</li>
+              <li>Improved website performance by optimizing code, lowering load times, and increasing overall
+                responsiveness.</li>
+              <li>Collaborated with backend engineers and designers to guarantee smooth functionality and a
+                user-friendly interface.</li>
+              <li>To increase customer involvement and happiness, we included features such as user reviews, package
+                filtering, and booking confirmation.</li>
+            </ul>
+          </div>
+        </section>
+        <section id="contact">
+          <h2>Contact</h2>
+          <div class="contact-item">
+            <a href="https://www.linkedin.com/in/devjai/" target="_blank">
+              <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+          </div>
+          <div class="contact-item">
+            <a href="https://github.com/youngsterjaidev" target="_blank">
+              <i class="fab fa-github"></i> GitHub
+            </a>
+          </div>
+          <div class="contact-item">
+            <a href="mailto:jaidevv999@outlook.com">
+              <i class="fas fa-envelope"></i> Email
+            </a>
+          </div>
+        </section>
       </div>
     </div>
-    <script src="./index.js"></script>
-  </body>
+  </div>
+  <script src="./index.js"></script>
+</body>
+
 </html>
